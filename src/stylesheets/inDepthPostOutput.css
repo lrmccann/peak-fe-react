@@ -1,0 +1,93 @@
+.inDepthPostPage {
+  height: 100%;
+  width: 100%;
+  /* background-color: bisque; */
+  /* background-color: whitesmoke; */
+  overflow-y: scroll;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.blogImgCont {
+  margin-top: 3%;
+  align-self: center;
+  height: 500px;
+  width: 1000px;
+  border: #777777 solid 4px;
+  /* background-size: cover; */
+  display: flex;
+  align-items: flex-end;
+}
+
+.blogImg {
+  align-self: center;
+  /* height: 491.75px;
+  width: 800px; */
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+  /* display: flex; */
+}
+
+.publishingInfo {
+  width: 80%;
+  height: 20%;
+  display: flex;
+  flex-direction: row;
+  border-bottom: solid black 1px;
+  margin-bottom: 4%;
+  align-self: center;
+  margin-top: 3%;
+  justify-content: center;
+}
+
+#blogPublishDate {
+  margin-top: 6%;
+  font-size: 18px;
+}
+
+#blogTitle {
+  font-size: 50px;
+  text-align: center;
+  margin-left: 2%;
+}
+
+.blogBody {
+  align-self: center;
+  height: 100%;
+  width: 60%;
+  background-color: whitesmoke;
+  padding: 4%;
+  line-height: 1.5;
+}
+
+.commentsCont {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: 300px;
+  width: 78%;
+  background-color: whitesmoke;
+  align-self: center;
+  margin-bottom: 10%;
+}
+
+.commentsTitle {
+  text-align: center;
+  height: 14%;
+  width: 100%;
+  border-bottom: solid black 1px;
+}
+
+.indivContDiv {
+  align-self: center;
+  height: 40%;
+  width: 80%;
+  background-color: white;
+  margin-top: 1%;
+  border: solid black 1px;
+  margin-bottom: 2%;
+}
+
+/*# sourceMappingURL=inDepthPostOutput.css.map */

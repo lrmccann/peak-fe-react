@@ -1,0 +1,44 @@
+.navbarTop{
+    height: 70px;
+    width: 100%;
+    margin-top: -1.35%;
+    background-color: rgb(245, 224, 105);
+}
+
+.logoText{
+    text-align: left;
+}
+
+.moveRight{
+    display: flex;
+    flex-direction: row;
+    margin-left: 71%;
+    width: 30%;
+    height: 100%;
+    margin-top: -3.35%;
+}
+
+#navBtn{
+    border-left: solid black 1px;
+    border-right: none;
+    border-top: none;
+    border-bottom: none;
+    background-color: transparent;
+    font-size: 20.5px;
+    cursor: pointer;
+}
+
+.navBtnHome{
+    width: 33.33%;
+    height: 100%;
+}
+
+.navBtnAccount{
+    width: 33.33%;
+    height: 100%;
+}
+
+.navBtnLogout{
+    width: 33.33%;
+    height: 100%;
+}
