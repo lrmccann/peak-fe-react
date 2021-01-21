@@ -19,6 +19,7 @@ html, body, #app, #app>div {
 html {
   overflow: hidden;
   height: 100%;
+  background-color: rgb(34, 71, 102);
 }
 
 body {

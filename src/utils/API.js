@@ -8,14 +8,14 @@ if(process.env.NODE_ENV === "development"){
     var devFuncs = {
         loginUser: async function (username , password) {
             console.log(username , password , "username and password for auth");
-            return await axios.get(`http://localhost:3000/account-info-login/${username}/${password}`, {
+            return await axios.get(`http://localhost:3005/account-info-login/${username}/${password}`, {
                 headers: {
                     'Access-Control-Allow-Origin': '*'
                 }
             })
         },
         getAllPosts: async function(){
-            return await axios.get(`http://localhost:3000/user-posts`, {
+            return await axios.get(`http://localhost:3005/user-posts`, {
                 headers: {
                     'Access-Control-Allow-Origin': '*'
                 }
@@ -23,7 +23,7 @@ if(process.env.NODE_ENV === "development"){
         },
         getPostDetails: async function(id){
             console.log(id, "id of post to get details")
-            return await axios.get(`http://localhost:3000/user-posts/${id}` , {
+            return await axios.get(`http://localhost:3005/user-posts/${id}` , {
                 headers: {
                     'Access-Control-Allow-Origin': '*'
                 }
@@ -31,7 +31,39 @@ if(process.env.NODE_ENV === "development"){
         },
         getUsernamesForComments: async function(comment_ids){
             console.log(comment_ids , "comment id for API")
-            return await axios.get(`http://localhost:3000/user-comments/` + comment_ids)
+            return await axios.get(`http://localhost:3005/user-comments`  , {
+                headers: {
+                    'Access-Control-Allow-Origin': '*',
+                },
+                params : {
+                    stuff : comment_ids
+                }
+            })
+        },
+        postNewBlog: async function(blogContent){
+            console.log(blogContent, "new blog for API")
+            return await axios.post(`http://localhost:3005/create-new-post` , blogContent , {
+                headers: {
+                    'Access-Control-Allow-Origin': '*'
+                }
+            })
+        },
+        getTopUserPosts : async function(id){
+            console.log(id , "id for getTopUserPosts API")
+            return await axios.get(`http://localhost:3005/getUserPost/${id}` , {
+                headers: {
+                    'Access-Control-Allow-Origin': '*'
+                }
+            })
+        },
+
+        getTopUserComments : async function(id){
+            console.log(id , "id for getTopUserComments api")
+            return await axios.get(`http://localhost:3005/user-comments/${id}` , {
+                headers: {
+                    'Access-Control-Allow-Origin': '*'
+                }
+            })
         }
     }
 

@@ -15,7 +15,7 @@
     align-self: center;
     height: 500px;
     width: 1000px;
-    border: rgb(119, 119, 119) solid 4px;
+    border: oldlace solid 4px;
     /* background-size: cover; */
     display: flex;
     align-items: flex-end;
@@ -36,7 +36,7 @@
     height: 20%;
     display: flex;
     flex-direction: row;
-    border-bottom: solid black 1px;
+    border-bottom: solid oldlace 1px;
     margin-bottom: 4%;
     align-self: center;
     margin-top: 3%;
@@ -52,6 +52,7 @@
     font-size: 50px ;
     text-align: center;
     margin-left: 2%;
+    color: oldlace;
     
 }
 
@@ -68,18 +69,46 @@
     display: flex;
     flex-direction: column;
     position: relative;
-    height: 300px;
-    width: 78%;
+    height: 360px;
+    width: 68%;
     background-color: whitesmoke;
     align-self: center;
     margin-bottom: 10%;
+    overflow: scroll;
+}
+
+
+.actualCommentsCont{
+    align-self: center;
+    height: 250px;
+    width: 80%;
+    margin-bottom: 2%;
+    border: solid black 1px;
+}
+
+.commentAuthDiv{
+    height: 40%;
+    width: 100%;
+    background-color: gray;
+    display: flex;
+    flex-direction: row;
+}
+
+.commentAuthPic{
+    height: 90%;
+    width: 7.25%;
+    background-color: red;
+    margin-right: 1%;
+    border-radius: 30px;
 }
 
 .commentsTitle{
     text-align: center;
     height: 14%;
     width: 100%;
-    border-bottom: solid black 1px;
+    border-bottom: solid gray thin;
+    margin-bottom: 2%;
+    padding-bottom: .5% ;
 }
 
 .indivContDiv{
@@ -87,7 +116,9 @@
     height: 40%;
     width: 80%;
     background-color: white;
-    margin-top: 1%;
+    margin-top: .25%;
     border: solid black 1px;
-    margin-bottom: 2%;
+    margin-bottom: 3%;
+    font-size: 18px;
+    padding-left: 1%;
 }

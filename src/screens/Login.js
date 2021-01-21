@@ -20,7 +20,6 @@ import UserContext from '../utils/Context';
 
     const showModal = () => {
         setShow(true);
-        console.log(show)
     }
 
     const hideModal = () => {
@@ -40,11 +39,6 @@ import UserContext from '../utils/Context';
         }else{
             checkSqlForUser()
         }
-        // const data = {
-        //     username: usernameRef.current.value,
-        //     password: passwordRef.current.value,
-        //     rememberMe: rememberMeRef.current.value
-        // }
     }
     const checkSqlForUser = async (username , password) => {
         await API.loginUser(
@@ -80,10 +74,10 @@ import UserContext from '../utils/Context';
                         <button className="aboutUsBtn" id="navBtn">
                             <p id="navBarBtnText">About Us</p>
                         </button>
-                        <div className="myInfoDiv">
-                            <h2 id="navBarBtnTextTwo">Logan McCann</h2>
-                            <h3 id="navBarBtnTextTwo">Web Dev</h3>
-                        </div>
+                        {/* <div className="myInfoDiv">
+                            <h2 id="navBarBtnTextTwo" style={{color:'white'}}>Logan McCann</h2>
+                            <h3 id="navBarBtnTextTwo" style={{color:'white'}}>Web Dev</h3>
+                        </div> */}
                     </div>
                 </div>
                 <div className="flexColumnCont">

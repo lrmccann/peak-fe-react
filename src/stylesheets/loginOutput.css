@@ -1,10 +1,10 @@
 .loginPage {
   height: 100%;
   width: 100%;
-  background-image: url("../images/summit-pic-1.jpg");
+  background-image: url("../images/background-img-1.jpg");
   background-repeat: no-repeat;
   background-origin: border-box;
-  background-blend-mode: hard-light;
+  background-blend-mode: soft-light;
   background-size: cover;
   contain: content;
   overflow-y: scroll;
@@ -14,38 +14,39 @@
 .loginPage .navBar {
   position: absolute;
   height: 100%;
-  width: 15%;
-  background-color: white;
+  width: 10%;
   display: flex;
-  border-right: solid black 4px;
   flex-direction: column;
   margin-left: -1.15%;
   filter: none;
 }
 .loginPage #navBtn {
-  height: 38%;
+  height: 34%;
   width: 100%;
-  background-color: transparent;
-  border-left: transparent;
-  border-right: transparent;
-  border-top: solid black 2px;
-  border-bottom: solid black 2px;
+  background-color: gray;
+  border-left: solid black 1px;
+  border-right: solid black 1px;
+  border-top: solid black 1px;
+  border-bottom: solid black 1px;
   outline: transparent;
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .loginPage #navBarBtnText {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: bolder;
-  color: black;
+  color: white;
 }
 .loginPage .myInfoDiv {
   text-align: center;
+  margin-top: 5%;
 }
 .loginPage #navBarBtnTextTwo {
-  margin-top: 2%;
-  font-size: 18px;
+  margin-left: 18%;
+  width: 70%;
   font-weight: bolder;
-  color: black;
 }
 .loginPage .flexColumnCont {
   display: flex;

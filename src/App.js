@@ -48,9 +48,9 @@ function App() {
       getAllComments
     }}>
     <Router>
-    <NavbarTop/>
       <Route exact activeClassName path="/" component={Login} />
       <Route exact activeClassName path="/signup" component={Signup} />
+      <NavbarTop/>
       <Switch>
       <Route exact activeClassName path="/home" component={Home} />
       </Switch>

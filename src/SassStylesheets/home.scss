@@ -129,20 +129,27 @@
 }
 
 .blogMoreInfoBtn{
-    height: 2.50%;
-    width: 28%;
+    height: 2.0%;
+    width: 34%;
     white-space: nowrap;
     position: absolute;
-    margin-left: 35%;
+    margin-left: 33%;
     border-radius: 50px;
     text-align: center;
-    margin-top: .5%;
     background-color: rgb(245, 224, 105);
-    margin-top: 2.75%;
+    // margin-top: 5.75%;
+    margin-top: 1.5%;
     border: solid gray 2px;
     cursor: pointer;
 }
 
+.blogMoreInfoBtn:focus{
+    outline: none;
+}
+
+.moreInfoBtnText{
+    font-weight: 100;
+}
 
 .likeCont{
     // background-color: goldenrod;
@@ -155,48 +162,49 @@
     align-items: center;
 }
 
-.heartCounter{
-    font-size: 20px;
-    position: absolute;
-    margin-left: 10%;
-}
+// .heartCounter{
+//     font-size: 20px;
+//     position: absolute;
+//     margin-left: 9%;
+//     margin-top: 2.5%;
+// }
 
-.heartImg{
-    float: left;
-    margin-left: 200%;
-    margin-top: 20%;
-    height: 90%;
-    width: 150%;
-    cursor: pointer;
-}
+// .heartImg{
+//     float: left;
+//     margin-left: 210%;
+//     margin-top: 70%;
+//     height: 90%;
+//     width: 115%;
+//     cursor: pointer;
+// }
 
-.heartBtn{
-    border: none;
-    outline: none;
-    background-color: transparent;
-    height: 100%;
-    width: 35%;
-    font-size: 50px;
-}
+// .heartBtn{
+//     border: none;
+//     outline: none;
+//     background-color: transparent;
+//     height: 100%;
+//     width: 35%;
+//     font-size: 50px;
+// }
 
-.heartBtn:focus{
-    outline: none;
-}
+// .heartBtn:focus{
+//     outline: none;
+// }
  
-.heartBtn:checked {
-    border: none;
-    outline: none;
-    background-color: transparent;
-    height: 100%;
-    width: 35%;
-    font-size: 45px;
-    margin-top: 1%;
-    color: red;
-}
+// .heartBtn:checked {
+//     border: none;
+//     outline: none;
+//     background-color: transparent;
+//     height: 100%;
+//     width: 35%;
+//     font-size: 45px;
+//     margin-top: 1%;
+//     color: red;
+// }
 
 .likeCountText{
     font-size: 17px;
-    padding-right: .25%;    
+    margin-right: 2.25%;    
 }
 
 /* MODAL CONTENT */

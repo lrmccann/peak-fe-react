@@ -4,10 +4,11 @@ $ws : 'whitesmoke';
     height: 100%;
     width: 100%;
     // background-image: url("../images/homePgBg.jpg");
-    background-image: url("../images/summit-pic-1.jpg");
+    background-image: url("../images/background-img-1.jpg");
     background-repeat: no-repeat;
     background-origin: border-box;
-    background-blend-mode: hard-light;
+    // background-blend-mode: hard-light;
+    background-blend-mode: soft-light;
     background-size: cover;
     contain: content;
     overflow-y: scroll;
@@ -18,49 +19,60 @@ $ws : 'whitesmoke';
     .navBar{
         position: absolute;
         height: 100%;
-        width: 15%;
+        width: 10%;
         // background-color: black;
-        background-color: white;
+        // background-color: white;
+        // background-color: rgb(105, 105, 105);
         display: flex;
-        border-right: solid black 4px;
+        // border-right: solid black 2px;
         flex-direction: column;
         margin-left: -1.15%;
         filter: none;
     }
     
     #navBtn{
-        height: 38%;
+        height: 34%;
         width: 100%;
-        background-color: transparent;
-        border-left: transparent;
-        border-right: transparent;
-        // border-top: solid whitesmoke 2px;
-        // border-bottom: solid whitesmoke 2px;
-        border-top: solid black 2px;
-        border-bottom: solid black 2px;
+        // background-color: transparent;
+        background-color: gray;
+        // border-left: transparent;
+        // border-right: transparent;
+        border-left: solid black 1px;
+        border-right: solid black 1px;
+        border-top: solid black 1px;
+        border-bottom: solid black 1px;
         outline: transparent;
         // margin-left: -11%;
         // padding-top: 1%;
         cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
     
     #navBarBtnText{
-        font-size: 22px;
+        font-size: 20px;
         font-weight: bolder;
-        // color: whitesmoke;
-        color: black;
+        color: white;
+        // color: black;
     }
 
     .myInfoDiv{
         text-align: center;
+        // font-size: 10px;
+        // background-color: goldenrod;
+        // height: 10%;
+        margin-top: 5%;
     }
 
     #navBarBtnTextTwo{
-        margin-top: 2%;
-        font-size: 18px;
+        margin-left: 18%;
+        // font-size: 14px;
+        width: 70%;
         font-weight: bolder;
         // color: whitesmoke;
-        color: black;
+        // color: black;
+        // background-color: goldenrod;
     }
     // end navbar content //
     

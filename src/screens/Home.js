@@ -1,24 +1,27 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import '../stylesheets/homeOutput.css';
 import API from '../utils/API';
 import UserContext from '../utils/Context';
-import photo from '../images/heart-icon-one.png'
+// import photo from '../images/heart-icon-one.png'
+// import photo from "../images/heart-icon-two.png"
 import { useHistory } from 'react-router-dom';
 import Truncate from 'react-truncate';
+import HeartCont from '../components/heartCont';
 
 export default function Home() {
     const history = useHistory()
 
-    const { user , getDetailedPost , getAllComments } = useContext(UserContext);
+    const { user , getDetailedPost} = useContext(UserContext);
     const [postsToMap, setPostsToMap] = useState([]);
     const [newBlogOpen, setNewBlogOpen] = useState(false);
-    const [allCommentsForNewPage , setAllCommentsForNewPage] = useState([])
-    const [allPostForNewPage , setAllPostForNewPage] = useState([])
+    const imgHeader = useRef(null);
+    const blogTitle = useRef(null);
+    const blogBody =  useRef(null);
 
-    useEffect(async () => {
+    useEffect(async () => (
         await API.getAllPosts()
             .then(async res => setPostsToMap(await res.data))
-    }, [])
+        ), [])
 
     const openBlog = () => {
         setNewBlogOpen(true);
@@ -29,36 +32,36 @@ export default function Home() {
 
     const getIndepthblogDetails = async e => {
         await API.getPostDetails(e)
-        // .then(async res =>  setAllIndepthBlogInfo(await res.data))
         .then(res => seperateResponseData(res.data));
     }
 
     const seperateResponseData = async (responseData) => {
-        // console.log(responseData)
-        // getDetailedPost(responseData.results)
         getDetailedPost(responseData)
-        // setAllCommentsForNewPage(responseData.comments)
-        // setAllPostForNewPage(responseData.results)
-        // setTimeout(async () => {
-                // setAllCommentsForNewPage(await allIndepthBlogInfo.comments)
-        // }, 2 * 500)
-        // console.log(allIndepthBlogInfo)
-        // if(allIndepthBlogInfo.length === 0){
-            // setTimeout(() => {
-                // console.log(allIndepthBlogInfo , "asdasdasdas")
-                // setAllCommentsForNewPage(await allIndepthBlogInfo.comments)
-            // },  1 * 50)
-        // }
         history.push('/indepthpost')
     }
 
-    console.log(allCommentsForNewPage)
-    console.log(allPostForNewPage)
+    const handleBlogPost = async e => {
+        e.preventDefault();
+        var resultsInFullScope = {};
+        var imgHeaderToSend = imgHeader.current.value;
+        var blogTitleToSend = blogTitle.current.value;
+        var blogBodyToSend = blogBody.current.value;
+        var userIdToSend = await user[0].id;
 
-                // console.log(allIndepthBlogInfo , "indepth post info")
-
-    // console.log(postsToMap)
-    // console.log(allCommentsForNewPage, "all comments for enw page")
+        var blogInfoToSend = {
+            imgHeaderToSend,
+            blogTitleToSend,
+            blogBodyToSend,
+            userIdToSend
+        }
+        await API.postNewBlog({blogInfoToSend})
+        .then(res => {resultsInFullScope = res})
+        if(resultsInFullScope.status === 202){
+            setNewBlogOpen(false);
+        }else{
+            alert('An error occured while posting your blog, please try again later.')
+        }
+    }
 
     if (newBlogOpen === false) {
         return (
@@ -83,22 +86,24 @@ export default function Home() {
                             <div className="otherInfo">
                                 <div className="authorCont">
                                     <div className="makeflexColumn">
-                                        <img className="authorImg">
-
-                                        </img>
+                                        <img className="authorImg"></img>
                                         <h4 className="usernameText">mani123</h4>
                                     </div>
                                     <button className="blogMoreInfoBtn" id={index.id} onClick={e => {getIndepthblogDetails(e.target.id)}}>
-                                        <h3 id={index.id}>More Info</h3>
+                                        <h2 className="moreInfoBtnText" id={index.id}>More Info</h2>
                                     </button>
-                                    <div className="likeCont">
+                                    <HeartCont
+                                        numOfLikes = {index.blog_likes}
+                                        postId = {index.id}
+                                    />
+                                    {/* <div className="likeCont">
                                         <div className="likeCountText">
                                             <button className="heartBtn">
-                                                <p className="heartCounter">{index.id}</p>
+                                                <p className="heartCounter">{index.blog_likes}</p>
                                                 <img className="heartImg" src={photo}></img>
                                             </button>
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                         </div>
@@ -113,13 +118,12 @@ export default function Home() {
                     <button className="closeModalBtn" onClick={closeBlog} >X</button>
                     <button className="openDialogBtn"><i className="fas fa-search"></i></button>
                     <h6 style={{ marginTop: '2%' }} id="categoryText">Image Header</h6>
-                    <input id="modalInput" className="imgInput"></input>
+                    <input id="modalInput" ref={imgHeader} className="imgInput"></input>
                     <h6 id="categoryText">Title</h6>
-                    <input id="modalInputTwo" className="titleInput"></input>
+                    <input id="modalInputTwo" ref={blogTitle} className="titleInput"></input>
                     <h6 style={{ marginLeft: '8%' }} >Body</h6>
-                    <textarea id="modalInputThree" className="bodyInput"></textarea>
-                    <button className="submitBlogBtn">Create Post</button>
-
+                    <textarea id="modalInputThree" ref={blogBody} className="bodyInput"></textarea>
+                    <button style={{cursor: "pointer"}} onClick={handleBlogPost} className="submitBlogBtn">Create Post</button>
                 </div>
             </div>
         )

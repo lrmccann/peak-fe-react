@@ -6,25 +6,44 @@ import UserContext from '../utils/Context';
 export default function InDepthPost() {
 
     const { detailedPost } = useContext(UserContext);
+    console.log(detailedPost , "i am a detailed post ")
 
     const [commentsToMap, setCommentsToMap] = useState(detailedPost.comments);
     const [postToMap, setPostToMap] = useState(detailedPost.results)
+    const [userNamesForComments, setUsernameForComments] = useState([]);
     const [loading, isLoading] = useState(true);
+    const [idkRandom , setIdkRandom] = useState(userNamesForComments);
+    const [visibilityCond , setVisibility] = useState("visible");
     var userIdForApi = [];
 
-    console.log(postToMap)
-
+    setTimeout(() => {
+        if(userNamesForComments.length === 0 && commentsToMap === null){
+            setIdkRandom(["" , "" , ""]);
+            setCommentsToMap(["" , "" , ""]);
+            setVisibility("none")
+        }else{
+            console.log("it worked")
+        }
+    }, 2 * 200)
 
     useEffect(async () => (
-        commentsToMap.map( async(index) => {
+        someRandomFunc()
+    ), [])
+
+    const someRandomFunc = () => {
+        commentsToMap.map(async (index) => {
             userIdForApi.push(index.user_id)
-            // console.log(index.user_id, "index for use effect")
             setTimeout(async () => {
                 await API.getUsernamesForComments(userIdForApi)
-                .then(res => console.log(res))
+                    .then((res) => setUsernameForComments(res.data));
+                if (userNamesForComments.length !== 0) {
+                    return
+                } else {
+                    console.log("i give up")
+                }
             }, 1 * 10)
         })
-    ))
+    }
 
     useEffect(() => {
         if (postToMap.length !== 0) {
@@ -33,14 +52,13 @@ export default function InDepthPost() {
     }, [isLoading])
 
     if (loading === true) {
-        console.log(userIdForApi , "asdasdass")
         return (
             <div>
                 <h1>Loading</h1>
             </div>
         )
     } else if (loading === false) {
-        console.log(userIdForApi , "asdasdass")
+        console.log(userNamesForComments, "user name for comments to maaap")
         return (
             <div className="inDepthPostPage conatiner-fluid ">
                 {(postToMap.map((index) => (
@@ -57,15 +75,24 @@ export default function InDepthPost() {
                         <h2 className="blogBody" id="blogBody">{index.post_body}</h2>
                     </>
                 )))}
-                                <div className="commentsCont">
-                                <h2 className="commentsTitle">Comments</h2>
-                                    {commentsToMap.map((index , myKey) => (
-                                        <div key={myKey} className="indivContDiv">
-                                   <p>{index.comment_body}</p>
-                                   </div>
-                                    ))}
-                    
-                    </div>
+                <div className="commentsCont" style={{visibility : `${visibilityCond}`}}>
+                    <h1 className="commentsTitle">Comments</h1>
+                    {(commentsToMap.map((index, myKey) => (
+                        ((console.log(index, "indeeeexxx"))),
+                        <>
+                            {(userNamesForComments.map((indexTwo) => (
+                                ((console.log(indexTwo, "index twoooooo"))),
+                                <div className="actualCommentsCont">
+                                    <div className="commentAuthDiv">
+                                        <img className="commentAuthPic"></img>
+                                        <h4>{indexTwo}</h4>
+                                    </div>
+                                    <p>{index.comment_body}</p>
+                                </div>
+                            )))}
+                        </>
+                    )))}
+                </div>
             </div>
         )
     }

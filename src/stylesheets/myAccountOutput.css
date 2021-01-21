@@ -1,0 +1,142 @@
+.myAccountPage {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: scroll;
+}
+
+.accountInfoCont {
+  height: 80%;
+  width: 80%;
+  background-color: oldlace;
+  position: relative;
+  margin-top: 3%;
+  display: flex;
+  flex-direction: row;
+}
+
+.leftSide {
+  height: 100%;
+  width: 50%;
+  text-align: center;
+}
+
+.rightSide {
+  height: 100%;
+  width: 50%;
+  text-align: center;
+}
+
+.sectionHolder {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+}
+
+#infoText {
+  margin-top: -0.5%;
+  align-self: center;
+  border: solid black 1px;
+  width: 60%;
+  padding-top: 2%;
+  padding-bottom: 2%;
+  background-color: white;
+}
+
+#headerText {
+  font-size: 23px;
+}
+
+.topStatsCont {
+  height: 400px;
+  width: 80%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  position: relative;
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+.topPostsCont {
+  z-index: 110;
+  height: 100%;
+  width: 49.5%;
+  background-color: oldlace;
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+}
+
+.topCommentsCont {
+  height: 100%;
+  width: 49.5%;
+  background-color: oldlace;
+  display: flex;
+  flex-direction: column;
+}
+
+#topStatsHeaderText {
+  align-self: center;
+}
+
+.postBox {
+  height: 30%;
+  max-height: 30%;
+  min-height: 30%;
+  min-width: 80%;
+  max-width: 80%;
+  width: 80%;
+  background-color: whitesmoke;
+  align-self: center;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 2.5%;
+}
+
+.postBox:focus {
+  outline: none;
+}
+
+.postImg {
+  align-self: flex-start;
+  height: 100%;
+  width: 35%;
+  margin-left: -1.25%;
+}
+
+.makeFlexCol {
+  margin-left: 1%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.postTitleCont {
+  height: 100%;
+  width: 100%;
+}
+
+.postTitle {
+  border-bottom: solid black 1px;
+  height: 30%;
+  width: 60;
+}
+
+.commentBox {
+  height: 20%;
+  width: 80%;
+  background-color: whitesmoke;
+  align-self: center;
+  cursor: pointer;
+}
+
+.commentBox:focus {
+  outline: none;
+}
+
+/*# sourceMappingURL=myAccountOutput.css.map */

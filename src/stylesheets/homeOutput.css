@@ -130,18 +130,25 @@
 }
 
 .blogMoreInfoBtn {
-  height: 2.5%;
-  width: 28%;
+  height: 2%;
+  width: 34%;
   white-space: nowrap;
   position: absolute;
-  margin-left: 35%;
+  margin-left: 33%;
   border-radius: 50px;
   text-align: center;
-  margin-top: 0.5%;
   background-color: #f5e069;
-  margin-top: 2.75%;
+  margin-top: 1.5%;
   border: solid gray 2px;
   cursor: pointer;
+}
+
+.blogMoreInfoBtn:focus {
+  outline: none;
+}
+
+.moreInfoBtnText {
+  font-weight: 100;
 }
 
 .likeCont {
@@ -154,48 +161,9 @@
   align-items: center;
 }
 
-.heartCounter {
-  font-size: 20px;
-  position: absolute;
-  margin-left: 10%;
-}
-
-.heartImg {
-  float: left;
-  margin-left: 200%;
-  margin-top: 20%;
-  height: 90%;
-  width: 150%;
-  cursor: pointer;
-}
-
-.heartBtn {
-  border: none;
-  outline: none;
-  background-color: transparent;
-  height: 100%;
-  width: 35%;
-  font-size: 50px;
-}
-
-.heartBtn:focus {
-  outline: none;
-}
-
-.heartBtn:checked {
-  border: none;
-  outline: none;
-  background-color: transparent;
-  height: 100%;
-  width: 35%;
-  font-size: 45px;
-  margin-top: 1%;
-  color: red;
-}
-
 .likeCountText {
   font-size: 17px;
-  padding-right: 0.25%;
+  margin-right: 2.25%;
 }
 
 /* MODAL CONTENT */
