@@ -2,7 +2,7 @@ import axios from "axios";
 
 const proxyurl = "https://cors-anywhere.herokuapp.com/";
 
-// console.log(process.env)
+console.log(process.env)
 
 if(process.env.NODE_ENV === "development"){
     var devFuncs = {
@@ -64,19 +64,34 @@ if(process.env.NODE_ENV === "development"){
                     'Access-Control-Allow-Origin': '*'
                 }
             })
+        },
+        addLike : async function(numOfLikesToSend , postId , postTitle) {
+            console.log(numOfLikesToSend , "num of likes for addLike API");
+            console.log(postId , "id of post addlike API");
+            console.log(postTitle , "post title for addLike API")
+            return await axios.put(`http://localhost:3005/numOfLikesForPost/${postId}/${numOfLikesToSend}/${postTitle}` , {
+                headers: {
+                    'Access-Control-Allow-Origin': '*'
+                }
+            })
+        },
+        deletePost : async function(postId) {
+            console.log( postId , "id of post to delete for API");
+            return await axios.delete(`http://localhost:3005/user-posts/${postId}` , {
+                headers : {
+                    'Access-Control-Allow-Origin': '*'
+                }
+            })
         }
     }
 
-}else{
+}else if(process.env.NODE_ENV === "production"){
 var prodFuncs = {
     loginUser: async function (username , password) {
         console.log(username , password , "username and password for auth");
-        return await axios.get(proxyurl + `https://peak-blogspace.herokuapp.com/account-info-login/${username}/${password}`, {
+        return await axios.get(`https://peak-blogspace.herokuapp.com/account-info-login/${username}/${password}`, {
             headers: {
                 'Access-Control-Allow-Origin': '*',
-                "Access-Control-Allow-Headers": "X-Requested-With",
-                'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,OPTIONS',
-                "Access-Control-Allow-Credentials": true
             }
         })
     },
@@ -97,7 +112,46 @@ var prodFuncs = {
     },
     getUsernamesForComments: async function(comment_ids){
         console.log(comment_ids , "comment id for API")
-        return await axios.get(`https://peak-blogspace.herokuapp.com/user-comments/` + comment_ids)
+        return await axios.get(`https://peak-blogspace.herokuapp.com/user-comments/` + comment_ids , {
+            headers: {
+                'Access-Control-Allow-Origin': '*'
+            }
+        })
+    },
+    postNewBlog: async function(blogContent){
+        console.log(blogContent, "new blog for API")
+        return await axios.post(`https://peak-blogspace.herokuapp.com/create-new-post` , blogContent , {
+            headers: {
+                'Access-Control-Allow-Origin': '*'
+            }
+        })
+    },
+    getTopUserPosts : async function(id){
+        console.log(id , "id for getTopUserPosts API")
+        return await axios.get(`https://peak-blogspace.herokuapp.com/getUserPost/${id}` , {
+            headers: {
+                'Access-Control-Allow-Origin': '*'
+            }
+        })
+    },
+
+    getTopUserComments : async function(id){
+        console.log(id , "id for getTopUserComments api")
+        return await axios.get(`https://peak-blogspace.herokuapp.com/user-comments/${id}` , {
+            headers: {
+                'Access-Control-Allow-Origin': '*'
+            }
+        })
+    },
+    addLike : async function(numOfLikesToSend , postId , postTitle) {
+        console.log(numOfLikesToSend , "num of likes for addLike API");
+        console.log(postId , "id of post addlike API");
+        console.log(postTitle , "post title for addLike API")
+        return await axios.put(`https://peak-blogspace.herokuapp.com/${postId}/${numOfLikesToSend}/${postTitle}` , {
+            headers: {
+                'Access-Control-Allow-Origin': '*'
+            }
+        })
     }
 }
 }

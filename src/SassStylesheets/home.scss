@@ -1,59 +1,58 @@
 .homeCont{
-    height: 100%;
+    height: auto;
     width: 100%;
-    background-color: rgb(245, 224, 105);
     display: flex;
     flex-direction: column;
 }
 
 .createPostDiv{
-    align-self: center;
-    height: 12.5%;
-    width: 25%;
-    margin-top: 2%;
-    border-radius: 65px;
+    position: absolute;
+    // height: 10.5%;
+    height: 8%;
+    width: 20%;
+    margin-top: -4%;
+    // margin-top: 2%;
+    // margin-bottom: 2%;
+    // border-radius: 50px;
+    // border: solid gray 2px;
+    border-left: solid black 1px;
+    border-right: solid black 1px;
+    border-bottom: none;
+    border-top: none;
+    right: 39%;
+    // background-color: white;
     background-color: whitesmoke;
-    border: solid gray 2px;
-    z-index: 3;
-    cursor: pointer;
-}
-
-.createPostText{
-    text-align: center;
-    position: relative;
-    font-size: 30px;
-}
-
-.mainCont{
     display: flex;
-    flex-direction: column;
-    height: 100%;
-    width: 100%;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    // align-self: center;
+    font-size: 32px;
+}
+
+.createPostDiv:hover{
+    // background-color: rgb(204, 203, 203);
+    background-color: rgb(158, 157, 157);
 }
 
 .blogContainer{
     align-self: center;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    height: 100%;
-    width: 70%;
+    height: 70%;
+    width: 75%;
     border: none;
-    justify-content: flex-end;
-}
-.randomcont{
-    margin-top: 5%;
-    margin-bottom: 5%;
+    margin-bottom: 2%;
+    margin-top: 2%;
 }
 
 .imgCont{
-    height: 80%;
+    height: 100%;
     width: 100%;
-    position: relative;
     background-size: cover;
-    border-top: solid gray 3px;
-    border-left: solid gray 3px;
-    border-right: solid gray 3px;
+    background-repeat: no-repeat;
+    border-top: solid black 1px;
+    border-left: solid black 1px;
+    border-right: solid black 1px;
+    border-bottom: solid black  1px;
     display: flex;
 }
 
@@ -66,156 +65,147 @@
 }
 
 .blogInfoCont{
-    height: 40%;
+    height: auto;
     width: 100%;
-    background-color: whitesmoke;
-    position: relative;
-    border-top: solid gray 2px;
-    border-left: solid gray 3px;
-    border-right: solid gray 3px;
+    background-color: gainsboro;
+    border-top: solid black 1px;
+    border-left: solid black 1px;
+    border-right: solid black 1px;
+    display: flex;
+    align-items: center;
 }
 
 .blogSnippet{
-    padding-top: .50%;
-    height: 100%;
-    width: 100%;
+    height: auto;
+    width: 90%;
+    max-width: 88%;
     border-bottom: rgb(143, 143, 143) solid .25px;
+    font-size: 20px;
+    white-space: nowrap;
+    display: flex;
 }
 
 .blogBodyText{
-    width: 98%;
-    font-size: 20px;
-    padding-left: 1.50%;
-    padding-top: .75%;
+    height: 100%;
+    line-height: 150%;
+    width: 100%;
+    line-break: loose;
+    overflow-wrap: break-word;
 }
 
-.otherInfo{
-    height: fit-content;
+.authorContain{
+    height: 10%;
     width: 100%;
     display: flex;
     flex-direction: row;
-    background-color: whitesmoke;
-    border-left: solid gray 3px;
-    border-right: solid gray 3px;
-    border-bottom: solid gray 3px;
+    border-bottom: solid black 1px;
+    // background-color: goldenrod;
 }
 
-.authorCont{
-    height: 75%;
-    width: 100%;
+.makeCol{
     display: flex;
-}
-
-.makeflexColumn{
-    display: flex;
-    flex-direction: column;
-    margin-left: 1%;
+    flex-direction: row;
+    height: auto;
+    width: 25%;
+    // background-color: forestgreen;
 }
 
 .authorImg{
-    margin-top: 10%;
-    height: 60px;
-    width: 65px;
+    width: 50px;
+    height: 50px;
     border-radius: 60px;
     background-color: rgb(172, 172, 172);
     border: solid black 1px;
     z-index: 100;
-    margin-bottom: 10%;
+    margin-top: 4%;
+    margin-left: 5%;
 }
 
 .usernameText{
-    margin-top: -.0001%;
-    text-align: center;
+    margin-left: 3%;
+    margin-top: 11%;
+    height: 25%;
+    width: 40%;
+}
+
+.btnHolder{
+    height: auto;
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 .blogMoreInfoBtn{
-    height: 2.0%;
-    width: 34%;
-    white-space: nowrap;
-    position: absolute;
-    margin-left: 33%;
-    border-radius: 50px;
-    text-align: center;
-    background-color: rgb(245, 224, 105);
-    // margin-top: 5.75%;
-    margin-top: 1.5%;
-    border: solid gray 2px;
+    height: 100%;
+    width: 100%;
+    background-color: transparent;
+    border-left: solid black 1px;
+    border-right: solid black 1px;
+    border-top: none;
+    border-bottom: none;
     cursor: pointer;
+    justify-content: center;
 }
 
 .blogMoreInfoBtn:focus{
     outline: none;
 }
 
+.blogMoreInfoBtn:hover{
+    background-color: rgb(155, 153, 153);
+}
+
 .moreInfoBtnText{
     font-weight: 100;
 }
 
-.likeCont{
-    // background-color: goldenrod;
-    height: 70%;
-    width: 20%;
+.abcdef{
+    width: 25%;
+    // height: 100%;
+    height: auto;
     display: flex;
     flex-direction: row;
-    margin-left: 72%;
-    z-index: 10;
-    align-items: center;
+    justify-content: center;
 }
 
-// .heartCounter{
-//     font-size: 20px;
-//     position: absolute;
-//     margin-left: 9%;
-//     margin-top: 2.5%;
-// }
-
-// .heartImg{
-//     float: left;
-//     margin-left: 210%;
-//     margin-top: 70%;
-//     height: 90%;
-//     width: 115%;
-//     cursor: pointer;
-// }
-
-// .heartBtn{
-//     border: none;
-//     outline: none;
-//     background-color: transparent;
-//     height: 100%;
-//     width: 35%;
-//     font-size: 50px;
-// }
-
-// .heartBtn:focus{
-//     outline: none;
-// }
- 
-// .heartBtn:checked {
-//     border: none;
-//     outline: none;
-//     background-color: transparent;
-//     height: 100%;
-//     width: 35%;
-//     font-size: 45px;
-//     margin-top: 1%;
-//     color: red;
-// }
-
-.likeCountText{
-    font-size: 17px;
-    margin-right: 2.25%;    
-}
-
-/* MODAL CONTENT */
-
-.mainContTwo{
+.bookMarkIcon{
+    height: auto;
+    // width: 25.5%;
+    width: 32.5%;
+    cursor: pointer;
+    background-size: contain;
+    border: transparent;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    // background-color: rebeccapurple;
+    background-position: center;
     display: flex;
-    flex-direction: column;
+}
+
+.settingsCont{
+    height: auto;
+    width: 30%;
+    // background-color: aqua;
+}
+
+.settingsBtn{
     height: 100%;
     width: 100%;
-    background-color: fuchsia;
+    background-position: center;
+    background-size: contain;
+    cursor: pointer;
+    background-color: transparent;
+    border: transparent;
 }
+
+.settingsBtn > img{
+    height: 70%;
+    width: 80%;
+}
+
+
+/* MODAL CONTENT */
 
 .newPostModal{
     height: 85%;

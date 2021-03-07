@@ -1,0 +1,76 @@
+.signupPage {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  background-image: url("../images/maybe-bg-4.jpg");
+  background-repeat: no-repeat;
+  background-blend-mode: soft-light;
+  background-size: cover;
+  overflow: auto;
+  contain: content;
+}
+
+.signupContainer {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.signupContainer > form {
+  position: relative;
+  height: 90%;
+  width: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.signupContainer > form > label {
+  margin-left: 18.1%;
+  margin-top: 6%;
+  margin-bottom: 1%;
+  font-size: 20px;
+  color: white;
+}
+
+.signupContainer > form > input {
+  margin-left: 18%;
+  width: 60%;
+  height: 6%;
+}
+
+.submit-btn {
+  height: 8%;
+  width: 14%;
+  background-color: white;
+  cursor: pointer;
+  position: absolute;
+  right: 19%;
+  bottom: 10%;
+}
+
+.submit-btn:hover {
+  background-color: whitesmoke;
+}
+
+.submit-btn > p {
+  margin: auto;
+  font-size: 20px;
+}
+/*# sourceMappingURL=signup.css.map */

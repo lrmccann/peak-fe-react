@@ -1,146 +1,186 @@
 $ws : 'whitesmoke';
 
-.loginPage{
+.login-page{
     height: 100%;
     width: 100%;
-    // background-image: url("../images/homePgBg.jpg");
-    background-image: url("../images/background-img-1.jpg");
+    background-image: url("../images/maybe-bg-4.jpg");
     background-repeat: no-repeat;
-    background-origin: border-box;
-    // background-blend-mode: hard-light;
     background-blend-mode: soft-light;
     background-size: cover;
     contain: content;
-    overflow-y: scroll;
-    overflow-x: hidden;
+    overflow: hidden;
     position: absolute;
+    display: flex;
+    flex-direction: column;
+}
+.div-left{
+    height: 100%;
+    width: 25%;
+    background-color: rgb(128, 135, 155);
+    opacity: .50;
+    padding-top: 5%;
+    padding-bottom: 15%;
+    display: flex;
+    flex-direction: column;
+}
 
-    // Nav bar content //
-    .navBar{
-        position: absolute;
-        height: 100%;
-        width: 10%;
-        // background-color: black;
-        // background-color: white;
-        // background-color: rgb(105, 105, 105);
-        display: flex;
-        // border-right: solid black 2px;
-        flex-direction: column;
-        margin-left: -1.15%;
-        filter: none;
-    }
-    
-    #navBtn{
-        height: 34%;
-        width: 100%;
-        // background-color: transparent;
-        background-color: gray;
-        // border-left: transparent;
-        // border-right: transparent;
-        border-left: solid black 1px;
-        border-right: solid black 1px;
-        border-top: solid black 1px;
-        border-bottom: solid black 1px;
-        outline: transparent;
-        // margin-left: -11%;
-        // padding-top: 1%;
-        cursor: pointer;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    #navBarBtnText{
-        font-size: 20px;
-        font-weight: bolder;
-        color: white;
-        // color: black;
-    }
+.icon-div {
+    // background-color: green;
+    height: 29%;
+    width: 15%;
+    border-radius: 190px;
+    position: absolute;
+    margin-top: 2.5%;
+    margin-left: 5%;
+    opacity: .9;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+    overflow: hidden;
+}
 
-    .myInfoDiv{
-        text-align: center;
-        // font-size: 10px;
-        // background-color: goldenrod;
-        // height: 10%;
-        margin-top: 5%;
-    }
+.icon-div > img {
+    height: 100%;
+    width: 100%;
+    // margin-bottom: 10%;
+    background-color: transparent;
+    // position: absolute;
+    // margin-right: 3.75%;
+    color: black;
 
-    #navBarBtnTextTwo{
-        margin-left: 18%;
-        // font-size: 14px;
-        width: 70%;
-        font-weight: bolder;
-        // color: whitesmoke;
-        // color: black;
-        // background-color: goldenrod;
-    }
-    // end navbar content //
-    
-    .flexColumnCont{
-        display: flex;
-        flex-direction: column;
-        position: absolute;
-        margin-left: 19%;
-        margin-top: 10%;
-    }
+}
 
-    // .quoteCont{
-    //     position: absolute;
-    //     display: flex;
-    //     flex-direction: row;
-    //     top: 30%;
-    //     right: 33.15%;
-    // }
-    
-    .quoteTextTwo{
-        font-size: 20px;
-        // position: absolute;
-        margin-top: 8.25%;
-        // right: 39.70%;
-    }
-    
-    .quoteTextTwo{
-        font-size: 24px;
-        position: absolute;
-        margin-top: 8.25%;
-        right: 39.70%;
-        color: whitesmoke;
-    }
-    
-    #navBarBtnTextTwo{
-        margin-top: 5%;
-        font-size: 18px;
-        font-weight: bolder;
-        // color: whitesmoke;
-        color: black;
-    }
+.intro-text-cont{
+    height: 22%;
+    width: 21%;
+    font-size: 28px;
+    position: absolute;
+    margin-top: 16%;
+    line-height: 1.05;
+    margin-left: .75%;
+}
+
+.intro-text-cont > h1 {
+    font-family: "garamond";
+    color: white;
+}
+
+.line{
+    width: 50.75%;
+    margin-top: -10%;
+    border: solid white 5px;
+}
+
+.intro-text-cont > h4{
+    width: 100%;
+    margin-top: 6%;
+    line-height: 1.2;
+    color: white;
+    font-weight: 2000;
+    font-family: "garamond";
+    margin-bottom: 20%;
+}
+
+.btn-holder{
+    height: 10%;
+    width: 20%;
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    bottom: 5%;
+}
+
+.btn-holder > button > h2{
+    color: white;
+    font-weight: 1400;
+    font-size: 25px;
+}
+
+.loginBtn{
+    height: 50%;
+    width: 45%;
+    margin-left: 3%;
+    margin-right: 3%;
+    border: solid white 2px;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    align-items: center;
+}
+
+.loginBtn:focus{
+    outline: none;
+}
+.loginBtn:hover{
+    background-color: whitesmoke;
+    opacity: .9;
+}
+
+.signupBtn{
+    height: 50%;
+    width: 45%;
+    border: none;
+    background-color: transparent;
+    border: solid white 2px;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    align-items: center;
+}
+
+.signupBtn:hover{
+    background-color: whitesmoke;
+    opacity: .9;
+}
+
+.signupBtn:focus{
+    outline: none;
+}
+
+.loginBtnText{
+    margin-right: 4%;
+}
+
+.loginBtnText:hover{
+    color: black;
+}
+
+.signupBtnText{
+    // background-color: violet;
+    // position: absolute;
+}
+
+.signupBtnText:hover{
+    color: black;
+}
 
     // Modal Content //
     .loginModal{
         height: 100%;
         width: 60%;
-        // background-color: whitesmoke;
         background-color: rebeccapurple;
         position: absolute;
         display: flex;
         flex-direction: column;
         border-radius: 50px;
         margin-left: 23.10%;
-        margin-top: 8%;
+        margin-top: 10%;
         border: solid 4px black;
         visibility: hidden;
 
     }
     .loginModalTwo{
-        height: 75%;
-        width: 60%;
+        height: 65%;
+        width: 50%;
         background-color: whitesmoke;
         position: absolute;
         display: flex;
         flex-direction: column;
-        margin-left: 23.10%;
-        margin-top: 8%;
-        border: solid 4px black;
+        align-self: center;
+        margin-top: 7%;
+        border: solid black 2px;
         visibility: visible;
 
     }
@@ -154,21 +194,28 @@ $ws : 'whitesmoke';
     
     .loginModalHeader{
         height: 12%;
+        width: 100%;
+        border-bottom: solid gray thin;
+        display: flex;
+        flex-direction: column;
     }
     
     .modalXBtn{
-        height: 10%;
-        width: 12%;
+        font-size: 28px;
+        position: absolute;
+        height: 7%;
+        width: 5%;
+        font-weight: 500;
+        bottom: 86.50%;
+        left: 94%;
     }
     
     .closeModalBtn{
-        position: absolute;
-        border: transparent;
-        outline: transparent;
-        background-color: transparent;
-        margin-left: 92%;
-        // margin-top: .10%;
-        cursor: pointer;
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        height: 100%;
+        background-color: yellow;
     }
     
     .closeModalBtn:focus{
@@ -179,68 +226,81 @@ $ws : 'whitesmoke';
     
     .loginModalBody{
     height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     background-color: whitesmoke;
     }
+
+    .inputFields{
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
     
     #inputLoginText{
         width: 80%;
-        height: 20%;
+        height: 15%;
         align-self: center;
-        border-radius: 25px;
-        border-top: transparent;
-        border-left: transparent;
-        border-right: transparent;
-        border-bottom: solid 3px black;
-        margin-top: 4%;
+        border: solid black 1px;
+        margin-top: 10%;
         text-align: center;
         font-size: 20px;
     }
     
     #inputLoginText:focus{
         outline: transparent;
-        border: transparent;
+        border: solid black 1px;
+        background-color: white;
     }
 
     .rememberMeDiv{
-        // background-color: yellow;
+        height: 14%;
+        width: 100%;
         display: flex;
         flex-direction: row;
+    }
+
+    .rememberMeCont{
+        height: 100%;
+        width: 50%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
         align-items: center;
-        margin-left: 70%;
+    }
+
+    .rememberMeCont > h4{
+        padding-right: 2%;
     }
     
     .forgotPasswordBtn{
-        width: 30%;
-        height: 15%;
-        // background-color: tomato;
-        margin-top: 5%;
+        width: 50%;
+        height: 100%;
         outline: transparent;
         border: transparent;
         background-color: transparent;
         cursor: pointer;
     }
+
+    .myCont{
+        height: 15%;
+        width: 100%;
+        border-top: solid gray thin;
+    }
     
     .modalLogin{
-        width: 30%;
-        height: 15%;
-        background-color: turquoise;
+        width: 100%;
+        height: 100%;
         cursor: pointer;
     }
 
     .forgotPassBtn{
         font-weight: bolder;
         color: blue;
-        margin-top: -46%;
-        margin-left: 25%;
-    
     }
     
     .modalLogin{
-        border-radius: 25px;
         border: transparent;
-        margin-left: 36%;
-        margin-top: -8%;
     }
-}

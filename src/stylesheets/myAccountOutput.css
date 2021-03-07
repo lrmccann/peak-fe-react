@@ -1,52 +1,72 @@
 .myAccountPage {
-  height: 100%;
+  height: fit-content;
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  overflow: scroll;
 }
 
-.accountInfoCont {
-  height: 80%;
+.accountDiv {
+  height: auto;
   width: 80%;
-  background-color: oldlace;
-  position: relative;
+  background-color: white;
+  align-self: center;
   margin-top: 3%;
-  display: flex;
-  flex-direction: row;
+  border: solid black 2px;
 }
 
 .leftSide {
   height: 100%;
-  width: 50%;
-  text-align: center;
+  width: 100%;
+  display: inline;
 }
 
-.rightSide {
+.infoRowOne {
   height: 100%;
-  width: 50%;
-  text-align: center;
+  width: 100%;
+  border-bottom: solid black 1px;
+  display: flex;
+  flex-direction: row;
 }
 
-.sectionHolder {
+.infoRowOneIsh {
+  height: 100%;
+  width: 100%;
   display: flex;
-  flex-direction: column;
-  align-content: center;
+  flex-direction: row;
 }
 
 #infoText {
-  margin-top: -0.5%;
   align-self: center;
-  border: solid black 1px;
-  width: 60%;
-  padding-top: 2%;
-  padding-bottom: 2%;
+  height: auto;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  width: 80%;
+  height: auto;
+  font-weight: 300;
   background-color: white;
+  margin-top: 1%;
 }
 
 #headerText {
   font-size: 23px;
+  background-color: whitesmoke;
+  height: 25%;
+  width: 100%;
+  border-bottom: solid black 1px;
+  padding-top: 2%;
+  padding-bottom: 2.5%;
+  margin-top: 0%;
+  font-weight: 600;
+}
+
+.shit {
+  height: auto;
+  font-size: 25px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  border-right: solid black 1px;
 }
 
 .topStatsCont {
@@ -55,16 +75,17 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  position: relative;
   margin-top: 2%;
   margin-bottom: 2%;
+  align-self: center;
 }
 
 .topPostsCont {
   z-index: 110;
   height: 100%;
   width: 49.5%;
-  background-color: oldlace;
+  border: solid black 1px;
+  background-color: white;
   display: flex;
   flex-direction: column;
   overflow: scroll;
@@ -73,7 +94,8 @@
 .topCommentsCont {
   height: 100%;
   width: 49.5%;
-  background-color: oldlace;
+  background-color: white;
+  border: solid black 1px;
   display: flex;
   flex-direction: column;
 }

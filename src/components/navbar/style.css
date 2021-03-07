@@ -1,32 +1,87 @@
 .navbarTop{
-    /* height: 45px; */
-    height: 75px;
+    height: 8%;
     width: 100%;
-    margin-top: -1.35%;
-    /* background-color: rgb(245, 224, 105); */
-    background-color: oldlace;
-    border:  solid black 1px;
+    max-width: 100%;
+    background-color: white;
+    border-bottom:  solid black 1px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .logoTextCont{
-    width: 10%;
+    height: 100%;
+    width: 20%;
+    display: flex;
+    flex-direction: row;
+    /* justify-content: center; */
+    align-items: center;
+    /* background-color: rebeccapurple; */
 }
 
-.logoText{
-    text-align: left;
+.logoTextCont > h2{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+    font-size: 32px;
+    height: 75%;
+    width: 32%;
+    margin-left: 4%;
+    font-weight: 500;
+}
+
+.logoTextCont > img{
+    height: 100%;
+    width: 29%;
+    justify-self: flex-start;
+    padding-left: 2%;
+    /* margin-left: -3%; */
 }
 
 .moveRight{
     display: flex;
     flex-direction: row;
-    margin-left: 72.5%;
-    width: 28%;
     height: 100%;
-    margin-top: -3.35%;
-    justify-content: left;
+    width: 20%;
+    /* background-color: fuchsia; */
+}
+
+.newPostBtn{
+    height: 100%;
+    width: 40%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    /* background-color: royalblue; */
+    margin: auto;
+}
+
+.postBtnForReal{
+    background-color: ghostwhite;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    border-left: solid black 1px;
+    border-right: solid black 1px;
+    border-bottom: none;
+    border-top: none;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.postBtnForReal:hover{
+    background-color: rgb(169, 169, 190);
+}
+
+.postBtnForReal > h3{
+    font-size: 30px;
+    font-weight: 500;
 }
 
 #navBtn{
+    height: 100%;
+    width: 35%;
     border-left: solid black 1px;
     border-right: none;
     border-top: none;
@@ -34,11 +89,7 @@
     background-color: transparent;
     font-size: 17.5px;
     cursor: pointer;
-    display: flex;
-    width: 34%;
     justify-content: center;
-    height: 76.2%;
-
 }
 
 #navBtn:focus{
@@ -60,29 +111,22 @@
     height: 100%;
 }
 
-.dropDownCont{
+.navBtnLogout{
+    width: 33.33%;
+    height: 100%;
+}
+
+/* .dropDownCont{
     z-index: 1;
     height: 29.17%;
     width: 9.31%;
     background-color: oldlace;
     position: absolute;
-    margin-top: 3.91%;
-    margin-left: 9.30%;
     border-left: solid black 1px;
     border-right: solid black 1px;
     border-bottom: solid black 1px;
     display: flex;
     flex-direction: column;
-}
-
-.listHolder{
-    margin-left: -3.5%;
-    width: 100%;
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 100%;
 }
 
 #menuOptionLI{
@@ -98,9 +142,4 @@
 
 #menuOptionBtn:focus{
     outline: none;
-}
-
-.navBtnLogout{
-    width: 33.33%;
-    height: 100%;
-}
+} */

@@ -16,13 +16,25 @@ html, body, #app, #app>div {
   height: 100%
 }
 
+html, body, #root, .App {
+  height: 100%;
+}
+
 html {
+  contain: content;
   overflow: hidden;
   height: 100%;
-  background-color: rgb(34, 71, 102);
+  background-color: whitesmoke;
+  /* background-image: url('./images/bg-img-2.png'); */
+  background-image: url('./images/whole-app-bg-3.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-blend-mode: darken;
+
 }
 
 body {
   overflow: auto;
+  contain: content;
   height: 100%;
 }

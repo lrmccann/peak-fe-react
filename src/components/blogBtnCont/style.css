@@ -1,0 +1,46 @@
+.btnContainer{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.bookMarkIcon{
+    height: 100%;
+    width: 33.3%;
+    background-color: transparent;
+    border: transparent;
+    background-size: 45%;
+    background-position: center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+.likeIcon{
+    height: 100%;
+    width: 33.3%;
+    background-color: transparent;
+    border: transparent;
+    background-size: 45%;
+    background-position: center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+.numOfUpvotes{
+    height: auto;
+    width: auto;
+    float: right;
+    margin-bottom: 40%;
+}
+
+.settingsIcon{
+    height: 100%;
+    width: 33.3%;
+    background-color: transparent;
+    border: transparent;
+    background-size: 45%;
+    background-position: center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}

@@ -1,91 +1,126 @@
 .myAccountPage{
-    height: 100%;
+    // height: auto;
+    // height: 100%;
+    height: fit-content;
     width: 100%;
+    // background-color: red;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    overflow: scroll;
 }
 
-.accountInfoCont{
-    height: 80%;
+.accountDiv{
+    height: auto;
     width: 80%;
-    background-color: oldlace;
-    // position: absolute;
-    position: relative;
+    // background-color: rebeccapurple;
+    background-color: white;
+    // display: flex;
+    align-self: center;
     margin-top: 3%;
-    display: flex;
-    flex-direction: row;
+    // flex-direction: row;
+    border: solid black 2px;
 }
 
 .leftSide{
     height: 100%;
-    width: 50%;
-    text-align: center;
+    width: 100%;
+    display: inline;
 }
 
-.rightSide{
+
+.infoRowOne{
     height: 100%;
-    width: 50%;
-    text-align: center;
+    width: 100%;
+    border-bottom: solid black 1px;
+    display: flex;
+    flex-direction: row;
 }
 
-.sectionHolder{
+.infoRowOneIsh{
+    height: 100%;
+    width: 100%;
     display: flex;
-    flex-direction: column;
-    align-content: center;
+    flex-direction: row;
 }
 
 #infoText{
-    margin-top: -.5%;
     align-self: center;
-    border: solid black 1px;
-    width: 60%;
-    padding-top: 2%;
-    padding-bottom: 2%;
+    // border: solid black 1px;
+    // margin: auto;
+    // height: 70%;
+    height: auto;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    width: 80%;
+    height: auto;
+    // height: 100%;
+    font-weight: 300;
     background-color: white;
+    margin-top: 1%;
 }
 
 #headerText{
+    // margin-bottom: 5%;
     font-size: 23px;
+    background-color: whitesmoke;
+    height: 25%;
+    width: 100%;
+    border-bottom: solid black 1px;
+    padding-top: 2%;
+    padding-bottom: 2.5%;
+    margin-top: 0%;
+    font-weight: 600;
 }
 
-.topStatsCont{
+.shit{
+    height:auto;
+    font-size: 25px;
+    // font-size: 10px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    border-right: solid black 1px;
+}
+
+.topStatsCont {
     height: 400px;
     width: 80%;
-    // background-color: sienna;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    position: relative;
+    // position: relative;
     margin-top: 2%;
     margin-bottom: 2%;
-}
-
-.topPostsCont{
+    align-self: center;
+  }
+  
+  .topPostsCont {
     z-index: 110;
     height: 100%;
     width: 49.5%;
-    background-color: oldlace;
+    // background-color: oldlace;
+    border: solid black 1px ;
+    background-color: white;
     display: flex;
     flex-direction: column;
     overflow: scroll;
-}
-
-.topCommentsCont{
+  }
+  
+  .topCommentsCont {
     height: 100%;
     width: 49.5%;
-    background-color: oldlace;
+    // background-color: oldlace;
+    background-color: white;
+    border: solid black 1px ;
     display: flex;
     flex-direction: column;
-}
-
-#topStatsHeaderText{
+  }
+  
+  #topStatsHeaderText {
     align-self: center;
-    // position: absolute;
-}
-
-.postBox{
+  }
+  
+  .postBox {
     height: 30%;
     max-height: 30%;
     min-height: 30%;
@@ -98,50 +133,46 @@
     display: flex;
     flex-direction: row;
     margin-bottom: 2.5%;
-}
-
-.postBox:focus{
+  }
+  
+  .postBox:focus {
     outline: none;
-}
-
-.postImg{
+  }
+  
+  .postImg {
     align-self: flex-start;
     height: 100%;
     width: 35%;
     margin-left: -1.25%;
-}
-
-.makeFlexCol{
+  }
+  
+  .makeFlexCol {
     margin-left: 1%;
     display: flex;
     flex-direction: column;
     height: 100%;
     width: 100%;
-}
-
-.postTitleCont{
+  }
+  
+  .postTitleCont {
     height: 100%;
     width: 100%;
-    // background-color: red;
-}
-
-.postTitle{
+  }
+  
+  .postTitle {
     border-bottom: solid black 1px;
     height: 30%;
     width: 60;
-}
-
-
-
-
-.commentBox{
+  }
+  
+  .commentBox {
     height: 20%;
     width: 80%;
     background-color: whitesmoke;
     align-self: center;
     cursor: pointer;
-}
-
-.commentBox:focus{
+  }
+  
+  .commentBox:focus {
     outline: none;
-}
+  }
