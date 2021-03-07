@@ -17,19 +17,19 @@ export default function Signup () {
     const validateForm = e => {
         e.preventDefault();
         var signupObject = {
-            firstName = firstNameRef.current.value,
-            lastName = lastNameRef.current.value,
-            email = emailRef.current.value,
-            password = passwordRef.current.value,
-            age = ageRef.current.value,
-            city = cityRef.current.value,
-            zip = zipRef.current.value,
-            jobTitle = jobTitleRef.current.value
+            firstName : firstNameRef.current.value,
+            lastName : lastNameRef.current.value,
+            email : emailRef.current.value,
+            password : passwordRef.current.value,
+            age : ageRef.current.value,
+            city : cityRef.current.value,
+            zip : zipRef.current.value,
+            jobTitle : jobTitleRef.current.value
         }
         if(firstNameRef.current.value || lastNameRef.current.value || emailRef.current.value || passwordRef.current.value || ageRef.current.value || cityRef.current.value || zipRef.current.value || jobTitleRef.current.value === ""){
             alert("Please fill out all required forms")
         }else{
-            signUpUser()
+            // signUpUser()
         }
     }
 
