@@ -6,6 +6,14 @@ console.log(process.env)
 
 if(process.env.NODE_ENV === "development"){
     var devFuncs = {
+        signupUser: async function (userData) {
+            console.log(userData, "user data for signup API");
+            return await axios.post(`http://localhost:3005/account-info`, userData , {
+                headers: {
+                    'Access-Control-Allow-Origin': '*'
+                }
+            })
+        },
         loginUser: async function (username , password) {
             console.log(username , password , "username and password for auth");
             return await axios.get(`http://localhost:3005/account-info-login/${username}/${password}`, {
@@ -87,6 +95,14 @@ if(process.env.NODE_ENV === "development"){
 
 }else if(process.env.NODE_ENV === "production"){
 var prodFuncs = {
+    signupUser: async function (userData) {
+        console.log(userData, "user data for signup API");
+        return await axios.post(`https://peak-blogspace.herokuapp.com/account-info` , userData, {
+            headers: {
+                'Access-Control-Allow-Origin': '*'
+            }
+        })
+    },
     loginUser: async function (username , password) {
         console.log(username , password , "username and password for auth");
         return await axios.get(`https://peak-blogspace.herokuapp.com/account-info-login/${username}/${password}`, {

@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useContext } from 'react';
 import API from "../utils/API";
 import UserContext from '../utils/Context';
-import "../stylesheets/myPosts.css"
 import photo from "../images/trash-bin-2.png";
 // const photo = require("../images/trash-bin.png");
+import "../stylesheets/myPosts.css"
 
 
 export default function MyPosts() {

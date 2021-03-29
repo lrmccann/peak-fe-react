@@ -1,12 +1,14 @@
 import React, { useRef } from 'react';
-import "../stylesheets/signup.css";
 import { useHistory } from "react-router-dom";
+import API from '../utils/API';
+import "../stylesheets/signup.css";
 
-export default function Signup () {
+export default function Signup() {
 
     const history = useHistory();
     const firstNameRef = useRef(null);
     const lastNameRef = useRef(null);
+    const usernameRef = useRef(null);
     const emailRef = useRef(null);
     const passwordRef = useRef(null);
     const ageRef = useRef(null);
@@ -14,32 +16,57 @@ export default function Signup () {
     const zipRef = useRef(null);
     const jobTitleRef = useRef(null);
 
+
     const validateForm = e => {
         e.preventDefault();
+        var dateTime = new Date().toJSON().slice(0, 19).replace('T', ' ')
         var signupObject = {
-            firstName : firstNameRef.current.value,
-            lastName : lastNameRef.current.value,
-            email : emailRef.current.value,
-            password : passwordRef.current.value,
-            age : ageRef.current.value,
-            city : cityRef.current.value,
-            zip : zipRef.current.value,
-            jobTitle : jobTitleRef.current.value
+            firstName: firstNameRef.current.value,
+            lastName: lastNameRef.current.value,
+            username : usernameRef.current.value,
+            email: emailRef.current.value,
+            password: passwordRef.current.value,
+            age: ageRef.current.value,
+            city: cityRef.current.value,
+            zip: zipRef.current.value,
+            jobTitle: jobTitleRef.current.value,
+            date : dateTime
         }
-        if(firstNameRef.current.value || lastNameRef.current.value || emailRef.current.value || passwordRef.current.value || ageRef.current.value || cityRef.current.value || zipRef.current.value || jobTitleRef.current.value === ""){
-            alert("Please fill out all required forms")
+        if(signupObject.firstName === ""){
+            alert("Please enter user name")
+        }else if(signupObject.lastName === ""){
+            alert("Please enter last name")
+        }else if(signupObject.username === ""){
+            alert("Please enter username")
+        }else if(signupObject.email === ""){
+            alert("Please enter email")
+        }else if(signupObject.password === ""){
+            alert("Please enter email")
+        }else if(signupObject.age === ""){
+            alert("Please enter age")
+        }else if(signupObject.city === ""){
+            alert("Please enter city")
+        }else if(signupObject.zip === ""){
+            alert("Please enter zip")
+        }else if(signupObject.jobTitle === "") {
+            alert("Please enter job title")
         }else{
-            // signUpUser()
+            signupUser(signupObject)
         }
     }
 
-    // const signUpUser = async (signupObject) => {
-    //     await
+    const signupUser = async (signupObject) => {
+        await API.signupUser(
+            signupObject
+        )
+        .then(async function (res) {
+            console.log(res , "response for sign up")
+        })
 
-    // }
+    }
 
 
-    return(
+    return (
         <div className="signupPage container-fixed">
             <div className="signupContainer">
                 <form>
@@ -47,14 +74,16 @@ export default function Signup () {
                     <input type="text" ref={firstNameRef}></input>
                     <label>Last</label>
                     <input type="text" ref={lastNameRef}></input>
+                    <label>Username</label>
+                    <input type="text" ref={usernameRef}></input>
                     <label>Email</label>
                     <input type="text" ref={emailRef}></input>
                     <label>Password</label>
                     <input type="text" ref={passwordRef}></input>
                 </form>
                 <form>
-                <label>Age</label>
-                <input type="text" ref={ageRef}></input>
+                    <label>Age</label>
+                    <input type="text" ref={ageRef}></input>
                     <label>City</label>
                     <input type="text" ref={cityRef}></input>
                     <label>Zip</label>

@@ -1,9 +1,9 @@
 import React, { useContext, useRef, useState } from 'react';
 import { useHistory } from "react-router-dom";
 import API from "../utils/API";
-import '../stylesheets/login.css';
 import UserContext from '../utils/Context';
 import photo from "../images/peak-blogspace-icon.png";
+import '../stylesheets/login.css';
 
 // if(process.env.NODE_ENV === "production"){
 //     import API from "main.968702f6.chunk.js";
