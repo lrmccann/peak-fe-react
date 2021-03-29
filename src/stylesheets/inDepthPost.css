@@ -1,4 +1,4 @@
-.inDepthPostPage {
+.indepth-post-page {
   height: auto;
   width: 100%;
   display: -webkit-box;
@@ -10,7 +10,7 @@
           flex-direction: column;
 }
 
-.holdErthang {
+.blog-post-cont {
   margin-top: 2%;
   height: 100%;
   width: 75%;
@@ -27,7 +27,7 @@
       align-self: center;
 }
 
-.blogImgCont {
+.blog-img-cont {
   margin-top: 2%;
   -ms-flex-item-align: center;
       align-self: center;
@@ -39,13 +39,13 @@
   display: flex;
 }
 
-.blogImg {
+.blog-img-cont > div {
   height: 100%;
   width: 100%;
   background-size: cover;
 }
 
-.publishingInfo {
+.author-pub-info {
   width: 80%;
   height: 50%;
   display: -webkit-box;
@@ -64,18 +64,18 @@
           justify-content: center;
 }
 
-#blogPublishDate {
+.indepth-blog-pd {
   margin-top: 6%;
   font-size: 18px;
 }
 
-#blogTitle {
+.author-pub-info > h1 {
   font-size: 50px;
   text-align: center;
   color: black;
 }
 
-.blogBody {
+.blog-body-text {
   -ms-flex-item-align: center;
       -ms-grid-row-align: center;
       align-self: center;
@@ -88,7 +88,7 @@
   text-align: center;
 }
 
-.commentsCont {
+.comments-cont {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -107,48 +107,7 @@
   overflow: scroll;
 }
 
-.actualCommentsCont {
-  -ms-flex-item-align: center;
-      align-self: center;
-  margin-top: 2%;
-  height: auto;
-  width: 80%;
-  margin-bottom: 2%;
-  border: solid black 1px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-}
-
-.commentAuthDiv {
-  height: 40%;
-  width: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  border-bottom: solid black thin;
-}
-
-.commentAuthPic {
-  height: 75.5%;
-  width: 5.42%;
-  background-color: white;
-  border: transparent;
-  margin-top: .50%;
-  margin-left: 1%;
-  border-radius: 30px;
-  margin-right: .5%;
-}
-
-.rand {
+.comments-header {
   height: 15%;
   width: 100%;
   display: -webkit-box;
@@ -169,11 +128,52 @@
   padding-bottom: .50%;
 }
 
-.rand > h1 {
+.comments-header > h1 {
   font-weight: 400;
 }
 
-.bodyOfComment {
+.each-comment {
+  -ms-flex-item-align: center;
+      align-self: center;
+  margin-top: 2%;
+  height: auto;
+  width: 80%;
+  margin-bottom: 2%;
+  border: solid black 1px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.comment-auth-info {
+  height: 40%;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  border-bottom: solid black thin;
+}
+
+.comment-auth-info > img {
+  height: 75.5%;
+  width: 5.42%;
+  background-color: white;
+  border: transparent;
+  margin-top: .50%;
+  margin-left: 1%;
+  border-radius: 30px;
+  margin-right: .5%;
+}
+
+.comment-text {
   height: 125px;
   width: 100%;
   display: -webkit-box;
@@ -184,11 +184,5 @@
       -ms-flex-direction: row;
           flex-direction: row;
   font-size: 18px;
-}
-
-.bodyText {
-  height: auto;
-  width: 100%;
-  background-color: fuchsia;
 }
 /*# sourceMappingURL=inDepthPost.css.map */

@@ -1,20 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
 import API from "../utils/API";
 import profIcon from "../images/profile-icon-def.png";
-import Truncate from "react-truncate";
 import UserContext from "../utils/Context";
 import "../stylesheets/inDepthPost.css";
 
 export default function InDepthPost() {
   const { detailedPost } = useContext(UserContext);
-  console.log(detailedPost, "i am a detailed post ");
-  console.log(detailedPost, "detailed post idk what i am");
 
   const [commentsToMap, setCommentsToMap] = useState([]);
   const [postToMap, setPostToMap] = useState([]);
   const [userNamesForComments, setUsernameForComments] = useState([]);
   const [loading, isLoading] = useState(true);
   const [visibilityCond, setVisibility] = useState("visible");
+
   var userIdForApi = [];
 
   useEffect(() => {
@@ -26,7 +24,7 @@ export default function InDepthPost() {
     } else {
       console.log("it worked");
     }
-  }, []);
+  }, [commentsToMap, userNamesForComments]);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(async () => {
@@ -37,9 +35,9 @@ export default function InDepthPost() {
 
   const someRandomFunc = () => {
     if (commentsToMap.length === 0) {
-      console.log("no comments to map");
+      // console.log("no comments to map");
       isLoading(false);
-      console.log(postToMap, "post to map!");
+      // console.log(postToMap, "post to map!");
     } else if (commentsToMap.length !== 0) {
       commentsToMap.map(async (index) => {
         userIdForApi.push(index.user_id);
@@ -50,7 +48,7 @@ export default function InDepthPost() {
           if (userNamesForComments.length !== 0) {
             return;
           } else {
-            console.log("i give up");
+            console.log("Not sure, have to check back");
           }
         }, 1 * 20);
       });
@@ -64,63 +62,44 @@ export default function InDepthPost() {
       </div>
     );
   } else if (loading === false) {
-    console.log(userNamesForComments, "user name for comments to map");
     return (
-      <div className="inDepthPostPage container-fluid ">
+      <div className="indepth-post-page container-fluid ">
         {postToMap.map((index, myKey) => (
-          <div className="holdErthang" id={myKey}>
-            <div id="blogImgCont" className="blogImgCont">
-              <div
-                className="blogImg"
-                id="blogImg"
-                style={{ backgroundImage: `url(${index.blog_img})` }}
-              ></div>
+          <div className="blog-post-cont" id={myKey}>
+            <div className="blog-img-cont">
+              <div style={{ backgroundImage: `url(${index.blog_img})` }}></div>
             </div>
-            <div className="publishingInfo" id="publishingInfo">
-              <h1 id="blogTitle">{index.post_title}</h1>
+            <div className="author-pub-info">
+              <h1>{index.post_title}</h1>
               <i className="far fa-heart"></i>
-              {/* <h1 id="blogLikes">{index.blog_likes}</h1> */}
-              {/* <h1 id="blogPublishDate">{index.publish_date}</h1> */}
+              {/* <h1 className="indepth-blog-likes">{index.blog_likes}</h1> */}
+              {/* <h1 className="indepth-blog-pd">{index.publish_date}</h1> */}
             </div>
-            <p className="blogBody" id="blogBody">
-              {index.post_body}
-            </p>
+            <p className="blog-body-text">{index.post_body}</p>
           </div>
         ))}
         <div
-          className="commentsCont"
+          className="comments-cont container-fixed"
           style={{ visibility: `${visibilityCond}` }}
         >
-          <span className="rand">
-            <h1 className="commentsTitle">Comments</h1>
+          <span className="comments-header">
+            <h1>Comments</h1>
           </span>
-          {commentsToMap.map(
-            (index, myKey) => (
-              (
-                <>
-                  {userNamesForComments.map(
-                    (indexTwo, otherKey) => (
-                    //   console.log(indexTwo, "index two")
-                      (
-                        <div className="actualCommentsCont" key={otherKey}>
-                          <div className="commentAuthDiv">
-                            <img
-                              src={profIcon}
-                              className="commentAuthPic"
-                              alt="Profile Icon"></img>
-                            <h4>{indexTwo}</h4>
-                          </div>
-                          <div className="bodyOfComment">
-                            <p>{index.comment_body}</p>
-                          </div>
-                        </div>
-                      )
-                    )
-                  )}
-                </>
-              )
-            )
-          )}
+          {commentsToMap.map((index, myKey) => (
+            <>
+              {userNamesForComments.map((indexTwo, otherKey) => (
+                <div className="each-comment" key={otherKey}>
+                  <div className="comment-auth-info">
+                    <img src={profIcon} alt="Profile Icon"></img>
+                    <h4>{indexTwo}</h4>
+                  </div>
+                  <div className="comment-text">
+                    <p>{index.comment_body}</p>
+                  </div>
+                </div>
+              ))}
+            </>
+          ))}
         </div>
       </div>
     );
