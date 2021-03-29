@@ -1,4 +1,4 @@
-.myPostsCont {
+.user-posts-page {
   height: 100%;
   width: 100%;
   position: absolute;
@@ -12,7 +12,7 @@
   overflow: scroll;
 }
 
-.makeRow {
+.user-posts-content {
   height: 100%;
   width: 100%;
   display: -webkit-box;
@@ -27,7 +27,7 @@
           justify-content: center;
 }
 
-.blogHolder {
+.each-blog {
   height: 92.5%;
   width: 80%;
   margin-top: 2%;
@@ -42,12 +42,12 @@
           flex-direction: row;
 }
 
-.blogHolder > img {
+.each-blog > img {
   height: 100%;
   width: 25%;
 }
 
-.blogHolder > span {
+.each-blog > span {
   height: 100%;
   width: 75%;
   display: -webkit-box;
@@ -59,7 +59,7 @@
           flex-direction: column;
 }
 
-.blogHolder > span > button {
+.each-blog > span > button {
   height: 22.1%;
   min-height: 22.1%;
   width: 4%;
@@ -74,22 +74,22 @@
   cursor: pointer;
 }
 
-.blogHolder > span > button > img {
+.each-blog > span > button > img {
   height: 20%;
   width: 70%;
   padding-bottom: 12%;
   padding-left: 35%;
 }
 
-.blogHolder > span > h1 {
-  margin-top: -.01%;
+.each-blog > span > h1 {
+  margin-top: -0.01%;
   font-size: 40px;
   padding-left: 1%;
   border-bottom: solid black 1px;
 }
 
-.blogHolder > span > h3 {
-  margin-top: -.01%;
+.each-blog > span > h3 {
+  margin-top: -0.01%;
   margin-left: 1.5%;
 }
 /*# sourceMappingURL=myPosts.css.map */
