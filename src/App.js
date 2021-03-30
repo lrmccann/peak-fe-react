@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import Login from "./screens/Login";
 import Signup from "./screens/Signup";
 import Home from "./screens/Home";

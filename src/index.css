@@ -25,7 +25,6 @@ html {
   overflow: hidden;
   height: 100%;
   background-color: whitesmoke;
-  /* background-image: url('./images/bg-img-2.png'); */
   background-image: url('./images/whole-app-bg-3.jpg');
   background-repeat: no-repeat;
   background-size: cover;

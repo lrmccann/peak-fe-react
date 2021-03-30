@@ -62,66 +62,57 @@ export default function NavbarTop() {
 
   if (newBlogOpen === false) {
     return (
-      <div className="navbarTop">
-        <div className="logoTextCont">
+      <div className="navbar-cont">
+        <div className="logo-cont">
           <img src={peakIcon} alt="Peak Icon"></img>
         </div>
-        <div className="newPostBtn">
+        <div className="new-post-btn">
           <button className="postBtnForReal" onClick={openBlog}>
             <h3>New Post</h3>
           </button>
         </div>
-        <div className="moveRight">
-          <button id="navBtn" className="navBtnHome" onClick={navHome}>
-            <p id="btnText">Home</p>
+        <div className="nav-btn-cont">
+          <button id="nav-button" onClick={navHome}>
+            <p>Home</p>
           </button>
-          <button id="navBtn" className="navBtnAccount" onClick={navAccount}>
-            <p id="btnText">Account</p>
+          <button id="nav-button" onClick={navAccount}>
+            <p>Account</p>
           </button>
-          {/* <button id="navBtn" className="navBtnAccount" onClick={openMenu}><p id="btnText" >Account</p></button>
-                <div className="dropDownCont" style={{ display: `${menuDisplay}` }}>
-                    <li className="listHolder">
-                        <ul id="menuOptionLI"><button id="menuOptionBtn" onClick={navAccount}>My Stats</button></ul>
-                        <ul id="menuOptionLI"><button id="menuOptionBtn" onClick={navMyPosts}>My Posts</button></ul>
-                        <ul id="menuOptionLI"><button id="menuOptionBtn">Peak +</button></ul>
-                    </li>
-                </div> */}
-          <button id="navBtn" className="navBtnLogout" onClick={navLogout}>
-            <p id="btnText">Log Out</p>
+          <button id="nav-button" onClick={navLogout}>
+            <p>Log Out</p>
           </button>
         </div>
       </div>
     );
   } else if (newBlogOpen === true) {
     return (
-      <div className="homeCont container">
-        <div className="newPostModal" id="newPostModal">
-          <button className="closeModalBtn" onClick={closeBlog}>
+      <div className="modal-background container">
+        <div className="new-post-modal">
+          <button className="close-modal-btn" onClick={closeBlog}>
             X
           </button>
-          <button className="openDialogBtn">
+          <button className="open-dialog-btn">
             <i className="fas fa-search"></i>
           </button>
-          <h6 style={{ marginTop: "2%" }} id="categoryText">
+          <h6 style={{ marginTop: "2%" }} id="category-text">
             Image Header
           </h6>
-          <input id="modalInput" ref={imgHeader} className="imgInput"></input>
-          <h6 id="categoryText">Title</h6>
+          <input id="modal-input" ref={imgHeader} className="imgInput"></input>
+          <h6 className="category-text">Title</h6>
           <input
-            id="modalInputTwo"
+            id="modal-input"
             ref={blogTitle}
-            className="titleInput"
           ></input>
           <h6 style={{ marginLeft: "8%" }}>Body</h6>
           <textarea
-            id="modalInputThree"
+            id="modal-input"
             ref={blogBody}
-            className="bodyInput"
+            className="body-input"
           ></textarea>
           <button
             style={{ cursor: "pointer" }}
             onClick={handleBlogPost}
-            className="submitBlogBtn"
+            className="submit-blog-btn"
           >
             Create Post
           </button>

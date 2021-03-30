@@ -1,179 +1,141 @@
-.navbarTop{
-    height: 8%;
-    width: 100%;
-    max-width: 100%;
-    background-color: white;
-    border-bottom:  solid black 1px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+.navbar-cont {
+  height: 8%;
+  width: 100%;
+  max-width: 100%;
+  background-color: white;
+  border-bottom: solid black 1px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
-.logoTextCont{
+.logo-cont {
+  height: 100%;
+  width: 20%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.logo-cont > h2 {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+  font-size: 32px;
+  height: 75%;
+  width: 32%;
+  margin-left: 4%;
+  font-weight: 500;
+}
+
+.logo-cont > img {
+  height: 100%;
+  width: 23%;
+  justify-self: flex-start;
+  padding-left: 2%;
+}
+
+.new-post-btn {
+  height: 100%;
+  width: 40%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
+
+.new-post-btn > button {
+  background-color: ghostwhite;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  border-left: solid black 1px;
+  border-right: solid black 1px;
+  border-bottom: none;
+  border-top: none;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.new-post-btn > button:hover {
+  background-color: rgb(169, 169, 190);
+}
+
+.new-post-btn > button > h3 {
+  font-size: 30px;
+  font-weight: 500;
+}
+
+.nav-btn-cont {
+    display: flex;
+    flex-direction: row;
     height: 100%;
     width: 20%;
-    display: flex;
-    flex-direction: row;
-    /* justify-content: center; */
-    align-items: center;
-    /* background-color: rebeccapurple; */
+  }
+
+#nav-button {
+  height: 100%;
+  width: 35%;
+  border-left: solid black 1px;
+  border-right: none;
+  border-top: none;
+  border-bottom: none;
+  background-color: transparent;
+  font-size: 17.5px;
+  cursor: pointer;
+  justify-content: center;
 }
 
-.logoTextCont > h2{
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    text-align: center;
-    font-size: 32px;
-    height: 75%;
-    width: 32%;
-    margin-left: 4%;
-    font-weight: 500;
+#nav-button:focus {
+  outline: transparent;
+  border-bottom: solid 4px black;
 }
 
-.logoTextCont > img{
-    height: 100%;
-    width: 23%;
-    justify-self: flex-start;
-    padding-left: 2%;
-    /* margin-left: -3%; */
+#nav-button > p {
+  align-self: center;
 }
 
-.moveRight{
-    display: flex;
-    flex-direction: row;
-    height: 100%;
-    width: 20%;
-    /* background-color: fuchsia; */
-}
-
-.newPostBtn{
-    height: 100%;
-    width: 40%;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    /* background-color: royalblue; */
-    margin: auto;
-}
-
-.postBtnForReal{
-    background-color: ghostwhite;
-    height: 100%;
-    width: 100%;
-    display: flex;
-    border-left: solid black 1px;
-    border-right: solid black 1px;
-    border-bottom: none;
-    border-top: none;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-}
-
-.postBtnForReal:hover{
-    background-color: rgb(169, 169, 190);
-}
-
-.postBtnForReal > h3{
-    font-size: 30px;
-    font-weight: 500;
-}
-
-#navBtn{
-    height: 100%;
-    width: 35%;
-    border-left: solid black 1px;
-    border-right: none;
-    border-top: none;
-    border-bottom: none;
-    background-color: transparent;
-    font-size: 17.5px;
-    cursor: pointer;
-    justify-content: center;
-}
-
-#navBtn:focus{
-    outline: transparent;
-    border-bottom: solid 4px black;
-}
-
-#btnText{
-    align-self: center;
-}
-
-.navBtnHome{
-    width: 33.33%;
-    height: 100%;
-}
-
-.navBtnAccount{
-    width: 33.33%;
-    height: 100%;
-}
-
-.navBtnLogout{
-    width: 33.33%;
-    height: 100%;
-}
 
 /* MODAL CONTENT */
-
-.newPostModal{
-    height: 85%;
-    width: 70%;
-    background-color: whitesmoke;
-    position: fixed;
-    z-index: 100;
-    align-self: center;
-    margin-top: 1%;
-    border: solid gray 2px ;
+.modal-background{
+    height: auto;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    font-size: 20px;
 }
 
-.closeModalBtn{
-    height: 5%;
-    width: 5%;
-    font-size: 24px;
-    align-self: flex-end;
-    background-color: transparent;
-    padding-top: 1%;
-    border: none;
-    cursor: pointer;
+.new-post-modal {
+  height: 85%;
+  width: 70%;
+  background-color: whitesmoke;
+  position: fixed;
+  z-index: 100;
+  align-self: center;
+  margin-top: 1%;
+  border: solid gray 2px;
+  display: flex;
+  flex-direction: column;
+  font-size: 20px;
 }
 
-.closeModalBtn:focus{
-    outline: none;
+.close-modal-btn {
+  height: 5%;
+  width: 5%;
+  font-size: 24px;
+  align-self: flex-end;
+  background-color: transparent;
+  padding-top: 1%;
+  border: none;
+  cursor: pointer;
 }
 
-#modalInput{
-    align-self: center;
-    width: 85%;
-    height: 4%;
-    margin-bottom: 3%;
+.close-.modal-background {
+  outline: none;
 }
 
-#modalInputTwo{
-    align-self: center;
-    width: 85%;
-    height: 4%;
-    margin-bottom: 3%;
-}
-
-#categoryText{
-    margin-left: 8%;
-}
-
-.bodyInput{
-    width: 85%;
-    height: 30%;
-    align-self: center;
-    margin-top: -2.25%;
-}
-
-.openDialogBtn{
-    height: 5.90%;
+.open-dialog-btn{
+    height: 5.9%;
     width: 3.8%;
     right: 3.3%;
     top: 15.65%;
@@ -181,47 +143,37 @@
     border: solid gray 1px;
     background-color: rgb(219, 219, 219);
     border-radius: 4px;
+  }
+
+#modal-input {
+  align-self: center;
+  width: 85%;
+  height: 4%;
+  margin-bottom: 3%;
 }
 
-.submitBlogBtn{
-    height: 8%;
-    width: 18%;
-    border-radius: 10px;
-    background-color: rgb(245, 224, 105);
-    border: solid gray 2px;
-    margin-top: 1%;
-    align-self: center;
-    font-size: 20px;
+.category-text {
+  margin-left: 8%;
 }
 
-.submitBlogBtn:focus{
-    outline: none;
+.body-input {
+  width: 85%;
+  height: 30%;
+  align-self: center;
+  margin-top: -2.25%;
 }
 
-/* .dropDownCont{
-    z-index: 1;
-    height: 29.17%;
-    width: 9.31%;
-    background-color: oldlace;
-    position: absolute;
-    border-left: solid black 1px;
-    border-right: solid black 1px;
-    border-bottom: solid black 1px;
-    display: flex;
-    flex-direction: column;
+.submit-blog-btn {
+  height: 8%;
+  width: 18%;
+  border-radius: 10px;
+  background-color: rgb(245, 224, 105);
+  border: solid gray 2px;
+  margin-top: 1%;
+  align-self: center;
+  font-size: 20px;
 }
 
-#menuOptionLI{
-    width: 100%;
-    height: 100%;
+.submit-blog-btn:focus {
+  outline: none;
 }
-
-#menuOptionBtn{
-    height: 110%;
-    width: 80%;
-    cursor: pointer;
-}
-
-#menuOptionBtn:focus{
-    outline: none;
-} */
