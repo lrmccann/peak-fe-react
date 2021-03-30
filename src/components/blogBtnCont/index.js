@@ -11,7 +11,6 @@ export default function BlogBtnCont(props) {
   const [bookMarked, setBookmarked] = useState(bookMarkIcon);
   const [likeBtn, setLikeBtn] = useState(thumbsUpIcon);
   const [settingsClicked, setSettingsClicked] = useState(false);
-
   const [numOfLikes, setNumOfLikes] = useState(props.numOfLikes);
   const [userClicked, setUserClicked] = useState(false);
 
@@ -48,21 +47,20 @@ export default function BlogBtnCont(props) {
   };
 
   return (
-    <div className="btnContainer container-fluid">
+    <div className="blog-btn-cont-page container-fluid">
       <button
-        className="likeIcon"
+        className="like-btn"
         onClick={addLike}
         style={{ backgroundImage: "url(" + likeBtn + ")" }}
       >
-        {/* <h4 className="numOfUpvotes">{numOfLikes}</h4> */}
       </button>
       <button
-        className="bookMarkIcon"
+        className="bookmark-btn"
         onClick={bookMark}
         style={{ backgroundImage: "url(" + bookMarked + ")" }}
       ></button>
       <button
-        className="settingsIcon"
+        className="settings-btn"
         style={{ backgroundImage: "url(" + settingsIcon + ")" }}
       ></button>
     </div>
