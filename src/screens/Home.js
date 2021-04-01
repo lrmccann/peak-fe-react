@@ -10,51 +10,31 @@ export default function Home() {
   const history = useHistory();
 
   const { getDetailedPost } = useContext(UserContext);
-  const [postsToMap, setPostsToMap] = useState([]);
-  const [bookMarked, setBookmarked] = useState(false);
-
-  useEffect(
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    async () =>
-      await API.getAllPosts().then(async (res) =>
-        setPostsToMap(await res.data.allPosts)
-      ),
-    [setPostsToMap]
-  );
+  const [blogObject, setBlogObject] = useState([]);
 
   useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
+    (async () => {
+      await API.getAllPosts().then((res) => setBlogObject(res.data));
+    })();
+  }, []);
 
-  const separateResponseData = async (responseData) => {
-    let destrucArr = responseData;
-    console.log(destrucArr)
-    getDetailedPost(destrucArr)
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const getIndepthblogDetails = async (e) => {
+    localStorage.setItem("recentPostId", e);
+    await API.getPostDetails(e).then((res) => {
+      getDetailedPost(res.data);
+    });
     history.push("/indepthpost");
   };
 
-  const getIndepthblogDetails = async (e) => {
-    localStorage.setItem("recentPostId", e)
-    await API.getPostDetails(e).then((res) => 
-    separateResponseData(res.data)
-    )
-  };
-
-  const bookMarkFunc = () => {
-    if (bookMarked === false) {
-      setBookmarked(true);
-    } else {
-      setBookmarked(false);
-    }
-  };
-  //   console.log(bookMarked);
-  // console.log(bookMarkFunc);
   return (
     <div className="home-page container">
-      {postsToMap.map((index, myKey) => (
-        <div className="blog-content container">
+      {blogObject.map((index, myKey) => (
+        <div className="blog-content container" key={myKey}>
           <div
-            key={myKey}
             className="blog-img-header"
             style={{ backgroundImage: `url(${index.blog_img})` }}
           >
@@ -66,7 +46,7 @@ export default function Home() {
             <div className="COMEBACKTOTHIS">
               <div className="author-info">
                 <img alt="User Icon" src={photoThree}></img>
-                <h4>JonSmith14</h4>
+                <h4>{index.username}</h4>
               </div>
               <div className="more-info-div">
                 <button
@@ -76,7 +56,7 @@ export default function Home() {
                     getIndepthblogDetails(e.target.id);
                   }}
                 >
-                  <h2 id={index.id}>More Info</h2>
+                  <h2 id={index.id}>{index.publish_date}</h2>
                 </button>
               </div>
               <div className="blog-options-bar">

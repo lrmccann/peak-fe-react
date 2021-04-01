@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import API from "../utils/API";
 import "../stylesheets/signup.css";
@@ -14,6 +14,10 @@ export default function Signup() {
   const cityRef = useRef(null);
   const zipRef = useRef(null);
   const jobTitleRef = useRef(null);
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   const validateForm = (e) => {
     e.preventDefault();

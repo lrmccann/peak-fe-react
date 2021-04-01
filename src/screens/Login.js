@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useRef, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import API from "../utils/API";
 import UserContext from "../utils/Context";
@@ -12,6 +12,10 @@ export default function Login () {
   const usernameRef = useRef(null);
   const passwordRef = useRef(null);
   const rememberMeRef = useRef(null);
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   const showModal = () => {
     setShow(true);

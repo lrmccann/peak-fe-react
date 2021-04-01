@@ -8,12 +8,20 @@ import "../stylesheets/myPosts.css";
 export default function MyPosts() {
   const { user } = useContext(UserContext);
   const [allUserPosts, setAllUserPosts] = useState([]);
-  useEffect(async () => {
-    var userId = user[0].id;
-    await API.getTopUserPosts(userId).then(async (res) =>
-      setAllUserPosts(await res.data)
-    );
-  }, [user]);
+  
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+  
+  useEffect(() => {
+    (async () => {
+      var userId = user[0].id;
+      await API.getTopUserPosts(userId).then(async (res) =>
+        setAllUserPosts(await res.data)
+      );
+    })()
+  })
+    
 
   const deleteUserPost = async (e) => {
     // e.preventDefault();

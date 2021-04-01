@@ -9,19 +9,15 @@ export default function InDepthPost() {
   const [loading, isLoading] = useState(true);
   const [visibilityCond, setVisibility] = useState("visible");
 
-  var commentArr = [];
-  var authName = "";
-  var postMapped = "";
-
   let newObj = {
     authUsername: "",
     postData: "",
     commentArr: [],
   };
 
-  const runMe = async () => {
+  const sortBlogData = async () => {
     await detailedPost.forEach((index, myKey) => {
-      if ("commentBody" in index && !commentArr.includes(index)) {
+      if ("commentBody" in index && !newObj.commentArr.includes(index)) {
         return newObj.commentArr.push(index);
       } else if ("post_title" in index) {
         return (newObj.postData = index);
@@ -33,9 +29,8 @@ export default function InDepthPost() {
   (() => {
     let checkForEmptyObj = Object.keys(detailedPost).length;
     if (checkForEmptyObj) {
-      runMe();
+      sortBlogData();
     } else {
-      console.log("object empty?");
       let blogToReload = localStorage.getItem("recentPostId");
       (async () => {
         await API.getPostDetails(blogToReload).then((res) =>

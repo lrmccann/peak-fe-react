@@ -8,6 +8,10 @@ export default function MyAccount() {
   const [topPosts, setTopPosts] = useState([]);
   const { user } = useContext(UserContext);
 
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
   setInterval(() => {
   console.log(user , "user from account page")
   }, 2 * 1000)
