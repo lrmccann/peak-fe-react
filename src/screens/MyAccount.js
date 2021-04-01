@@ -8,8 +8,12 @@ export default function MyAccount() {
   const [topPosts, setTopPosts] = useState([]);
   const { user } = useContext(UserContext);
 
+  setInterval(() => {
+  console.log(user , "user from account page")
+  }, 2 * 1000)
+
   // eslint-disable-next-line no-sequences
-  useEffect(() => (getTopComments(), getTopPosts()));
+  useEffect(() => (getTopComments(), getTopPosts()), []);
 
   const getTopPosts = async () => {
     var userId = user[0].id;

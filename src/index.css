@@ -25,7 +25,8 @@ html {
   overflow: hidden;
   height: 100%;
   background-color: whitesmoke;
-  background-image: url('./images/whole-app-bg-3.jpg');
+  /* background-image: url('./images/whole-app-bg-3.jpg'); */
+  background-image: url('./images/peak-bg-1.png');
   background-repeat: no-repeat;
   background-size: cover;
   background-blend-mode: darken;

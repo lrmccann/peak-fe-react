@@ -22,14 +22,22 @@ export default function Home() {
     [setPostsToMap]
   );
 
-  const getIndepthblogDetails = async (e) => {
-    await API.getPostDetails(e).then((res) => separateResponseData(res.data));
-  };
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   const separateResponseData = async (responseData) => {
-    getDetailedPost(responseData);
-    // console.log(responseData);
+    let destrucArr = responseData;
+    console.log(destrucArr)
+    getDetailedPost(destrucArr)
     history.push("/indepthpost");
+  };
+
+  const getIndepthblogDetails = async (e) => {
+    localStorage.setItem("recentPostId", e)
+    await API.getPostDetails(e).then((res) => 
+    separateResponseData(res.data)
+    )
   };
 
   const bookMarkFunc = () => {
@@ -40,7 +48,7 @@ export default function Home() {
     }
   };
   //   console.log(bookMarked);
-  console.log(bookMarkFunc);
+  // console.log(bookMarkFunc);
   return (
     <div className="home-page container">
       {postsToMap.map((index, myKey) => (
