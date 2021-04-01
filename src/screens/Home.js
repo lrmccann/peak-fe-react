@@ -22,6 +22,9 @@ export default function Home() {
     window.scrollTo(0, 0);
   }, []);
 
+  let userIdFromStorage = localStorage.getItem("loggedInUserId");
+  console.log(userIdFromStorage, "here her here")
+
   const getIndepthblogDetails = async (e) => {
     localStorage.setItem("recentPostId", e);
     await API.getPostDetails(e).then((res) => {

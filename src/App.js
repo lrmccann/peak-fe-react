@@ -3,7 +3,7 @@ import Signup from "./screens/Signup";
 import Home from "./screens/Home";
 import InDepthPost from "./screens/InDepthPost";
 import MyAccount from "./screens/MyAccount";
-import MyPosts from "./screens/MyPosts";
+import Bookmarks from "./screens/Bookmarks";
 import './App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { UserProvider } from "./utils/Context";
@@ -58,7 +58,7 @@ function App() {
       </Switch>
       <Route exact activeClassName path="/indepthpost" component={InDepthPost} />
       <Route exact activeClassName path="/myaccount" component={MyAccount} />
-      <Route exact activeClassName path="/myposts" component={MyPosts} />
+      <Route exact activeClassName path="/bookmarks" component={Bookmarks} />
     </Router>
     </UserProvider>
   );

@@ -54,7 +54,8 @@ export default function Login () {
         alert("Invalid Username or Password, Please Try Again");
         return;
       } else {
-        getUser(res.data.results);
+        getUser(res.data);
+        localStorage.setItem("loggedInUserId" , res.data.id)
         history.push("/home");
       }
     });

@@ -29,6 +29,13 @@ if(process.env.NODE_ENV === "development"){
                 }
             })
         },
+        getUserInfo: async function(id){
+            return await axios.get(`http://localhost:3005/user-details/${id}`, {
+                headers: {
+                    'Access-Control-Allow-Origin': '*'
+                }
+            })
+        },
         getPostDetails: async function(id){
             console.log(id, "id of post to get details")
             return await axios.get(`http://localhost:3005/user-posts/${id}` , {
@@ -113,6 +120,13 @@ var prodFuncs = {
     },
     getAllPosts: async function(){
         return await axios.get(`https://peak-blogspace.herokuapp.com/user-posts`, {
+            headers: {
+                'Access-Control-Allow-Origin': '*'
+            }
+        })
+    },
+    getUserInfo: async function(id){
+        return await axios.get(`https://peak-blogspace.herokuapp.com/user-details/${id}`, {
             headers: {
                 'Access-Control-Allow-Origin': '*'
             }

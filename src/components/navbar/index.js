@@ -17,11 +17,11 @@ export default function NavbarTop() {
   const navHome = () => {
     history.push("/home");
   };
+  const navBookmarks = () => {
+    history.push("/bookmarks")
+  }
   const navAccount = () => {
     history.push("/myaccount");
-  };
-  const navMyPosts = () => {
-    history.push("/myposts");
   };
   const navLogout = () => {
     history.push("/");
@@ -74,6 +74,9 @@ export default function NavbarTop() {
         <div className="nav-btn-cont">
           <button id="nav-button" onClick={navHome}>
             <p>Home</p>
+          </button>
+          <button id="nav-button" onClick={navBookmarks}>
+            <p>Bookmarked</p>
           </button>
           <button id="nav-button" onClick={navAccount}>
             <p>Account</p>

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext } from "react";
 import API from "../utils/API";
 import profIcon from "../images/profile-icon-def.png";
 import UserContext from "../utils/Context";
@@ -6,8 +6,7 @@ import "../stylesheets/inDepthPost.css";
 
 export default function InDepthPost() {
   const { detailedPost, getDetailedPost } = useContext(UserContext);
-  const [loading, isLoading] = useState(true);
-  const [visibilityCond, setVisibility] = useState("visible");
+  // const [loading, isLoading] = useState(true);
 
   let newObj = {
     authUsername: "",
@@ -63,10 +62,7 @@ export default function InDepthPost() {
         </div>
         <p className="blog-body-text">{newObj.postData.post_body}</p>
       </div>
-      <div
-        className="comments-cont container-fixed"
-        style={{ visibility: `${visibilityCond}` }}
-      >
+      <div className="comments-cont container-fixed">
         <span className="comments-header">
           <h1>Comments</h1>
         </span>
