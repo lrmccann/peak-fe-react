@@ -6,6 +6,7 @@ console.log(process.env)
 
 if(process.env.NODE_ENV === "development"){
     var devFuncs = {
+    // user related http requests
         signupUser: async function (userData) {
             console.log(userData, "user data for signup API");
             return await axios.post(`http://localhost:3005/account-info`, userData , {
@@ -22,13 +23,6 @@ if(process.env.NODE_ENV === "development"){
                 }
             })
         },
-        getAllPosts: async function(){
-            return await axios.get(`http://localhost:3005/user-posts`, {
-                headers: {
-                    'Access-Control-Allow-Origin': '*'
-                }
-            })
-        },
         getUserInfo: async function(id){
             return await axios.get(`http://localhost:3005/user-details/${id}`, {
                 headers: {
@@ -36,6 +30,25 @@ if(process.env.NODE_ENV === "development"){
                 }
             })
         },
+        getTopUserPosts : async function(id){
+            console.log(id , "id for getTopUserPosts API")
+            return await axios.get(`http://localhost:3005/getUserPost/${id}` , {
+                headers: {
+                    'Access-Control-Allow-Origin': '*'
+                }
+            })
+        },
+    //
+    // home page calls
+        getAllPosts: async function(){
+            return await axios.get(`http://localhost:3005/user-posts`, {
+                headers: {
+                    'Access-Control-Allow-Origin': '*'
+                }
+            })
+        },
+    //
+    // indepth blog calls
         getPostDetails: async function(id){
             console.log(id, "id of post to get details")
             return await axios.get(`http://localhost:3005/user-posts/${id}` , {
@@ -55,6 +68,8 @@ if(process.env.NODE_ENV === "development"){
                 }
             })
         },
+    //
+    // calls to create new blog
         postNewBlog: async function(blogContent){
             console.log(blogContent, "new blog for API")
             return await axios.post(`http://localhost:3005/create-new-post` , blogContent , {
@@ -63,23 +78,7 @@ if(process.env.NODE_ENV === "development"){
                 }
             })
         },
-        getTopUserPosts : async function(id){
-            console.log(id , "id for getTopUserPosts API")
-            return await axios.get(`http://localhost:3005/getUserPost/${id}` , {
-                headers: {
-                    'Access-Control-Allow-Origin': '*'
-                }
-            })
-        },
-
-        getTopUserComments : async function(id){
-            console.log(id , "id for getTopUserComments api")
-            return await axios.get(`http://localhost:3005/user-comments/${id}` , {
-                headers: {
-                    'Access-Control-Allow-Origin': '*'
-                }
-            })
-        },
+    //
         addLike : async function(numOfLikesToSend , postId , postTitle) {
             console.log(numOfLikesToSend , "num of likes for addLike API");
             console.log(postId , "id of post addlike API");
@@ -90,14 +89,7 @@ if(process.env.NODE_ENV === "development"){
                 }
             })
         },
-        deletePost : async function(postId) {
-            console.log( postId , "id of post to delete for API");
-            return await axios.delete(`http://localhost:3005/user-posts/${postId}` , {
-                headers : {
-                    'Access-Control-Allow-Origin': '*'
-                }
-            })
-        },
+    // bookmark related axios requests
         bookmarkNewPost : async function(postToBookmark, userId) {
             console.log( postToBookmark , "id of blog to bookmark!!!");
             return await axios.put(`http://localhost:3005/user-bookmarks/${postToBookmark}/${userId}` , {
@@ -121,11 +113,30 @@ if(process.env.NODE_ENV === "development"){
                     'Access-Control-Allow-Origin': '*'
                 }
             })
+        },
+    //
+        getTopUserComments : async function(id){
+            console.log(id , "id for getTopUserComments api")
+            return await axios.get(`http://localhost:3005/user-comments/${id}` , {
+                headers: {
+                    'Access-Control-Allow-Origin': '*'
+                }
+            })
+        },
+        // unfinished calls
+        deletePost : async function(postId) {
+            console.log( postId , "id of post to delete for API");
+            return await axios.delete(`http://localhost:3005/user-posts/${postId}` , {
+                headers : {
+                    'Access-Control-Allow-Origin': '*'
+                }
+            })
         }
     }
 
 }else if(process.env.NODE_ENV === "production"){
 var prodFuncs = {
+// user related http requests
     signupUser: async function (userData) {
         console.log(userData, "user data for signup API");
         return await axios.post(`https://peak-blogspace.herokuapp.com/account-info` , userData, {
@@ -142,13 +153,6 @@ var prodFuncs = {
             }
         })
     },
-    getAllPosts: async function(){
-        return await axios.get(`https://peak-blogspace.herokuapp.com/user-posts`, {
-            headers: {
-                'Access-Control-Allow-Origin': '*'
-            }
-        })
-    },
     getUserInfo: async function(id){
         return await axios.get(`https://peak-blogspace.herokuapp.com/user-details/${id}`, {
             headers: {
@@ -156,6 +160,17 @@ var prodFuncs = {
             }
         })
     },
+//
+// home page axios calls
+    getAllPosts: async function(){
+        return await axios.get(`https://peak-blogspace.herokuapp.com/user-posts`, {
+            headers: {
+                'Access-Control-Allow-Origin': '*'
+            }
+        })
+    },
+//
+// indepth post calls
     getPostDetails: async function(id){
         console.log(id, "id of post to get details")
         return await axios.get(`https://peak-blogspace.herokuapp.com/user-posts/${id}` , {
@@ -172,6 +187,8 @@ var prodFuncs = {
             }
         })
     },
+//
+// calls to create new blog
     postNewBlog: async function(blogContent){
         console.log(blogContent, "new blog for API")
         return await axios.post(`https://peak-blogspace.herokuapp.com/create-new-post` , blogContent , {
@@ -180,6 +197,8 @@ var prodFuncs = {
             }
         })
     },
+//
+// indepth post related axios calls
     getTopUserPosts : async function(id){
         console.log(id , "id for getTopUserPosts API")
         return await axios.get(`https://peak-blogspace.herokuapp.com/getUserPost/${id}` , {
@@ -189,14 +208,7 @@ var prodFuncs = {
         })
     },
 
-    getTopUserComments : async function(id){
-        console.log(id , "id for getTopUserComments api")
-        return await axios.get(`https://peak-blogspace.herokuapp.com/user-comments/${id}` , {
-            headers: {
-                'Access-Control-Allow-Origin': '*'
-            }
-        })
-    },
+//
     addLike : async function(numOfLikesToSend , postId , postTitle) {
         console.log(numOfLikesToSend , "num of likes for addLike API");
         console.log(postId , "id of post addlike API");
@@ -207,6 +219,8 @@ var prodFuncs = {
             }
         })
     },
+//
+// bookmark related axios calls
     bookmarkNewPost : async function(postToBookmark, userId) {
         console.log( postToBookmark , "id of blog to bookmark!!!");
         return await axios.put(`https://peak-blogspace.herokuapp.com/user-bookmarks/${postToBookmark}/${userId}` , {
@@ -230,7 +244,26 @@ var prodFuncs = {
                 'Access-Control-Allow-Origin': '*'
             }
         })
+    },
+//
+// unfinished calls
+    deletePost : async function(postId) {
+        console.log( postId , "id of post to delete for API");
+        return await axios.delete(`http://peak-blogspace.herokuapp.com/user-posts/${postId}` , {
+            headers : {
+                'Access-Control-Allow-Origin': '*'
+            }
+        })
+    },
+    getTopUserComments : async function(id){
+        console.log(id , "id for getTopUserComments api")
+        return await axios.get(`https://peak-blogspace.herokuapp.com/user-comments/${id}` , {
+            headers: {
+                'Access-Control-Allow-Origin': '*'
+            }
+        })
     }
 }
+//
 }
 export default (prodFuncs , devFuncs)
