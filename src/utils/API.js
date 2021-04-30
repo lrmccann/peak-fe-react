@@ -206,6 +206,30 @@ var prodFuncs = {
                 'Access-Control-Allow-Origin': '*'
             }
         })
+    },
+    bookmarkNewPost : async function(postToBookmark, userId) {
+        console.log( postToBookmark , "id of blog to bookmark!!!");
+        return await axios.put(`https://peak-blogspace.herokuapp.com/user-bookmarks/${postToBookmark}/${userId}` , {
+            headers : {
+                'Access-Control-Allow-Origin': '*'
+            }
+        })
+    },
+    getBookmarkedPosts : async function(userId) {
+        console.log( userId , "id of user to fetch bookmarked blogs API");
+        return await axios.get(`https://peak-blogspace.herokuapp.com/user-all-bookmarks/${userId}` , {
+            headers : {
+                'Access-Control-Allow-Origin': '*'
+            }
+        })
+    },
+    removeBookmarkedPost : async function(postIdToRemove, userId) {
+        console.log( postIdToRemove , "id of post to unbookmark for API!");
+        return await axios.delete(`https://peak-blogspace.herokuapp.com/user-bookmarks/${postIdToRemove}/${userId}` , {
+            headers : {
+                'Access-Control-Allow-Origin': '*'
+            }
+        })
     }
 }
 }
