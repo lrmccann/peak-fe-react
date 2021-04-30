@@ -38,11 +38,22 @@ export default function BlogBtnCont(props) {
     }
   };
 
-  const bookMark = async () => {
+  const bookmarkPost = async () => {
+    var userId = localStorage.getItem("loggedInUserId");
+    var idToSend = props.postId;
     if (bookMarked === bookMarkIcon) {
-      setBookmarked(bookMarkIconClicked);
+      await API.bookmarkNewPost(idToSend, userId)
+      .then(response => {
+        if(response.status === 202){
+          setBookmarked(bookMarkIconClicked);
+        }else{
+          alert("Failed to bookmark")
+        }
+      })
+      // .then(setBookmarked(bookMarkIconClicked));
     } else {
-      setBookmarked(bookMarkIcon);
+      await API.removeBookmarkedPost(idToSend, userId)
+      .then(setBookmarked(bookMarkIcon));
     }
   };
 
@@ -56,7 +67,7 @@ export default function BlogBtnCont(props) {
       </button>
       <button
         className="bookmark-btn"
-        onClick={bookMark}
+        onClick={bookmarkPost}
         style={{ backgroundImage: "url(" + bookMarked + ")" }}
       ></button>
       <button

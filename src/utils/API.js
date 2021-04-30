@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const proxyurl = "https://cors-anywhere.herokuapp.com/";
+// const proxyurl = "https://cors-anywhere.herokuapp.com/";
 
 console.log(process.env)
 
@@ -93,6 +93,30 @@ if(process.env.NODE_ENV === "development"){
         deletePost : async function(postId) {
             console.log( postId , "id of post to delete for API");
             return await axios.delete(`http://localhost:3005/user-posts/${postId}` , {
+                headers : {
+                    'Access-Control-Allow-Origin': '*'
+                }
+            })
+        },
+        bookmarkNewPost : async function(postToBookmark, userId) {
+            console.log( postToBookmark , "id of blog to bookmark!!!");
+            return await axios.put(`http://localhost:3005/user-bookmarks/${postToBookmark}/${userId}` , {
+                headers : {
+                    'Access-Control-Allow-Origin': '*'
+                }
+            })
+        },
+        getBookmarkedPosts : async function(userId) {
+            console.log( userId , "id of user to fetch bookmarked blogs API");
+            return await axios.get(`http://localhost:3005/user-all-bookmarks/${userId}` , {
+                headers : {
+                    'Access-Control-Allow-Origin': '*'
+                }
+            })
+        },
+        removeBookmarkedPost : async function(postIdToRemove, userId) {
+            console.log( postIdToRemove , "id of post to unbookmark for API!");
+            return await axios.delete(`http://localhost:3005/user-bookmarks/${postIdToRemove}/${userId}` , {
                 headers : {
                     'Access-Control-Allow-Origin': '*'
                 }

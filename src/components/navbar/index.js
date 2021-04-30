@@ -24,6 +24,7 @@ export default function NavbarTop() {
     history.push("/myaccount");
   };
   const navLogout = () => {
+    localStorage.clear();
     history.push("/");
   };
   // open new blog modal
@@ -40,7 +41,8 @@ export default function NavbarTop() {
     var imgHeaderToSend = imgHeader.current.value;
     var blogTitleToSend = blogTitle.current.value;
     var blogBodyToSend = blogBody.current.value;
-    var userIdToSend = await user[0].id;
+    var userIdToSend = localStorage.getItem("loggedInUserId");
+
 
     var blogInfoToSend = {
       imgHeaderToSend,
@@ -48,6 +50,8 @@ export default function NavbarTop() {
       blogBodyToSend,
       userIdToSend,
     };
+
+    console.log(blogInfoToSend, "blog info to send to server")
     await API.postNewBlog({ blogInfoToSend }).then((res) => {
       resultsInFullScope = res;
     });

@@ -9,9 +9,9 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { UserProvider } from "./utils/Context";
 import { useState } from 'react';
 import NavbarTop from "./components/navbar/index";
-import ScrollToTop from "react-scroll-to-top";
+// import ScrollToTop from "react-scroll-to-top";
 
-function App() {
+export default function App() {
 
   const [user , setUser] = useState({});
   const [allPosts , setAllPosts] = useState([]);
@@ -51,7 +51,7 @@ function App() {
     <Router>
       <Route exact activeClassName path="/" component={Login} />
       <Route exact activeClassName path="/signup" component={Signup} />
-      <ScrollToTop smooth />
+      {/* <ScrollToTop smooth /> */}
       <NavbarTop/>
       <Switch>
       <Route exact activeClassName path="/home" component={Home} />
@@ -63,5 +63,3 @@ function App() {
     </UserProvider>
   );
 }
-
-export default App;
