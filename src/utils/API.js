@@ -16,7 +16,7 @@ if(process.env.NODE_ENV === "development"){
             })
         },
         loginUser: async function (username , password) {
-            console.log(username , password , "username and password for auth");
+            console.log(username , password , "username and password for auth FROM DEV ENV");
             return await axios.get(`http://localhost:3005/account-info-login/${username}/${password}`, {
                 headers: {
                     'Access-Control-Allow-Origin': '*'
@@ -79,12 +79,30 @@ if(process.env.NODE_ENV === "development"){
             })
         },
     //
+    // call to add view to post using postId
+    addViewToBlog: async function(postId){
+        console.log(postId, "add view to post API")
+        return await axios.put(`http://localhost:3005/post-views/${postId}` , {
+            headers: {
+                'Access-Control-Allow-Origin': '*'
+            }
+        })
+    },
+    //
         addLike : async function(numOfLikesToSend , postId , postTitle) {
             console.log(numOfLikesToSend , "num of likes for addLike API");
             console.log(postId , "id of post addlike API");
             console.log(postTitle , "post title for addLike API")
             return await axios.put(`http://localhost:3005/numOfLikesForPost/${postId}/${numOfLikesToSend}/${postTitle}` , {
                 headers: {
+                    'Access-Control-Allow-Origin': '*'
+                }
+            })
+        },
+        checkBookmarksForHome : async function(userId) {
+            console.log( userId , "user id for check bookmarks func for API!");
+            return await axios.get(`http://localhost:3005/user-bookmarks-home/${userId}` , {
+                headers : {
                     'Access-Control-Allow-Origin': '*'
                 }
             })
@@ -134,7 +152,8 @@ if(process.env.NODE_ENV === "development"){
         }
     }
 
-}else if(process.env.NODE_ENV === "production"){
+}else{
+// else if(process.env.NODE_ENV === "production"){
 var prodFuncs = {
 // user related http requests
     signupUser: async function (userData) {
@@ -146,7 +165,7 @@ var prodFuncs = {
         })
     },
     loginUser: async function (username , password) {
-        console.log(username , password , "username and password for auth");
+        console.log(username , password , "username and password for auth FROM PROD ENV");
         return await axios.get(`https://peak-blogspace.herokuapp.com/account-info-login/${username}/${password}`, {
             headers: {
                 'Access-Control-Allow-Origin': '*',
@@ -262,8 +281,18 @@ var prodFuncs = {
                 'Access-Control-Allow-Origin': '*'
             }
         })
-    }
+    },
+        // call to add view to post using postId
+        addViewToBlog: async function(postId){
+            console.log(postId, "add view to post API")
+            return await axios.put(`http://localhost:3005/post-views/${postId}` , {
+                headers: {
+                    'Access-Control-Allow-Origin': '*'
+                }
+            })
+        },
+        //
 }
 //
 }
-export default (prodFuncs , devFuncs)
+export default (prodFuncs , devFuncs);

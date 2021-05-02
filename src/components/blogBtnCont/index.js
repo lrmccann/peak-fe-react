@@ -9,11 +9,26 @@ import "./style.css";
 
 export default function BlogBtnCont(props) {
   const [bookMarked, setBookmarked] = useState(bookMarkIcon);
+  // const [alreadyBookmarkedPost, setAlreadyBookmarkedPost] = useState(props.bookMarkedPosts);
   const [likeBtn, setLikeBtn] = useState(thumbsUpIcon);
   const [settingsClicked, setSettingsClicked] = useState(false);
   const [numOfLikes, setNumOfLikes] = useState(props.numOfLikes);
   const [userClicked, setUserClicked] = useState(false);
+  var idk = props.bookMarkedPosts;
 
+  // set already bookmarked posts
+  useEffect(() => {
+    idk.map((index) => {
+        if(index === props.postId){
+          console.log("index : " + index + "   " , "postId : " + props.postId)
+          setBookmarked(bookMarkIconClicked);
+        }
+    })
+  }, [idk, props.postId])
+
+  // set already liked posts
+
+  //
   const addLike = async () => {
     if (userClicked === false) {
       setNumOfLikes(numOfLikes + 1);
@@ -50,7 +65,6 @@ export default function BlogBtnCont(props) {
           alert("Failed to bookmark")
         }
       })
-      // .then(setBookmarked(bookMarkIconClicked));
     } else {
       await API.removeBookmarkedPost(idToSend, userId)
       .then(setBookmarked(bookMarkIcon));

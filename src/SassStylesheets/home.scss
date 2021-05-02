@@ -34,6 +34,24 @@
     font-size: 25px;
 }
 
+.blog-img-header > p{
+    margin-top: -.01%;
+    right: 12.5%;
+    position: absolute;
+    height: 10%;
+    width: 10%;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.blog-img-header > p > img{
+    height: 60%;
+    width: 30%;
+
+}
+
 .blog-footer-cont{
     height: 10%;
     width: 100%;

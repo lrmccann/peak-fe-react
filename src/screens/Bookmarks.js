@@ -16,11 +16,14 @@ export default function Bookmarks(){
         }
         getBookmarks();
     }, [])
-
-    console.log(bookmarkedBlog, "bookmarked blog fe")
-
-
-    return(
+if(bookmarkedBlog.length === 0){
+  return(
+    <div>
+      <h1>No Bookmarks Yet!</h1>
+    </div>
+  )
+}else{
+  return(
         <div className="bookmarks_page container">
             {bookmarkedBlog.map((index, myKey) => (
                         <div className="bk-blog-content container" key={myKey}>
@@ -60,7 +63,7 @@ export default function Bookmarks(){
                         </div>
                       </div>
             ))}
-            
         </div>
     )
+}
 }

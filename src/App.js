@@ -7,7 +7,7 @@ import Bookmarks from "./screens/Bookmarks";
 import './App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { UserProvider } from "./utils/Context";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import NavbarTop from "./components/navbar/index";
 // import ScrollToTop from "react-scroll-to-top";
 
@@ -17,6 +17,7 @@ export default function App() {
   const [allPosts , setAllPosts] = useState([]);
   const [detailedPost, setDetailedPost] = useState({});
   const [allComments, setAllComments] = useState([]);
+  const [envState, setEnvState] = useState();
 
 
   const getUser = (userData) => {
@@ -35,6 +36,17 @@ export default function App() {
     setAllComments(allCommentsData => {return allCommentsData = commentsData})
   } 
 
+  // Check status of env var for dev or prod
+  useEffect(() => {
+    if(process.env.NODE_ENV === "development"){
+      setEnvState("development");
+    }else if(process.env.NODE_ENV === "production"){
+      setEnvState("production");
+    }
+  }, []);
+
+  // console.log(envState, "state of env");
+
 
   return (
     <UserProvider value = {{
@@ -42,6 +54,7 @@ export default function App() {
       allPosts,
       detailedPost,
       allComments,
+      envState,
 
       getUser,
       getAllPostsForHomePage,
