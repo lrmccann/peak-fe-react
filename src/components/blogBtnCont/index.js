@@ -20,8 +20,8 @@ export default function BlogBtnCont(props) {
   useEffect(() => {
     idk.map((index) => {
         if(index === props.postId){
-          console.log("index : " + index + "   " , "postId : " + props.postId)
-          setBookmarked(bookMarkIconClicked);
+          // console.log("index : " + index + "   " , "postId : " + props.postId)
+          return setBookmarked(bookMarkIconClicked);
         }
     })
   }, [idk, props.postId])

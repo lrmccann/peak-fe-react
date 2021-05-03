@@ -13,6 +13,7 @@ export default function Home(props) {
   const { getDetailedPost, envState } = useContext(UserContext);
   const [blogObject, setBlogObject] = useState([]);
   const [bookmarkedPost, setBookmarkedPost] = useState([]);
+  const [loading, setLoading ] = useState(true);
 
   // SCROLL TOP
   useEffect(() => {
@@ -20,11 +21,11 @@ export default function Home(props) {
   }, []);
 
   // Set API routes based on env
-  useEffect(() => {
-    if(envState === "development"){
-      
-    }
-  })
+  // useEffect(() => {
+  //   if(envState === "development"){
+
+  //   }
+  // })
 
   // GET ALL POSTS
   useEffect(() => {
@@ -39,7 +40,14 @@ export default function Home(props) {
     var userId = localStorage.getItem("loggedInUserId");
     await API.checkBookmarksForHome(userId).then((res) => {
         setBookmarkedPost(res.data);
-    })
+    });
+    if(bookmarkedPost.length === 0){
+      // setTimeout(() => {
+        setLoading(false);
+      // }, 2 * 300);
+    }else{
+      setLoading(false);
+    }
   }
   checkBookmarkStatus();
   }, [])
@@ -62,6 +70,14 @@ export default function Home(props) {
     history.push("/indepthpost");
   };
 
+  if(loading === true){
+    return(
+      <div>
+        <h1>Loading</h1>
+      </div>
+    )
+  }
+  else if(loading === false){
   return (
     <div className="home-page container">
       {blogObject.map((index, myKey) => (
@@ -106,4 +122,5 @@ export default function Home(props) {
       ))}
     </div>
   );
+}
 }

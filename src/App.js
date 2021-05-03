@@ -17,7 +17,7 @@ export default function App() {
   const [allPosts , setAllPosts] = useState([]);
   const [detailedPost, setDetailedPost] = useState({});
   const [allComments, setAllComments] = useState([]);
-  const [envState, setEnvState] = useState();
+  // const [envState, setEnvState] = useState();
 
 
   const getUser = (userData) => {
@@ -37,13 +37,13 @@ export default function App() {
   } 
 
   // Check status of env var for dev or prod
-  useEffect(() => {
-    if(process.env.NODE_ENV === "development"){
-      setEnvState("development");
-    }else if(process.env.NODE_ENV === "production"){
-      setEnvState("production");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if(process.env.NODE_ENV === "development"){
+  //     setEnvState("development");
+  //   }else if(process.env.NODE_ENV === "production"){
+  //     setEnvState("production");
+  //   }
+  // }, []);
 
   // console.log(envState, "state of env");
 
@@ -54,7 +54,7 @@ export default function App() {
       allPosts,
       detailedPost,
       allComments,
-      envState,
+      // envState,
 
       getUser,
       getAllPostsForHomePage,

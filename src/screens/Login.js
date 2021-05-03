@@ -1,8 +1,8 @@
 import React, { useContext, useRef, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-// import API from "../utils/API";
-import prodFuncs from "../utils/API";
-import devFuncs from "../utils/API";
+import API from "../utils/API";
+// import prodFuncs from "../utils/API";
+// import devFuncs from "../utils/API";
 import UserContext from "../utils/Context";
 import photo from "../images/peak-blogspace-icon.png";
 import "../stylesheets/login.css";
@@ -11,7 +11,7 @@ export default function Login () {
   const history = useHistory();
   const { getUser, envState } = useContext(UserContext);
   const [show, setShow] = useState(false);
-  const [apiEnv, setApiEnv] = useState();
+  // const [apiEnv, setApiEnv] = useState();
 
   // const [envState, setEnvState] = useState();
 
@@ -19,13 +19,13 @@ export default function Login () {
   const passwordRef = useRef();
   const rememberMeRef = useRef();
 
-  useEffect(() => {
-    if(envState === "development"){
-      setApiEnv(devFuncs);
-    }else{
-      setApiEnv(prodFuncs);
-    }
-  }, [envState]);
+  // useEffect(() => {
+  //   if(envState === "development"){
+  //     setApiEnv(devFuncs);
+  //   }else{
+  //     setApiEnv(prodFuncs);
+  //   }
+  // }, [envState]);
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -60,7 +60,7 @@ export default function Login () {
     }
   };
   const checkSqlForUser = async (username, password) => {
-    await apiEnv.loginUser(
+    await API.loginUser(
       (username = usernameRef.current.value),
       (password = passwordRef.current.value)
     ).then(async function (res) {
