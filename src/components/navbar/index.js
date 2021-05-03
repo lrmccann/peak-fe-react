@@ -1,14 +1,18 @@
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useRef, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import API from "../../utils/API";
 import UserContext from "../../utils/Context";
-import peakIcon from "../../images/peak-blogspace-icon.png";
+import photoThree from "../../images/profile-icon-def.png";
+import peakIcon from "../../images/peak-new-icon.png";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBookmark, faHome } from '@fortawesome/free-solid-svg-icons';
 import "./style.css";
 
 export default function NavbarTop() {
   const { user } = useContext(UserContext);
   const history = useHistory();
   const [newBlogOpen, setNewBlogOpen] = useState(false);
+  const [welcomeMsg, setWelcomeMsg] = useState("Welcome");
   // Refs for new blog post
   const imgHeader = useRef(null);
   const blogTitle = useRef(null);
@@ -34,6 +38,12 @@ export default function NavbarTop() {
   const closeBlog = () => {
     setNewBlogOpen(false);
   };
+
+  useEffect(()=> {
+    setTimeout(() => {
+        setWelcomeMsg(" ");
+    }, 2 * 2000)
+  })
 
   const handleBlogPost = async (e) => {
     e.preventDefault();
@@ -69,25 +79,29 @@ export default function NavbarTop() {
       <div className="navbar-cont">
         <div className="logo-cont">
           <img src={peakIcon} alt="Peak Icon"></img>
+          <h1>{welcomeMsg}</h1>
         </div>
-        <div className="new-post-btn">
+        {/* <div className="new-post-btn">
           <button className="postBtnForReal" onClick={openBlog}>
             <h3>New Post</h3>
           </button>
-        </div>
+        </div> */}
         <div className="nav-btn-cont">
-          <button id="nav-button" onClick={navHome}>
-            <p>Home</p>
+          <button style={{fontSize: "32.5px"}} id="nav-button" onClick={navHome}>
+            <FontAwesomeIcon icon={faHome}></FontAwesomeIcon>
           </button>
-          <button id="nav-button" onClick={navBookmarks}>
-            <p>Bookmarked</p>
+          <button style={{fontSize: "30px"}} id="nav-button" onClick={navBookmarks}>
+            <FontAwesomeIcon icon={faBookmark}></FontAwesomeIcon>
+          </button>
+          <button style={{marginRight: "1%"}} id="nav-button" onClick={openBlog}>
+            <p>Write</p>
           </button>
           <button id="nav-button" onClick={navAccount}>
-            <p>Account</p>
+            <img src={photoThree} alt={"Your Profile"}></img>
           </button>
-          <button id="nav-button" onClick={navLogout}>
+          {/* <button id="nav-button" onClick={navLogout}>
             <p>Log Out</p>
-          </button>
+          </button> */}
         </div>
       </div>
     );
