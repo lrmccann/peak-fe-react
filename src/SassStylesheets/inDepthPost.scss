@@ -108,6 +108,8 @@
     height: 30%;
     width: 100%;
     display: flex;
+    // flex-direction: column;
+    // justify-content: space-between;
     flex-direction: row;
     border-bottom: solid black thin;
 }
@@ -121,6 +123,22 @@
     margin-left: 1%;
     border-radius: 30px;
     margin-right: .5%;
+}
+
+.comment-auth-info > div{
+    height: auto;
+    width: 7.5%;
+    margin-left: auto;
+}
+
+.comment-auth-info > div > button{
+    margin-left: auto;
+    height: 100%;
+    width: 100%;
+    font-size: 20px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
 }
 
 .comment-text{

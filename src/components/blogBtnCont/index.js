@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import bookMarkIcon from "../../images/bookmark-unchecked.png";
 import bookMarkIconClicked from "../../images/bookmark-checked.png";
 import thumbsUpIcon from "../../images/thumbs-up.png";
@@ -9,39 +9,51 @@ import "./style.css";
 
 export default function BlogBtnCont(props) {
   const [bookMarked, setBookmarked] = useState(bookMarkIcon);
-  // const [alreadyBookmarkedPost, setAlreadyBookmarkedPost] = useState(props.bookMarkedPosts);
   const [likeBtn, setLikeBtn] = useState(thumbsUpIcon);
-  const [settingsClicked, setSettingsClicked] = useState(false);
+  // const [settingsClicked, setSettingsClicked] = useState(false);
   const [numOfLikes, setNumOfLikes] = useState(props.numOfLikes);
-  const [userClicked, setUserClicked] = useState(false);
-  var idk = props.bookMarkedPosts;
+  const [loading, setLoading] = useState(true);
 
-  // set already bookmarked posts
+  var bookmarksArr = props.bookMarkedPosts;
+  var likedPostArr = props.likedPosts;
+
+  // set already bookmarked posts & likes
   useEffect(() => {
-    idk.map((index) => {
-        if(index === props.postId){
-          // console.log("index : " + index + "   " , "postId : " + props.postId)
-          return setBookmarked(bookMarkIconClicked);
+    bookmarksArr.map((index) => {
+      if (index === props.postId) {
+        return setBookmarked(bookMarkIconClicked);
+      }
+    });
+    if (likedPostArr.length === 0) {
+      setLoading(true);
+    } else {
+      likedPostArr.map((index) => {
+        if (index === props.postId) {
+          return setLikeBtn(thumbsUpIconClicked);
         }
-    })
-  }, [idk, props.postId])
-
-  // set already liked posts
-
+      });
+      setLoading(false);
+    }
+  }, [bookmarksArr, props.postId, likedPostArr]);
   //
-  const addLike = async () => {
-    if (userClicked === false) {
+
+  const toggleLike = async () => {
+    if (likeBtn === thumbsUpIcon) {
       setNumOfLikes(numOfLikes + 1);
-      setLikeBtn(thumbsUpIconClicked);
       var postIdToSend = props.postId;
       var postTitleToSend = props.postTitle;
       var likesPlusOne = numOfLikes + 1;
       await API.addLike(postIdToSend, likesPlusOne, postTitleToSend).then(
-        setUserClicked(true)
+        (results) => {
+          if (results.status === 200) {
+            setLikeBtn(thumbsUpIconClicked);
+          } else {
+            alert("Failed to like post, please try again");
+          }
+        }
       );
-    } else if (userClicked === true) {
+    } else {
       setNumOfLikes(numOfLikes - 1);
-      setLikeBtn(thumbsUpIcon);
       var postIdToSendTwo = props.postId;
       var postTitleToSendTwo = props.postTitle;
       var likesMinusOne = numOfLikes - 1;
@@ -49,45 +61,58 @@ export default function BlogBtnCont(props) {
         postIdToSendTwo,
         likesMinusOne,
         postTitleToSendTwo
-      ).then(setUserClicked(false));
+      ).then((response) => {
+        if (response.status === 200) {
+          setLikeBtn(thumbsUpIcon);
+        } else {
+          alert("Failed to unliked post, please try again");
+        }
+      });
     }
   };
 
-  const bookmarkPost = async () => {
+  const toggleBookmark = async () => {
     var userId = localStorage.getItem("loggedInUserId");
     var idToSend = props.postId;
     if (bookMarked === bookMarkIcon) {
-      await API.bookmarkNewPost(idToSend, userId)
-      .then(response => {
-        if(response.status === 202){
+      await API.bookmarkNewPost(idToSend, userId).then((response) => {
+        if (response.status === 202) {
           setBookmarked(bookMarkIconClicked);
-        }else{
-          alert("Failed to bookmark")
+        } else {
+          alert("Failed to bookmark");
         }
-      })
+      });
     } else {
-      await API.removeBookmarkedPost(idToSend, userId)
-      .then(setBookmarked(bookMarkIcon));
+      await API.removeBookmarkedPost(idToSend, userId).then(
+        setBookmarked(bookMarkIcon)
+      );
     }
   };
 
-  return (
-    <div className="blog-btn-cont-page container-fluid">
-      <button
-        className="like-btn"
-        onClick={addLike}
-        style={{ backgroundImage: "url(" + likeBtn + ")" }}
-      >
-      </button>
-      <button
-        className="bookmark-btn"
-        onClick={bookmarkPost}
-        style={{ backgroundImage: "url(" + bookMarked + ")" }}
-      ></button>
-      <button
-        className="settings-btn"
-        style={{ backgroundImage: "url(" + settingsIcon + ")" }}
-      ></button>
-    </div>
-  );
+  if (loading === true) {
+    return (
+      <div>
+        <h1>Loading</h1>
+      </div>
+    );
+  } else {
+    return (
+      <div className="blog-btn-cont-page container-fluid">
+        <button
+          className="like-btn"
+          onClick={toggleLike}
+          style={{ backgroundImage: "url(" + likeBtn + ")" }}
+        ></button>
+        <button
+          className="bookmark-btn"
+          onClick={toggleBookmark}
+          style={{ backgroundImage: "url(" + bookMarked + ")" }}
+        ></button>
+        <button
+          className="settings-btn"
+          style={{ backgroundImage: "url(" + settingsIcon + ")" }}
+        ></button>
+      </div>
+    );
+  }
 }

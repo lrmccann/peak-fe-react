@@ -102,6 +102,16 @@ export default {
             }
         })
     },
+    getLikedPosts : async function(userId) {
+        console.log(userId , "Userid for getLikedPosts API");
+        // return await axios.put(`http://localhost:3005/numOfLikesForPost/${postId}/${numOfLikesToSend}/${postTitle}` , {
+            // return await axios.put(`/numOfLikesForPost/${postId}/${numOfLikesToSend}/${postTitle}` , {
+                        return await axios.get(`https://peak-blogspace.herokuapp.com/liked-posts/${userId}` , {
+            headers: {
+                'Access-Control-Allow-Origin': 'http://peak-blogspace.s3-website.us-east-2.amazonaws.com/'
+            }
+        })
+    },
     //
         addLike : async function(numOfLikesToSend , postId , postTitle) {
             console.log(numOfLikesToSend , "num of likes for addLike API");
@@ -162,6 +172,18 @@ export default {
             // return await axios.get(`http://localhost:3005/user-comments/${id}` , {
                 // return await axios.get(`/user-comments/${id}` , {
                             return await axios.get(`https://peak-blogspace.herokuapp.com/user-comments/${id}` , {
+                headers: {
+                    'Access-Control-Allow-Origin': 'http://peak-blogspace.s3-website.us-east-2.amazonaws.com/'
+                }
+            })
+        },
+        postNewComment : async function(userId, postId, commentBody){
+            console.log(userId, postId, commentBody , `userId : ${userId} postId: ${postId} body : ${commentBody} for postnewcomment api`)
+            // return await axios.post(`http://localhost:3005/user-comments-post/${userId}/${postId}/${commentBody}` , {
+                // return await axios.get(`/user-comments/${id}` , {
+
+                            return await axios.post(`https://peak-blogspace.herokuapp.com/user-comments-post/${userId}/${postId}/${commentBody}` , {
+
                 headers: {
                     'Access-Control-Allow-Origin': 'http://peak-blogspace.s3-website.us-east-2.amazonaws.com/'
                 }

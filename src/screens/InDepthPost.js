@@ -1,15 +1,19 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useRef, useState } from "react";
 import API from "../utils/API";
 import profIcon from "../images/profile-icon-def.png";
 import UserContext from "../utils/Context";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCheck,
+  faCheckSquare
+} from "@fortawesome/free-solid-svg-icons";
 import "../stylesheets/inDepthPost.css";
+
 
 export default function InDepthPost() {
   const { detailedPost, getDetailedPost, user } = useContext(UserContext);
   // const [loading, isLoading] = useState(true);
-
-  // ref for posting comments
-  const newCommentBody = useRef(null);
+    const [commentBodyState, setCommentBodyState] = useState("Please enter comment!");
 
   // blog object
   let newObj = {
@@ -48,12 +52,20 @@ export default function InDepthPost() {
     }
   })();
   //
+
+    // comment object
+    let newCommentObj = {
+      userId : localStorage.getItem("loggedInUserId"),
+      postId : localStorage.getItem("recentPostId"),
+      commentBody: commentBodyState
+    }
   
-  const postNewComment = async () => {
-    
+  const postNewComment = async (event) => {
+          event.preventDefault();
+          console.log(newCommentObj, "new comment obj");
+          await API.postNewComment(newCommentObj.userId , newCommentObj.postId , newCommentObj.commentBody);
 
   }
-
 
   // return loading ? (
   return (
@@ -85,11 +97,16 @@ export default function InDepthPost() {
             <div className="comment-auth-info">
               <img src={profIcon} alt="Profile Icon"></img>
               <h4>{user.username}</h4>
+              <div>
+              <button className="new-comment-btn" type="submit" onClick={postNewComment}>
+                <FontAwesomeIcon icon={faCheck}></FontAwesomeIcon>
+                </button>
+              </div>
             </div>
             <div className="comment-text">
-                  <textarea id="comment-body" ref={newCommentBody}></textarea>
+                  <textarea id="comment-body" onChange={e => setCommentBodyState(e.target.value)} value={commentBodyState} ></textarea>
             </div>
-          </div>
+          </div>    
         {newObj.commentArr.map((index, key) => (
           <div className="each-comment">
             <div className="comment-auth-info">

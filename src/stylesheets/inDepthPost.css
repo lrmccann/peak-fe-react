@@ -173,6 +173,22 @@
   margin-right: .5%;
 }
 
+.comment-auth-info > div {
+  height: auto;
+  width: 7.5%;
+  margin-left: auto;
+}
+
+.comment-auth-info > div > button {
+  margin-left: auto;
+  height: 100%;
+  width: 100%;
+  font-size: 20px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
 .comment-text {
   height: 125px;
   width: 100%;
