@@ -49,7 +49,7 @@ if(bookmarkedBlog.length === 0){
                                 //   getIndepthblogDetails(e.target.id);
                                 // }}
                               >
-                                <h2 id={`bk-${index.id}`}>{index.publish_date}</h2>
+                                <h2 id={`bk-${index.id}`}>View</h2>
                               </button>
                             </div>
                             <div className="bk-blog-options-bar">

@@ -1,19 +1,25 @@
-import React, { useContext } from "react";
+import React, { useContext, useRef } from "react";
 import API from "../utils/API";
 import profIcon from "../images/profile-icon-def.png";
 import UserContext from "../utils/Context";
 import "../stylesheets/inDepthPost.css";
 
 export default function InDepthPost() {
-  const { detailedPost, getDetailedPost } = useContext(UserContext);
+  const { detailedPost, getDetailedPost, user } = useContext(UserContext);
   // const [loading, isLoading] = useState(true);
 
+  // ref for posting comments
+  const newCommentBody = useRef(null);
+
+  // blog object
   let newObj = {
     authUsername: "",
     postData: "",
     commentArr: [],
   };
+  //
 
+  // sort blog info into object
   const sortBlogData = async () => {
     await detailedPost.forEach((index, myKey) => {
       if ("commentBody" in index && !newObj.commentArr.includes(index)) {
@@ -25,6 +31,9 @@ export default function InDepthPost() {
       }
     });
   };
+  //
+
+  // IIF to check if blog object is empty on page reload or network connection loss
   (() => {
     let checkForEmptyObj = Object.keys(detailedPost).length;
     if (checkForEmptyObj) {
@@ -38,7 +47,13 @@ export default function InDepthPost() {
       })();
     }
   })();
-  // console.log(newObj, "object to map");
+  //
+  
+  const postNewComment = async () => {
+    
+
+  }
+
 
   // return loading ? (
   return (
@@ -66,6 +81,15 @@ export default function InDepthPost() {
         <span className="comments-header">
           <h1>Comments</h1>
         </span>
+        <div className="each-comment">
+            <div className="comment-auth-info">
+              <img src={profIcon} alt="Profile Icon"></img>
+              <h4>{user.username}</h4>
+            </div>
+            <div className="comment-text">
+                  <textarea id="comment-body" ref={newCommentBody}></textarea>
+            </div>
+          </div>
         {newObj.commentArr.map((index, key) => (
           <div className="each-comment">
             <div className="comment-auth-info">
@@ -74,7 +98,7 @@ export default function InDepthPost() {
             </div>
             <div className="comment-text">
               <h6>{index.commentBody}</h6>
-              <p>{index.commentRank}</p>
+              {/* <p>{index.commentRank}</p> */}
             </div>
           </div>
         ))}
