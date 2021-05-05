@@ -9,23 +9,12 @@ import "../stylesheets/login.css";
 
 export default function Login () {
   const history = useHistory();
-  const { getUser, envState } = useContext(UserContext);
+  const { getUser } = useContext(UserContext);
   const [show, setShow] = useState(false);
-  // const [apiEnv, setApiEnv] = useState();
-
-  // const [envState, setEnvState] = useState();
 
   const usernameRef = useRef();
   const passwordRef = useRef();
   const rememberMeRef = useRef();
-
-  // useEffect(() => {
-  //   if(envState === "development"){
-  //     setApiEnv(devFuncs);
-  //   }else{
-  //     setApiEnv(prodFuncs);
-  //   }
-  // }, [envState]);
 
   useEffect(() => {
     window.scrollTo(0, 0)

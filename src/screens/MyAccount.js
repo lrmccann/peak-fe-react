@@ -35,7 +35,6 @@ export default function MyAccount() {
   return (
     <div className="account-page container-fixed">
       <div className="account-content">
-        {/* {user.map((index) => ( */}
         <div className="leftSide">
           <div className="infoRowOne">
             <div className="shit">
@@ -43,7 +42,6 @@ export default function MyAccount() {
                 First Name
               </h3>
               <h4 className="firstNameText" id="infoText">
-                {/* {index.first_name} */}
                 {user.first_name}
               </h4>
             </div>
@@ -52,7 +50,6 @@ export default function MyAccount() {
                 User Name
               </h3>
               <h4 className="usernameInput" id="infoText">
-                {/* {index.username} */}
                 {user.username}
               </h4>
             </div>
@@ -63,7 +60,6 @@ export default function MyAccount() {
                 City
               </h3>
               <h4 className="cityText" id="infoText">
-                {/* {index.city} */}
                 {user.city}
               </h4>
             </div>
@@ -72,7 +68,6 @@ export default function MyAccount() {
                 Title
               </h3>
               <h4 className="titleText" id="infoText">
-                {/* {index.job_title} */}
                 {user.job_title}
               </h4>
             </div>
@@ -83,7 +78,6 @@ export default function MyAccount() {
                 Last Name
               </h3>
               <h4 className="lastNameText" id="infoText">
-                {/* {index.last_name} */}
                 {user.last_name}
               </h4>
             </div>
@@ -92,7 +86,6 @@ export default function MyAccount() {
                 Email
               </h3>
               <h4 className="emailText" id="infoText">
-                {/* {index.email} */}
                 {user.email}
               </h4>
             </div>
@@ -103,7 +96,6 @@ export default function MyAccount() {
                 Zipcode
               </h3>
               <h4 className="zipcodeText" id="infoText">
-                {/* {index.zipcode} */}
                 {user.zipcode}
               </h4>
             </div>
@@ -112,13 +104,19 @@ export default function MyAccount() {
                 Age
               </h3>
               <h4 className="ageText" id="infoText">
-                {/* {index.age} */}
                 {user.age}
+              </h4>
+            </div>
+            <div className="shit">
+              <h3 className="stateHeaderText" id="headerText">
+                State
+              </h3>
+              <h4 className="stateText" id="infoText">
+                {user.state}
               </h4>
             </div>
           </div>
         </div>
-        {/* ))} */}
       </div>
       <div className="topStatsCont">
         <div className="topPostsCont">
