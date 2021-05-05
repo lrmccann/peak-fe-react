@@ -119,7 +119,7 @@ export default {
             console.log(postTitle , "post title for addLike API")
             // return await axios.put(`http://localhost:3005/numOfLikesForPost/${postId}/${numOfLikesToSend}/${postTitle}` , {
                 // return await axios.put(`/numOfLikesForPost/${postId}/${numOfLikesToSend}/${postTitle}` , {
-                            return await axios.put(`https://peak-blogspace.herokuapp.com/${postId}/${numOfLikesToSend}/${postTitle}` , {
+                            return await axios.put(`https://peak-blogspace.herokuapp.com/numOfLikesForPost/${postId}/${numOfLikesToSend}/${postTitle}` , {
                 headers: {
                     'Access-Control-Allow-Origin': 'http://peak-blogspace.s3-website.us-east-2.amazonaws.com/'
                 }
