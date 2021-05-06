@@ -160,3 +160,19 @@
 .commentBox:focus {
   outline: none;
 }
+
+
+// loading screen holder
+.load-holder{
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-image: url("../images/maybe-bg-4.jpg");
+  background-repeat: no-repeat;
+  background-blend-mode: soft-light;
+  background-size: cover;
+}

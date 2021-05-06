@@ -15,21 +15,24 @@ export default function Signup() {
   const [titleMsg, setTitleMsg] = useState(null);
   const [topicLimit, setTopicLimit] = useState(5);
 
-  
-
-  const topicsArr = ["Food", "Self-Improvement", "Technology", "Business", "Pop-Culture", "Music", "Fashion"];
-
-
-  // useEffect(() => {
-  //   if(topicClicked === false){
-  //     setBtnColor("white");
-  //   }else if(topicClicked === true){
-  //     setBtnColor("green")
-  //   }
-  // }, [topicClicked])
-
-
-  const history = useHistory();
+  const topicChoices = {
+    topicOne : "Food",
+    topicTwo : "Self-Improvement",
+    topicThree : "Technology",
+    topicFour : "Business",
+    topicFive : "Pop-Culture",
+    topicSix : "Music",
+    topicSeven : "Fashion",
+    topicEight : "Gardening",
+    topicNine : "Finance",
+    topicTen : "Health",
+    topicEleven : "Gaming",
+    topicTwelve : "Medicine",
+    topicThirteen : "Movies",
+    topicFourteen : "Sports",
+    topicFifteen : "Travel"
+  }
+  // refs to create user obj
   const firstNameRef = useRef(null);
   const lastNameRef = useRef(null);
   const usernameRef = useRef(null);
@@ -40,7 +43,10 @@ export default function Signup() {
   const stateRef = useRef(null);
   const zipRef = useRef(null);
   const jobTitleRef = useRef(null);
+// history
+const history = useHistory();
 
+// scroll top
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
@@ -50,10 +56,10 @@ export default function Signup() {
       setTitleMsg("Almost Finished!");
     }else if(titleMsg === "Almost Finished!" && loading === false){
       setTimeout(() => {
-        setTitleMsg(`Personalize Your Experience, Select (${topicLimit})`)
+        setTitleMsg(`Personalize Your Experience (${topicLimit})`)
       }, 2 * 1800);
     }else{
-      setTitleMsg(`Personalize Your Experience, Select (${topicLimit})`)
+      setTitleMsg(`Personalize Your Experience (${topicLimit})`)
     }
   }, [loading, titleMsg, topicLimit])
 
@@ -97,17 +103,19 @@ export default function Signup() {
       signupUser(signupObject);
     }
   };
-
+// load state for pg 2 and set brief load
   const loadPageTwo = () => {
     setPageTwoShow(true);
     setTimeout(() => {
         return setLoading(false);
-    }, 2 * 2200);
+    }, 2 * 1600);
   }
 
+  // get user obj from sql + set local storage
   const trySignupAgain = async () => {
     let userId = localStorage.getItem("loggedInUserId");
-    await API.getUserInfo(userId).then((userData) => {
+    await API.getUserInfo(userId)
+    .then((userData) => {
       console.log(userData, "user data if og sign up fails");
     })
     // history.push('/home');
@@ -120,7 +128,8 @@ export default function Signup() {
         localStorage.setItem("loggedInUserId", res.data.insertId);
         let userId = localStorage.getItem("loggedInUserId");
         if(userId === res.data.insertId){
-          API.getUserInfo(userId).then((userRes) => {
+          API.getUserInfo(userId)
+          .then((userRes) => {
             console.log(userRes, "response for user object");
           })
           loadPageTwo();
@@ -133,10 +142,76 @@ export default function Signup() {
       }
     });
   };
+  // state for topic obj
+  const [choiceOne, setChoiceOne] = useState(null);
+  const [choiceTwo, setChoiceTwo] = useState(null);
+  const [choiceThree, setChoiceThree] = useState(null);
+  const [choiceFour, setChoiceFour] = useState(null);
+  const [choiceFive, setChoiceFive] = useState(null);
 
-
-  const recieveTopicsFromChild = (topicsObj) => {
-    console.log(topicsObj, "topic obj from topic");
+  // topic obj to send to be
+  const topicObj = {
+    choiceOne : choiceOne,
+    choiceTwo : choiceTwo,
+    choiceThree : choiceThree,
+    choiceFour : choiceFour,
+    choiceFive : choiceFive,
+}
+// func passed to child buttons to receive topics
+  const getTopic = (someTopic) => {
+        if (choiceOne === null){
+            setTopicLimit(topicLimit - 1)
+            return setChoiceOne(someTopic);
+        }else if(choiceOne !== null && choiceTwo === null){
+            setTopicLimit(topicLimit - 1)
+            return setChoiceTwo(someTopic);
+        }else if(choiceOne !== null && choiceTwo !== null && choiceThree === null){
+            setTopicLimit(topicLimit - 1)
+            return setChoiceThree(someTopic);
+        }else if(choiceOne !== null && choiceTwo !== null && choiceThree !== null && choiceFour === null){
+            setTopicLimit(topicLimit - 1)
+            return setChoiceFour(someTopic);
+        }else if(choiceOne !== null && choiceTwo !== null && choiceThree !== null && choiceFour !== null && choiceFive === null){
+            setTopicLimit(topicLimit - 1)
+            return setChoiceFive(someTopic);
+        }else if(choiceOne !== null && choiceTwo !== null && choiceThree !== null && choiceFour !== null && choiceFive !== null){
+          alert("Please remove a topic before selecting a new one");
+          return setTopicLimit(0);
+        }
+  }
+// func passed to child buttons to remove topics
+  const removeTopic = (someTopic) => {
+    if (choiceOne === someTopic){
+        setTopicLimit(topicLimit + 1)
+        return setChoiceOne(null);
+    }else if(choiceOne !== someTopic && choiceTwo === someTopic){
+        setTopicLimit(topicLimit + 1)
+        return setChoiceTwo(null);
+    }else if(choiceOne !== someTopic && choiceTwo !== someTopic && choiceThree === someTopic){
+        setTopicLimit(topicLimit + 1)
+        return setChoiceThree(null);
+    }else if(choiceOne !== someTopic && choiceTwo !== someTopic && choiceThree !== someTopic && choiceFour === someTopic){
+        setTopicLimit(topicLimit + 1)
+        return setChoiceFour(null);
+    }else if(choiceOne !== someTopic && choiceTwo !== someTopic && choiceThree !== someTopic && choiceFour !== someTopic && choiceFive === someTopic){
+        setTopicLimit(topicLimit + 1)
+        return setChoiceFive(null);
+    }else if(choiceOne !== someTopic && choiceTwo !== someTopic && choiceThree !== someTopic && choiceFour !== someTopic && choiceFive !== someTopic) {
+      alert("Please remove a topic before selecting a new one")
+        return setTopicLimit(0);
+    }
+  }
+  // send topics to api
+  const sendTopics = async () => {
+    const userId = localStorage.getItem('loggedInUserId')
+    if(topicObj.choiceOne === null || topicObj.choiceTwo === null || topicObj.choiceThree === null || topicObj.choiceFour === null || topicObj.choiceFive === null ){
+      alert("Please select all five topics you may be interested in!")
+    }else{
+      await API.sendUserTopics(topicObj, userId ).then((res) => {
+        console.log(res, "res for user topic obj")
+      })
+      history.push('/home');
+    }
   }
 
   if(pageTwoShow === false){
@@ -180,7 +255,7 @@ export default function Signup() {
 else if(pageTwoShow === true){
   if(loading === true){
     return(
-      <div className="load-screen-holder">
+      <div className="load-screen-holder container-fixed">
         <LoadingPage />
        </div>
     )
@@ -189,16 +264,23 @@ else if(pageTwoShow === true){
     <div className="signup-page-two container-fixed">
       <h1>{titleMsg}</h1>
       <div className="topic-cont container-fixed">
-        <TopicBtn 
-          arrForComp = {topicsArr}
-          parentFunc = {recieveTopicsFromChild}
-        />
-               {/* {topicsArr.map((topic , key) => (
-          <button className="topic-btn" style={{backgroundColor : btnColor}} onClick={e => {selectTopic(e.target.id)}}>
-            <p className={`topic-${key}`} id={topic}>{topic}</p>
-                </button>
-        ))} */}
+        <TopicBtn topic = {topicChoices.topicOne} getTopic = {getTopic} removeTopic = {removeTopic} limit={topicLimit} />
+        <TopicBtn topic = {topicChoices.topicTwo} getTopic = {getTopic} removeTopic = {removeTopic} limit={topicLimit} />
+        <TopicBtn topic = {topicChoices.topicThree} getTopic = {getTopic} removeTopic = {removeTopic} limit={topicLimit} />
+        <TopicBtn topic = {topicChoices.topicFour} getTopic = {getTopic} removeTopic = {removeTopic} limit={topicLimit} />
+        <TopicBtn topic = {topicChoices.topicFive} getTopic = {getTopic} removeTopic = {removeTopic} limit={topicLimit} />
+        <TopicBtn topic = {topicChoices.topicSix} getTopic = {getTopic} removeTopic = {removeTopic} limit={topicLimit} />
+        <TopicBtn topic = {topicChoices.topicSeven} getTopic = {getTopic} removeTopic = {removeTopic} limit={topicLimit} />
+        <TopicBtn topic = {topicChoices.topicEight} getTopic = {getTopic} removeTopic = {removeTopic} limit={topicLimit} />
+        <TopicBtn topic = {topicChoices.topicNine} getTopic = {getTopic} removeTopic = {removeTopic} limit={topicLimit} />
+        <TopicBtn topic = {topicChoices.topicTen} getTopic = {getTopic} removeTopic = {removeTopic} limit={topicLimit} />
+        <TopicBtn topic = {topicChoices.topicEleven} getTopic = {getTopic} removeTopic = {removeTopic} limit={topicLimit} />
+        <TopicBtn topic = {topicChoices.topicTwelve} getTopic = {getTopic} removeTopic = {removeTopic} limit={topicLimit} />
+        <TopicBtn topic = {topicChoices.topicThirteen} getTopic = {getTopic} removeTopic = {removeTopic} limit={topicLimit} />
+        <TopicBtn topic = {topicChoices.topicFourteen} getTopic = {getTopic} removeTopic = {removeTopic} limit={topicLimit} />
+        <TopicBtn topic = {topicChoices.topicFifteen} getTopic = {getTopic} removeTopic = {removeTopic} limit={topicLimit} />
       </div>
+      <button className="topic-btn" onClick={sendTopics}><p>Finish</p></button>
     </div>
   )
 }

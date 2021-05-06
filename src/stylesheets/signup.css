@@ -133,12 +133,25 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
 .signup-page-two > h1 {
-  font-size: 35px;
+  height: auto;
+  width: 100%;
+  font-size: 55px;
+  font-weight: 725;
   white-space: nowrap;
-  position: absolute;
+  color: white;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 .topic-cont {
@@ -146,20 +159,39 @@
   margin-right: auto;
   -ms-flex-item-align: center;
       align-self: center;
-  height: 50%;
-  width: 70%;
+  height: 60%;
+  width: 65%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
+  -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
   background-color: white;
+  contain: content;
 }
 
 .topic-btn {
-  height: 15%;
-  width: 15%;
+  height: 10%;
+  width: 14%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1.5%;
+  background-color: white;
+  border: solid #5454d8 2px;
+  border-radius: 25px;
+  cursor: pointer;
+}
+
+.topic-btn:hover {
+  background-color: whitesmoke;
+}
+
+.topic-btn > p {
+  margin: auto;
+  font-size: 20px;
 }
 /*# sourceMappingURL=signup.css.map */

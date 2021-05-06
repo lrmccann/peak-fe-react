@@ -100,29 +100,50 @@
   overflow: auto;
   contain: content;
   display: flex;
-  // justify-content: center;
-  // align-items: center;
-  // flex-direction: column;
+  flex-direction: column;
 }
 
 .signup-page-two > h1{
-  font-size: 35px;
+  height: auto;
+  width: 100%;
+  font-size: 55px;
+  font-weight: 725;
   white-space: nowrap;
-  position: absolute;
+  color: white;
+  display: flex;
+  justify-content: center;
 }
 
 .topic-cont{
   margin-left: auto;
   margin-right: auto;
   align-self: center;
-  height: 50%;
-  width: 70%;
+  height: 60%;
+  width: 65%;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   background-color: white;
+  contain: content;
 }
 
 .topic-btn{
-  height: 15%;
-  width: 15%;
+  height: 10%;
+  width: 14%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1.5%;
+  background-color: white;
+  border: solid rgb(84, 84, 216) 2px;
+  border-radius: 25px;
+  cursor: pointer;
+}
+
+.topic-btn:hover {
+  background-color: whitesmoke;
+}
+
+.topic-btn > p {
+  margin: auto;
+  font-size: 20px;
 }

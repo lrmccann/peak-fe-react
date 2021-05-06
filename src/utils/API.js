@@ -13,6 +13,16 @@ export default {
                 }
             })
         },
+        sendUserTopics: async function (topicObj, userId) {
+            console.log(topicObj, "user data for signup API");
+            // return await axios.post(`http://localhost:3005/account-info`, userData , {
+                // return await axios.post(`/account-info`, userData , {
+                    return await axios.put(`https://peak-blogspace.herokuapp.com/account_info/${userId}` , topicObj, {
+                headers: {
+                    'Access-Control-Allow-Origin': 'http://peak-blogspace.s3-website.us-east-2.amazonaws.com/'
+                }
+            })
+        },
         loginUser: async function (username , password) {
             console.log(username , password , "username and password for auth FROM DEV ENV");
             // return await axios.get(`http://localhost:3005/account-info-login/${username}/${password}`, {

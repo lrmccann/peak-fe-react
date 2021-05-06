@@ -220,4 +220,27 @@
 .commentBox:focus {
   outline: none;
 }
+
+.load-holder {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-image: url("../images/maybe-bg-4.jpg");
+  background-repeat: no-repeat;
+  background-blend-mode: soft-light;
+  background-size: cover;
+}
 /*# sourceMappingURL=myAccount.css.map */

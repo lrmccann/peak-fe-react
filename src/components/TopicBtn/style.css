@@ -1,22 +1,19 @@
-/* .topic-btn{
-    background-color: transparent;
-    border: solid 3px;
-} */
-
-
-
-.regularBtn{
-    height: 30%;
-    width: 30%;
-    cursor: pointer;
+.topic-btn-cont{
+    height: 32.4%;
+    width: 19.57%;
     background-color: white;
-    border: solid 3px black;
+    /* border: solid 2px rgb(84, 84, 216); */
+    border: solid 2px slategray;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-.activeBtn{
-    height: 30%;
-    width: 30%;
+.btn-topic{
+    height: 90%;
+    width: 90%;
+    /* background-color: gold; */
     cursor: pointer;
-    background-color: white;
-    border: hotpink 5px solid;
+    font-size: 20px;
 }

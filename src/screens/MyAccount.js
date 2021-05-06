@@ -2,11 +2,25 @@ import React, { useContext, useEffect, useState } from "react";
 import UserContext from "../utils/Context";
 import API from "../utils/API";
 import "../stylesheets/myAccount.css";
+import LoadingPage from "../components/Loading";
 
 export default function MyAccount() {
-  const [topComments, setTopComments] = useState([]);
-  const [topPosts, setTopPosts] = useState([]);
   const { user, getUser } = useContext(UserContext);
+  const [prefTopicsArr, setPrefTopicsArr] = useState([]);
+  const [topPosts, setTopPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+      if(Object.keys(user).length){
+        const removeQuotes = user.preferred_topics.replace(/['"]+/g, '').split(',');
+        setPrefTopicsArr(removeQuotes);
+        if(prefTopicsArr.length <= 1){
+          setLoading(true);
+        }else if(prefTopicsArr.length >= 3){
+          setLoading(false);
+        }
+      }
+  },[prefTopicsArr.length, user])
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -32,6 +46,13 @@ export default function MyAccount() {
     }
   }, [getUser, user]);
 
+if(loading === true){
+  return(
+    <div className="load-holder container-fixed">
+        <LoadingPage />
+    </div>
+  )
+}else{
   return (
     <div className="account-page container-fixed">
       <div className="account-content">
@@ -138,14 +159,15 @@ export default function MyAccount() {
           ))}
         </div>
         <div className="topCommentsCont">
-          <h1 id="topStatsHeaderText">Top Comments</h1>
-          {topComments.map((index, mapKey) => (
+          <h1 id="topStatsHeaderText">Preferred Topics</h1>
+          {prefTopicsArr.map((index, mapKey) => (
             <button className="commentBox" key={mapKey}>
-              <h3>{index.comment_body}</h3>
+              <h3>{index}</h3>
             </button>
           ))}
         </div>
       </div>
     </div>
   );
+}
 }
