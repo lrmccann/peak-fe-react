@@ -1,0 +1,22 @@
+/* .topic-btn{
+    background-color: transparent;
+    border: solid 3px;
+} */
+
+
+
+.regularBtn{
+    height: 30%;
+    width: 30%;
+    cursor: pointer;
+    background-color: white;
+    border: solid 3px black;
+}
+
+.activeBtn{
+    height: 30%;
+    width: 30%;
+    cursor: pointer;
+    background-color: white;
+    border: hotpink 5px solid;
+}
