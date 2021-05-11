@@ -42,7 +42,7 @@ export default function BlogBtnCont(props) {
       setNumOfLikes(numOfLikes + 1);
       var postIdToSend = props.postId;
       var postTitleToSend = props.postTitle;
-      var likesPlusOne = numOfLikes + 1;
+      var likesPlusOne = "add";
       await API.addLike(postIdToSend, likesPlusOne, postTitleToSend).then(
         (results) => {
           if (results.status === 200) {
@@ -56,7 +56,7 @@ export default function BlogBtnCont(props) {
       setNumOfLikes(numOfLikes - 1);
       var postIdToSendTwo = props.postId;
       var postTitleToSendTwo = props.postTitle;
-      var likesMinusOne = numOfLikes - 1;
+      var likesMinusOne = "remove";
       await API.addLike(
         postIdToSendTwo,
         likesMinusOne,

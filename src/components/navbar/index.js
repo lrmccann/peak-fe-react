@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import API from "../../utils/API";
 import photoThree from "../../images/profile-icon-def.png";
@@ -9,24 +9,17 @@ import {
   faFile,
   faHome,
 } from "@fortawesome/free-solid-svg-icons";
-import {awsConfigBlog} from '../../utils/awsCongif';
 import "./style.css";
-import { dirname } from "path";
-
-const { S3Client, PutObjectCommand } = require("aws-sdk/clients/s3");
-const path = require("path");
-const fs = require("fs");
-
-
-const REGION = awsConfigBlog.region;
-
-// var AWS = require('aws-sdk');
 
 export default function NavbarTop() {
   const history = useHistory();
   const [newBlogOpen, setNewBlogOpen] = useState(false);
-  const [awsLinkToSend, setAwsLinkToSend] = useState();
-  const [newFileInput, setNewFileInput] = useState();
+  const [fileName, setFileName] = useState();
+  const [selectedFile, setSelectedFile] = useState();
+  const [imgVisibility , setImgVisibility] = useState('hidden');
+  const [imgSrc , setImgSrc] = useState("");
+  const [imgSelected , setImgSelected] = useState(false);
+  const [dataUrl ,  setDataUrl ] = useState(null);
   // const [welcomeMsg, setWelcomeMsg] = useState("Welcome");
 
   // Refs for new blog post
@@ -35,11 +28,16 @@ export default function NavbarTop() {
   const blogBody = useRef(null);
   const inputFile = useRef(null);
 
-  // const s3 = new AWS.S3({
-  //   signatureVersion : 'v4',
-  //   region: awsConfigBlog.region
-  // })
-
+  useEffect(() => {
+    if(imgSelected === true){
+      setImgSrc()
+      return setImgVisibility('visible');
+    }else{
+      console.log("use effect else")
+      // setImgSrc("");
+      // return setImgVisibility('hidden');
+    }
+  }, [imgSelected])
 
   // Screen nav
   const navHome = () => {
@@ -63,19 +61,6 @@ export default function NavbarTop() {
     setNewBlogOpen(false);
   };
 
-  // Blog Image Functions - Send and Receive from AWS
-
-  const checkFileType = (files) => {
-    // console.log(files);
-    if(files.type === "application/pdf" || files.type === "image/jpg" || files.type === "image/png" || files.type === "image/jpeg"){
-      // var savePostWithFile = files
-        setNewFileInput(files.name);
-      return setAwsLinkToSend(files);
-    }else{
-      alert("Please Select From png, jpg, jpeg, or pdf");
-    }
-  }
-
   const retrieveFile = () => {
     const inputElement = document.getElementById("input");
     inputElement.addEventListener("change", handleFiles, false);
@@ -84,7 +69,11 @@ export default function NavbarTop() {
       if(fileList.length === 0 || fileList === null){
         alert("Error Loading File, Please Try Again")
       }else{
-          checkFileType(fileList[0])
+        let dataUrl = URL.createObjectURL(fileList[0]);
+          setImgSrc(dataUrl);
+          setImgSelected(true);
+          setFileName(fileList[0].name);
+          return setSelectedFile(fileList[0]);
       }
     }
   };
@@ -93,62 +82,86 @@ export default function NavbarTop() {
     retrieveFile();
   };
 
-  //
+// Blog Image Functions - Send and Receive from AWS
+const savePostToSQL = async (imgUrl, blogObj) => {
+  const userId = localStorage.getItem("loggedInUserId")
+  const finalBlogObj = {
+      "headerImg" : imgUrl,
+      "blogTitle" : blogObj.blogTitleToSend,
+      "blogBody" : blogObj.blogBodyToSend,
+      "userId" : userId
+  }
+  await API.postNewBlog(finalBlogObj).then((res) => {
+    console.log(res, "response from blog api");
+  })
+}
 
-  const tryAwsPost = async (dataSend) => {
-    const s3 = new S3Client({region : REGION})
-
-    try {
-      const data = await s3.send(new PutObjectCommand(dataSend));
-      console.log("Success", data);
-    } catch (err) {
-      console.log("Error", err);
+const sendImgToPost = async (titleNoSpaces, something, blogObj) => {
+  if(something === null){
+    setTimeout(() => {
+        sendImgToPost(titleNoSpaces);
+        console.log("failed data url =" , dataUrl)
+    }, 2 * 500);
+  }else{
+  const imageType = (selectedFile.type.replace("image/", ""));
+  const base64Data = new Buffer.from(something.replace(/^data:image\/\w+;base64,/, ""), 'base64');
+    await API.postBlogImg(base64Data, imageType, titleNoSpaces).then((error , response) => { 
+    if(error === undefined){
+      setTimeout(() => {
+        if(error.status !== 202){
+          alert("There was an error uploading your image")
+        }else if(error.status === 202){
+          savePostToSQL(error.data , blogObj)
+        }
+      }, 2 * 1200);
+    }else{
+      if(error.status !== 202){
+        alert("There was an error uploading your image")
+      }else if(error.status === 202){
+        savePostToSQL(error.data , blogObj )
+      }
+    }
+    })
+  }
+}
+ 
+  const checkFileType = async (blogObj) => {
+    if(selectedFile.type === "application/pdf" || selectedFile.type === "image/jpg" || selectedFile.type === "image/png" || selectedFile.type === "image/jpeg"){
+      let fileTypeAfterReplace = ((`${selectedFile.type}`).split("/").pop());
+      let blogTitleNoSpaces = ((`${blogObj.blogTitleToSend}`).replace(/\s/g, ''));
+      if(fileTypeAfterReplace === null){
+        return console.log("file did not de stringify")
+      }else{
+        const reader = new FileReader();
+      reader.readAsDataURL(selectedFile);
+      reader.onload =  function(){
+        sendImgToPost(blogTitleNoSpaces, reader.result , blogObj);
+      }
+      reader.onerror = function(){
+        console.log(reader.error, "on error load")
+      }
+      }
+    }else{
+      alert("Please Select From png, jpg, jpeg, or pdf");
     }
   }
 
   const handleBlogPost = async () => {
-    let ext = path.extname(newFileInput)
-    console.log(ext);
-    let keyToSend = `${__dirname}/${newFileInput}`;
-    console.log(keyToSend)
-    // const fileStream = fs.createReadStream(keyToSend)
-    const uploadParams = {
-      Bucket : awsConfigBlog.bucketName,
-      Key: newFileInput,
-      Body: awsLinkToSend
-    }
-    console.log(uploadParams, "upload params");
-      tryAwsPost(awsLinkToSend);
-  }
-
-  const sendAwsToBucket = async (e) => {
-    // e.preventDefault();
-    var resultsInFullScope = {};
-    // var imgHeaderToSend = imgHeader.current.value;
-    var imgHeaderToSend = awsLinkToSend;
+    var imgHeaderToSend = imgHeader.current.value;
     var blogTitleToSend = blogTitle.current.value;
     var blogBodyToSend = blogBody.current.value;
-    var userIdToSend = localStorage.getItem("loggedInUserId");
 
-    var blogInfoToSend = {
+        var blogInfoToCheck = {
       imgHeaderToSend,
       blogTitleToSend,
-      blogBodyToSend,
-      userIdToSend,
+      blogBodyToSend
     };
-
-    // console.log(blogInfoToSend, "blog info to send to server");
-    await API.postNewBlog({ blogInfoToSend }).then((res) => {
-      resultsInFullScope = res;
-    });
-    if (resultsInFullScope.status === 202) {
-      setNewBlogOpen(false);
-    } else {
-      alert(
-        "An error occurred while posting your blog, please try again later."
-      );
+    if(blogInfoToCheck.blogBodyToSend === null || blogInfoToCheck.blogBodyToSend === "" || blogInfoToCheck.imgHeaderToSend === null || blogInfoToCheck.imgHeaderToSend === "" ){
+      console.log("blog obj not full")
+    }else{
+      checkFileType(blogInfoToCheck);
     }
-  };
+    }
 
   if (newBlogOpen === false) {
     return (
@@ -207,7 +220,8 @@ export default function NavbarTop() {
           <h6 style={{ marginTop: "2%" }} id="category-text">
             Image Header
           </h6>
-          <input id="modal-input" ref={imgHeader} className="imgInput" defaultValue={newFileInput}></input>
+          <img src={imgSrc} alt="Selected File" style={{visibility : imgVisibility , height: '200px' , width: '200px' }} ></img>
+          <input id="modal-input" ref={imgHeader} type="text" className="imgInput" defaultValue={fileName}></input>
           <h6 className="category-text">Title</h6>
           <input id="modal-input" ref={blogTitle}></input>
           <h6 style={{ marginLeft: "8%" }}>Body</h6>

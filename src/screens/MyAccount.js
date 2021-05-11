@@ -12,14 +12,22 @@ export default function MyAccount() {
 
   useEffect(() => {
       if(Object.keys(user).length){
+        if(user.preferred_topics === null) {
+          setTimeout(() => {
+            setLoading(false);
+          }, 2 * 1800);
+        }else{
         const removeQuotes = user.preferred_topics.replace(/['"]+/g, '').split(',');
         setPrefTopicsArr(removeQuotes);
         if(prefTopicsArr.length <= 1){
-          setLoading(true);
+          setTimeout(() => {
+            setLoading(false);
+          }, 2 * 1800);
         }else if(prefTopicsArr.length >= 3){
           setLoading(false);
         }
       }
+    }
   },[prefTopicsArr.length, user])
 
   useEffect(() => {

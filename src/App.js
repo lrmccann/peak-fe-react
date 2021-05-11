@@ -16,6 +16,7 @@ export default function App() {
   const [allPosts, setAllPosts] = useState([]);
   const [detailedPost, setDetailedPost] = useState({});
   const [allComments, setAllComments] = useState([]);
+  const [loggedIn , setLoggedIn] = useState(false);
 
   const getUser = (userData) => {
     setUser((user) => {
