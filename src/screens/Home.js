@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import photoThree from "../images/profile-icon-def.png";
 import BlogBtnCont from "../components/blogBtnCont";
 import viewIcon from "../images/view-icon.png";
+import LoadingPage from '../components/Loading/index';
 import "../stylesheets/home.css";
 
 export default function Home(props) {
@@ -79,9 +80,9 @@ export default function Home(props) {
 
   if (loading === true) {
     return (
-      <div>
-        <h1>Loading</h1>
-      </div>
+      <div className="load-screen-holder container-fixed">
+      <LoadingPage />
+     </div>
     );
   } else if (loading === false) {
     return (

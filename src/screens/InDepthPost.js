@@ -7,21 +7,20 @@ import {
   faCheck,
   faCheckSquare
 } from "@fortawesome/free-solid-svg-icons";
+import LoadingPage from '../components/Loading/index';
 import "../stylesheets/inDepthPost.css";
 
 
 export default function InDepthPost() {
   const { detailedPost, getDetailedPost, user } = useContext(UserContext);
-  // const [loading, isLoading] = useState(true);
+  const [loading, isLoading] = useState(true);
     const [commentBodyState, setCommentBodyState] = useState("Please enter comment!");
 
-  // blog object
   let newObj = {
     authUsername: "",
     postData: "",
     commentArr: [],
   };
-  //
 
   // sort blog info into object
   const sortBlogData = async () => {
@@ -66,13 +65,12 @@ export default function InDepthPost() {
           await API.postNewComment(newCommentObj.userId , newCommentObj.postId , newCommentObj.commentBody);
 
   }
-
-  // return loading ? (
+if(loading === true){
+  <div className="load-screen-holder container-fixed">
+  <LoadingPage />
+ </div>
+}else{
   return (
-    //   <div>
-    //   <p>Loading</p>
-    // </div>
-    // ) : (
     <div className="indepth-post-page container-fluid ">
       <div className="blog-post-cont">
         <div className="blog-img-cont">
@@ -122,4 +120,5 @@ export default function InDepthPost() {
       </div>
     </div>
   );
+        }
 }

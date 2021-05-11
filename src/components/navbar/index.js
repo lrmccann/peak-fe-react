@@ -19,7 +19,6 @@ export default function NavbarTop() {
   const [imgVisibility , setImgVisibility] = useState('hidden');
   const [imgSrc , setImgSrc] = useState("");
   const [imgSelected , setImgSelected] = useState(false);
-  const [dataUrl ,  setDataUrl ] = useState(null);
   // const [welcomeMsg, setWelcomeMsg] = useState("Welcome");
 
   // Refs for new blog post
@@ -92,7 +91,10 @@ const savePostToSQL = async (imgUrl, blogObj) => {
       "userId" : userId
   }
   await API.postNewBlog(finalBlogObj).then((res) => {
-    console.log(res, "response from blog api");
+    if(res.status === 202){
+      alert("Blog created successfully!");
+      setNewBlogOpen(false);
+    }
   })
 }
 
@@ -100,7 +102,7 @@ const sendImgToPost = async (titleNoSpaces, something, blogObj) => {
   if(something === null){
     setTimeout(() => {
         sendImgToPost(titleNoSpaces);
-        console.log("failed data url =" , dataUrl)
+        console.log("failed data url =" , titleNoSpaces)
     }, 2 * 500);
   }else{
   const imageType = (selectedFile.type.replace("image/", ""));
