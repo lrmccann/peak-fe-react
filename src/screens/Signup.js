@@ -10,10 +10,23 @@ import "../stylesheets/signup.css";
 import TopicBtn from "../components/TopicBtn";
 
 export default function Signup() {
-  const [pageTwoShow, setPageTwoShow] = useState(false);
-  const [loading, setLoading] = useState(true);
+// state to set title message a few seconds after user loads second page
+  const [loadTitleMessage, setLoadTitleMessage] = useState(false);
   const [titleMsg, setTitleMsg] = useState(null);
-  const [topicLimit, setTopicLimit] = useState(5);
+// state to show select topic screen
+  const [pageTwoShow, setPageTwoShow] = useState(false);
+// state for topic limit, updates UI & capped at 5
+const [topicLimit, setTopicLimit] = useState(5);
+// state for loading
+  const [loading, setLoading] = useState(true);
+// state to load preview image of blog img
+  const [imgSelected, setImgSelected] = useState(null);
+  const [imgVisibility, setImgVisibility] = useState("hidden");
+  const [imgSrc, setImgSrc] = useState();
+
+  const [selectedFile, setSelectedFile] = useState();
+
+  const inputFile = useRef(null);
 
   const topicChoices = {
     topicOne : "Food",
@@ -52,21 +65,138 @@ const history = useHistory();
   }, [])
 
   useEffect(() => {
-    if(titleMsg === null){
+    // console.log(titleMsg, "title msg state")
+    if(loadTitleMessage === true){
       setTitleMsg("Almost Finished!");
-    }else if(titleMsg === "Almost Finished!" && loading === false){
       setTimeout(() => {
-        setTitleMsg(`Personalize Your Experience (${topicLimit})`)
-      }, 2 * 1800);
+        return setTitleMsg(`Personalize Your Experience (${topicLimit})`)
+      }, 2 * 1100);
     }else{
-      setTitleMsg(`Personalize Your Experience (${topicLimit})`)
+      setTitleMsg("Almost Finished!");
     }
-  }, [loading, titleMsg, topicLimit])
+  }, [loadTitleMessage, topicLimit])
+
+  const retrieveFile = () => {
+    const inputElement = document.getElementById("input");
+    inputElement.addEventListener("change", handleFiles, false);
+    function handleFiles() {
+      const fileList = this.files;
+      if (fileList.length === 0 || fileList === null) {
+          setImgSelected(false);
+        return alert("Error Loading File, Please Try Again");
+      } else {
+        let dataUrl = URL.createObjectURL(fileList[0]);
+        setImgSrc(dataUrl);
+        return setSelectedFile(fileList[0]);
+      }
+    }
+  };
+  const openDialogue = () => {
+    inputFile.current.click();
+    retrieveFile();
+  };
+
+// load state for pg 2 and set brief load
+  const loadPageTwo = () => {
+    setLoadTitleMessage(true);
+    setPageTwoShow(true);
+    setTimeout(() => {
+        return setLoading(false);
+    }, 2 * 1600);
+  }
+
+  // get user obj from sql + set local storage
+  const tryFetchDetailsAgain = async (userId) => {
+    // let userId = localStorage.getItem("loggedInUserId");
+    await API.getUserInfo(userId)
+    .then((userData) => {
+      if(userData.status === 404){
+        alert("error retrieving user data from sql")
+      }else if(userData.status === 202){
+        // loadPageTwo();
+        history.push('/home');
+      }
+    });
+  };
+
+  const signupUser = async (newAwsURL , signupObject) => {
+
+    let finalSignupObj = {
+      icon : newAwsURL,
+      firstName : signupObject.firstName,
+      lastName : signupObject.lastName,
+      username : signupObject.username,
+      email : signupObject.email,
+      password : signupObject.password,
+      age : signupObject.age,
+      city : signupObject.city,
+      state : signupObject.state,
+      zip : signupObject.zip,
+      jobTitle : signupObject.jobTitle,
+      date : signupObject.date
+    }
+
+    await API.signupUser(finalSignupObj).then((res) => {
+      if(res.status === 202){
+        localStorage.setItem("loggedInUserId", res.data.insertId);
+        let userId = localStorage.getItem("loggedInUserId");
+        if(userId === res.data.insertId){
+          loadPageTwo();
+        }
+      }else{
+        alert('error creating user, please try again');
+      }
+    });
+  };
+
+  const sendIconAws = async (awsFileName, fileType , fileData , signupObject) => {
+    if(fileData === null){
+      setTimeout(() => {
+        checkFileType(signupObject);
+      }, 2 * 500);
+    }else{
+      await API.postUserImg(awsFileName , fileType , fileData).then((res) => {
+        if(res.status === 404){
+          return alert("There was an error posting your photo")
+        }else if(res.status === 202){
+          signupUser(res.data , signupObject)
+        }
+      })
+    }
+
+  }
+
+  const checkFileType = async (signupObject) => {
+    if (
+      selectedFile.type === "application/pdf" ||
+      selectedFile.type === "image/jpg" ||
+      selectedFile.type === "image/png" ||
+      selectedFile.type === "image/jpeg"
+    ) {
+      let fileTypeAfterReplace = `${selectedFile.type}`.replace("image/" , "");
+      let awsFileName = `${signupObject.firstName}${signupObject.lastName}`.replace(/\s/g, "");
+      if (fileTypeAfterReplace === null) {
+        return alert("file did not de stringify");
+      } else {
+        const reader = new FileReader();
+        reader.readAsDataURL(selectedFile);
+        reader.onload = function () {
+          sendIconAws(awsFileName, fileTypeAfterReplace , reader.result, signupObject);
+        };
+        reader.onerror = function () {
+          return console.log(reader.error, "on error load");
+        };
+      }
+    } else {
+      alert("Please Select From png, jpg, jpeg, or pdf");
+    }
+  }
 
   const validateForm = (e) => {
     e.preventDefault();
     var dateTime = new Date().toJSON().slice(0, 19).replace("T", " ");
     var signupObject = {
+      icon: selectedFile,
       firstName: firstNameRef.current.value,
       lastName: lastNameRef.current.value,
       username: usernameRef.current.value,
@@ -79,7 +209,10 @@ const history = useHistory();
       jobTitle: jobTitleRef.current.value,
       date: dateTime,
     };
-    if (signupObject.firstName === "") {
+
+    if(signupObject.icon === ""){
+      alert("Please select a profile icon")
+    }else if (signupObject.firstName === "") {
       alert("Please enter user name");
     } else if (signupObject.lastName === "") {
       alert("Please enter last name");
@@ -100,48 +233,11 @@ const history = useHistory();
     } else if (signupObject.jobTitle === "") {
       alert("Please enter job title");
     } else {
-      signupUser(signupObject);
+      // signupUser(signupObject);
+      checkFileType(signupObject);
     }
   };
-// load state for pg 2 and set brief load
-  const loadPageTwo = () => {
-    setPageTwoShow(true);
-    setTimeout(() => {
-        return setLoading(false);
-    }, 2 * 1600);
-  }
 
-  // get user obj from sql + set local storage
-  const trySignupAgain = async () => {
-    let userId = localStorage.getItem("loggedInUserId");
-    await API.getUserInfo(userId)
-    .then((userData) => {
-      console.log(userData, "user data if og sign up fails");
-    })
-    // history.push('/home');
-        loadPageTwo();
-  }
-
-  const signupUser = async (signupObject) => {
-    await API.signupUser(signupObject).then((res) => {
-      if(res.status === 200){
-        localStorage.setItem("loggedInUserId", res.data.insertId);
-        let userId = localStorage.getItem("loggedInUserId");
-        if(userId === res.data.insertId){
-          API.getUserInfo(userId)
-          .then((userRes) => {
-            console.log(userRes, "response for user object");
-          })
-          loadPageTwo();
-            // history.push('/home');
-        }else{
-          trySignupAgain();
-        }
-      }else{
-        alert('error creating user');
-      }
-    });
-  };
   // state for topic obj
   const [choiceOne, setChoiceOne] = useState(null);
   const [choiceTwo, setChoiceTwo] = useState(null);
@@ -157,6 +253,7 @@ const history = useHistory();
     choiceFour : choiceFour,
     choiceFive : choiceFive,
 }
+
 // func passed to child buttons to receive topics
   const getTopic = (someTopic) => {
         if (choiceOne === null){
@@ -208,9 +305,19 @@ const history = useHistory();
       alert("Please select all five topics you may be interested in!")
     }else{
       await API.sendUserTopics(topicObj, userId ).then((res) => {
-        console.log(res, "res for user topic obj")
-      })
-      history.push('/home');
+        if(res.status === 404){
+          alert("Error posting topics, please try again");
+        }else if(res.status === 202){
+          API.getUserInfo(userId)
+          .then((userRes) => {
+            if(userRes.status === 404){
+              tryFetchDetailsAgain(userId);
+            }else if(userRes.status === 202){
+              history.push('/home');
+            }
+          });
+        }
+      });
     }
   }
 
@@ -219,6 +326,22 @@ const history = useHistory();
     <div className="signup-page container-fixed">
       <h1>Tell Us About Yourself!</h1>
       <div className="signup-container">
+        <div className="user-icon-cont container-fixed">
+          <button onClick={openDialogue}>
+            <input
+            type="file"
+            id="input"
+            ref={inputFile}
+            style={{display: "none"}}
+            ></input>
+          <img 
+          src={imgSrc} 
+          alt="Your Profile Icon"
+          >
+          </img>
+          </button>
+        </div>
+        <div className="forms-container">
         <form>
           <label>First</label>
           <input type="text" ref={firstNameRef}></input>
@@ -243,6 +366,7 @@ const history = useHistory();
           <label>Title</label>
           <input type="text" ref={jobTitleRef}></input>
         </form>
+        </div>
         <button 
         onClick={validateForm}
          className="submit-btn">

@@ -101,6 +101,18 @@ export default {
             })
         },
     //
+    // calls to send user icon to aws
+    saveUserIcon: async function(blogContent){
+        console.log(blogContent, "new blog for API")
+        // return await axios.post(`http://localhost:3005/create-new-post` , blogContent , {
+            // return await axios.post(`/create-new-post` , blogContent , {
+                    return await axios.post(`https://peak-blogspace.herokuapp.com/create-new-post` , blogContent , {    
+            headers: {
+                'Access-Control-Allow-Origin': 'http://peak-blogspace.s3-website.us-east-2.amazonaws.com/'
+            }
+        })
+    },
+    //
     // call to add view to post using postId
     addViewToBlog: async function(postId){
         console.log(postId, "add view to post API")
@@ -211,13 +223,16 @@ export default {
                 }
             })
         },
-        postUserImg : async function(file, fileType, username) {
-            console.log(`FILE : ${file}  FILETYPE :  ${fileType} USERNAME : ${username}  POST USER IMG API`);
+        postUserImg : async function(awsFileName, fileType, fileData) {
+            console.log(`FILENAME : ${awsFileName}  FILETYPE :  ${fileType} POST USER IMG API`);
             // return await axios.delete(`http://localhost:3005/user-posts/${postId}` , {
                 // return await axios.delete(`/user-posts/${postId}` , {
-                        return await axios.post(`https://peak-blogspace.herokuapp.com/user-images/${file}/${fileType}/${username}` , {
+                        return await axios.put(`https://peak-blogspace.herokuapp.com/user-images/${awsFileName}/${fileType}` , {
                 headers : {
                     'Access-Control-Allow-Origin': 'http://peak-blogspace.s3-website.us-east-2.amazonaws.com/'
+                },
+                data : {
+                    fileData
                 }
             })
         },

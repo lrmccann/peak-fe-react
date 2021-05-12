@@ -3,12 +3,14 @@ import { useHistory } from "react-router-dom";
 import API from "../utils/API";
 import UserContext from "../utils/Context";
 import photo from "../images/peak-blogspace-icon.png";
+import LoadingPage from '../components/Loading/index';
 import "../stylesheets/login.css";
 
 export default function Login () {
   const history = useHistory();
-  const { getUser } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
   const [show, setShow] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const usernameRef = useRef();
   const passwordRef = useRef();
@@ -28,22 +30,27 @@ export default function Login () {
 
   const checkCredentialValidity = (e) => {
     e.preventDefault();
+    setLoading(true);
     if (usernameRef.current.value === "") {
-      alert("Please Enter Username");
+      setLoading(false);
+      return alert("Please Enter Username");
     } else if (
       usernameRef.current.value < 8 ||
       usernameRef.current.value > 20
     ) {
-      alert("Please Meet Username Requirements");
+      setLoading(false);
+      return alert("Please Meet Username Requirements");
     } else if (passwordRef.current.value === "") {
-      alert("Please Enter Password");
+      setLoading(false);
+      return alert("Please Enter Password");
     } else if (
       passwordRef.current.value < 8 ||
       passwordRef.current.value > 20
     ) {
-      alert("Please Meet Password Requirements");
+      setLoading(false);
+      return alert("Please Meet Password Requirements");
     } else {
-      checkSqlForUser();
+      return checkSqlForUser();
     }
   };
   const checkSqlForUser = async (username, password) => {
@@ -52,10 +59,10 @@ export default function Login () {
       (password = passwordRef.current.value)
     ).then(async function (res) {
       if (res.data === "Invalid Username or Password") {
-        alert("Invalid Username or Password, Please Try Again");
-        return;
+        setLoading(false);
+        return alert("Invalid Username or Password, Please Try Again");
       } else {
-        getUser(res.data);
+        setUser(res.data);
         localStorage.setItem("loggedInUserId" , res.data.id)
         history.push("/home");
       }
@@ -64,6 +71,15 @@ export default function Login () {
   const navSignup = () => {
     history.push("/signup");
   };
+
+  if(loading === true){
+    return(
+      <div className="load-screen-holder container-fixed">
+      <LoadingPage />
+    </div>
+    )
+  }
+  else{
   if (show === false) {
     return (
       <div className="login-page container">
@@ -133,4 +149,5 @@ export default function Login () {
       </div>
     );
   }
+}
 };

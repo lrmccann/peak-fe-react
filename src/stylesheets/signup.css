@@ -15,6 +15,12 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .signup-page > h1 {
@@ -28,7 +34,58 @@
 
 .signup-container {
   position: relative;
+  height: 90%;
+  width: 70%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: #c2c2c9;
+}
+
+.user-icon-cont {
+  height: 20%;
+  width: 50%;
+  margin-bottom: -1%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.user-icon-cont > button {
+  height: 81%;
+  width: 21.2%;
+  border-radius: 55px;
+  border: solid black thin;
+  background-color: gainsboro;
+  cursor: pointer;
+}
+
+.user-icon-cont > button > img {
   height: 100%;
+  width: 100%;
+  border-radius: 55px;
+}
+
+.forms-container {
+  position: relative;
+  height: 75%;
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -37,19 +94,12 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
 }
 
-.signup-container > form {
+.signup-container > div > form {
   position: relative;
-  height: 70%;
-  width: 38%;
-  margin-top: -1%;
+  height: 100%;
+  width: 50%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -66,13 +116,13 @@
       align-content: center;
 }
 
-.signup-container > form > label {
+.signup-container > div > form > label {
   margin-bottom: -3%;
   font-size: 20px;
   color: white;
 }
 
-.signup-container > form > input {
+.signup-container > div > form > input {
   width: 60%;
   height: 5.5%;
 }

@@ -13,7 +13,7 @@ import "../stylesheets/inDepthPost.css";
 
 export default function InDepthPost() {
   const { detailedPost, getDetailedPost, user } = useContext(UserContext);
-  const [loading, isLoading] = useState(true);
+  const [loading, isLoading] = useState(false);
     const [commentBodyState, setCommentBodyState] = useState("Please enter comment!");
 
   let newObj = {
@@ -32,7 +32,9 @@ export default function InDepthPost() {
       } else if ("username" in index) {
         return (newObj.authUsername = index);
       }
-    });
+      // return isLoading(false);
+    })
+    
   };
   //
 
@@ -40,12 +42,14 @@ export default function InDepthPost() {
   (() => {
     let checkForEmptyObj = Object.keys(detailedPost).length;
     if (checkForEmptyObj) {
-      sortBlogData();
+      // isLoading(false)
+      return sortBlogData();
     } else {
       let blogToReload = localStorage.getItem("recentPostId");
       (async () => {
         await API.getPostDetails(blogToReload).then((res) =>
-          getDetailedPost(res.data)
+          getDetailedPost(res.data),
+          // isLoading(false)
         );
       })();
     }
@@ -66,10 +70,13 @@ export default function InDepthPost() {
 
   }
 if(loading === true){
-  <div className="load-screen-holder container-fixed">
-  <LoadingPage />
- </div>
-}else{
+  return (
+            <div className="load-screen-holder container-fixed">
+            <LoadingPage />
+          </div>
+  )
+}
+else if(loading === false){
   return (
     <div className="indepth-post-page container-fluid ">
       <div className="blog-post-cont">

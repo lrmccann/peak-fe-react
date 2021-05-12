@@ -4,6 +4,7 @@ import Home from "./screens/Home";
 import InDepthPost from "./screens/InDepthPost";
 import MyAccount from "./screens/MyAccount";
 import Bookmarks from "./screens/Bookmarks";
+import CreatePost from './screens/CreatePost';
 import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { UserProvider } from "./utils/Context";
@@ -12,14 +13,14 @@ import NavbarTop from "./components/navbar/index";
 // import ScrollToTop from "react-scroll-to-top";
 
 export default function App() {
-  const [user, setUser] = useState({});
+  const [user, setTheUser] = useState({});
   const [allPosts, setAllPosts] = useState([]);
   const [detailedPost, setDetailedPost] = useState({});
   const [allComments, setAllComments] = useState([]);
   const [loggedIn , setLoggedIn] = useState(false);
 
-  const getUser = (userData) => {
-    setUser((user) => {
+  const setUser = (userData) => {
+    setTheUser((user) => {
       return (user = userData);
     });
   };
@@ -50,7 +51,7 @@ export default function App() {
         detailedPost,
         allComments,
 
-        getUser,
+        setUser,
         getAllPostsForHomePage,
         getDetailedPost,
         getAllComments,
@@ -69,6 +70,7 @@ export default function App() {
           path="/indepthpost"
           component={InDepthPost}
         />
+        <Route exact activeClassName path="/createPost" component={CreatePost} />
         <Route exact activeClassName path="/myaccount" component={MyAccount} />
         <Route exact activeClassName path="/bookmarks" component={Bookmarks} />
       </Router>

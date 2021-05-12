@@ -5,7 +5,7 @@ import "../stylesheets/myAccount.css";
 import LoadingPage from "../components/Loading";
 
 export default function MyAccount() {
-  const { user, getUser } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const [prefTopicsArr, setPrefTopicsArr] = useState([]);
   const [topPosts, setTopPosts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -48,11 +48,11 @@ export default function MyAccount() {
       (async () => {
         let userToReload = localStorage.getItem("loggedInUserId");
         await API.getUserInfo(userToReload).then((res) => {
-          getUser(res.data);
+          setUser(res.data);
         });
       })();
     }
-  }, [getUser, user]);
+  }, [setUser, user]);
 
 if(loading === true){
   return(
