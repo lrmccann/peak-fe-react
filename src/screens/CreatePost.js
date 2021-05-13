@@ -88,11 +88,9 @@ export default function CreatePost() {
   const sendImgToPost = async (titleNoSpaces, fileType , fileData, blogObj) => {
     if (fileData === null) {
       setTimeout(() => {
-        // sendImgToPost(titleNoSpaces, fileData, blogObj);
         checkFileType(blogObj);
       }, 2 * 500);
     } else {
-    //   const imageType = selectedFile.type.replace("image/", "");
       const base64Data = new Buffer.from(
         fileData.replace(/^data:image\/\w+;base64,/, ""),
         "base64"
@@ -168,7 +166,7 @@ export default function CreatePost() {
     }
   };
 
-  if (loading === true) {
+  if (loading) {
     return (
       <div className="load-screen-holder container-fixed">
         <LoadingPage />
@@ -179,9 +177,6 @@ export default function CreatePost() {
       <div>
         <div className="modal-background container">
           <div className="new-post-modal">
-            {/* <button className="close-modal-btn" onClick={closeBlog}>
-            X
-          </button> */}
             <button className="open-dialog-btn" onClick={openDialogue}>
               <FontAwesomeIcon icon={faFile}></FontAwesomeIcon>
               <input
