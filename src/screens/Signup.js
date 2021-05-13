@@ -3,12 +3,10 @@ import UserContext from '../utils/Context';
 import { useHistory } from "react-router-dom";
 import API from "../utils/API";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faArrowRight
-} from "@fortawesome/free-solid-svg-icons";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import LoadingPage from '../components/Loading/index';
-import "../stylesheets/signup.css";
 import TopicBtn from "../components/TopicBtn";
+import "../stylesheets/signup.css";
 
 export default function Signup() {
 // state to set title message a few seconds after user loads second page
@@ -17,12 +15,10 @@ export default function Signup() {
 // state to show select topic screen
   const [pageTwoShow, setPageTwoShow] = useState(false);
 // state for topic limit, updates UI & capped at 5
-const [topicLimit, setTopicLimit] = useState(5);
+  const [topicLimit, setTopicLimit] = useState(5);
 // state for loading
   const [loading, setLoading] = useState(true);
 // state to load preview image of blog img
-  const [imgSelected, setImgSelected] = useState(null);
-  const [imgVisibility, setImgVisibility] = useState("hidden");
   const [imgSrc, setImgSrc] = useState();
 
   const [selectedFile, setSelectedFile] = useState();
@@ -48,6 +44,7 @@ const [topicLimit, setTopicLimit] = useState(5);
     topicFourteen : "Sports",
     topicFifteen : "Travel"
   }
+
   // refs to create user obj
   const firstNameRef = useRef(null);
   const lastNameRef = useRef(null);
@@ -68,7 +65,6 @@ const history = useHistory();
   }, [])
 
   useEffect(() => {
-    // console.log(titleMsg, "title msg state")
     if(loadTitleMessage === true){
       setTitleMsg("Almost Finished!");
       setTimeout(() => {
@@ -77,27 +73,105 @@ const history = useHistory();
     }else{
       setTitleMsg("Almost Finished!");
     }
-  }, [loadTitleMessage, topicLimit])
+  }, [loadTitleMessage, topicLimit]);
 
-  const retrieveFile = () => {
-    const inputElement = document.getElementById("input");
-    inputElement.addEventListener("change", handleFiles, false);
-    function handleFiles() {
-      const fileList = this.files;
-      if (fileList.length === 0 || fileList === null) {
-          setImgSelected(false);
-        return alert("Error Loading File, Please Try Again");
-      } else {
-        let dataUrl = URL.createObjectURL(fileList[0]);
-        setImgSrc(dataUrl);
-        return setSelectedFile(fileList[0]);
+    // state for topic obj
+    const [choiceOne, setChoiceOne] = useState(null);
+    const [choiceTwo, setChoiceTwo] = useState(null);
+    const [choiceThree, setChoiceThree] = useState(null);
+    const [choiceFour, setChoiceFour] = useState(null);
+    const [choiceFive, setChoiceFive] = useState(null);
+  
+    // topic obj to send to be
+    const topicObj = {
+      choiceOne : choiceOne,
+      choiceTwo : choiceTwo,
+      choiceThree : choiceThree,
+      choiceFour : choiceFour,
+      choiceFive : choiceFive,
+  }
+  
+  // func passed to child buttons to receive topics
+    const getTopic = (someTopic) => {
+          if (choiceOne === null){
+              setTopicLimit(topicLimit - 1)
+              return setChoiceOne(someTopic);
+          }else if(choiceOne !== null && choiceTwo === null){
+              setTopicLimit(topicLimit - 1)
+              return setChoiceTwo(someTopic);
+          }else if(choiceOne !== null && choiceTwo !== null && choiceThree === null){
+              setTopicLimit(topicLimit - 1)
+              return setChoiceThree(someTopic);
+          }else if(choiceOne !== null && choiceTwo !== null && choiceThree !== null && choiceFour === null){
+              setTopicLimit(topicLimit - 1)
+              return setChoiceFour(someTopic);
+          }else if(choiceOne !== null && choiceTwo !== null && choiceThree !== null && choiceFour !== null && choiceFive === null){
+              setTopicLimit(topicLimit - 1)
+              return setChoiceFive(someTopic);
+          }else if(choiceOne !== null && choiceTwo !== null && choiceThree !== null && choiceFour !== null && choiceFive !== null){
+            alert("Please remove a topic before selecting a new one");
+            return setTopicLimit(0);
+          }
+    }
+  // func passed to child buttons to remove topics
+    const removeTopic = (someTopic) => {
+      if (choiceOne === someTopic){
+          setTopicLimit(topicLimit + 1)
+          return setChoiceOne(null);
+      }else if(choiceOne !== someTopic && choiceTwo === someTopic){
+          setTopicLimit(topicLimit + 1)
+          return setChoiceTwo(null);
+      }else if(choiceOne !== someTopic && choiceTwo !== someTopic && choiceThree === someTopic){
+          setTopicLimit(topicLimit + 1)
+          return setChoiceThree(null);
+      }else if(choiceOne !== someTopic && choiceTwo !== someTopic && choiceThree !== someTopic && choiceFour === someTopic){
+          setTopicLimit(topicLimit + 1)
+          return setChoiceFour(null);
+      }else if(choiceOne !== someTopic && choiceTwo !== someTopic && choiceThree !== someTopic && choiceFour !== someTopic && choiceFive === someTopic){
+          setTopicLimit(topicLimit + 1)
+          return setChoiceFive(null);
+      }else if(choiceOne !== someTopic && choiceTwo !== someTopic && choiceThree !== someTopic && choiceFour !== someTopic && choiceFive !== someTopic) {
+        alert("Please remove a topic before selecting a new one")
+          return setTopicLimit(0);
       }
     }
+
+      // get user obj from sql + set local storage
+  const tryFetchDetailsAgain = async (userId) => {
+    await API.getUserInfo(userId)
+    .then((userData) => {
+      if(userData.status === 404){
+        alert("error retrieving user data from sql")
+      }else if(userData.status === 202){
+        setUser(userData.data);
+        history.push('/home');
+      }
+    });
   };
-  const openDialogue = () => {
-    inputFile.current.click();
-    retrieveFile();
-  };
+
+    // send topics to api
+    const sendTopics = async () => {
+      const userId = localStorage.getItem('loggedInUserId')
+      if(topicObj.choiceOne === null || topicObj.choiceTwo === null || topicObj.choiceThree === null || topicObj.choiceFour === null || topicObj.choiceFive === null ){
+        alert("Please select all five topics you may be interested in!")
+      }else{
+        await API.sendUserTopics(topicObj, userId ).then((res) => {
+          if(res.status === 400){
+            alert("Error posting topics, please try again");
+          }else if(res.status === 202){
+            API.getUserInfo(userId)
+            .then((userRes) => {
+              if(userRes.status === 404){
+                tryFetchDetailsAgain(userId);
+              }else if(userRes.status === 202){
+                setUser(userRes.data)
+                history.push('/home');
+              }
+            });
+          }
+        });
+      }
+    };
 
 // load state for pg 2 and set brief load
   const loadPageTwo = () => {
@@ -105,24 +179,10 @@ const history = useHistory();
     setPageTwoShow(true);
     setTimeout(() => {
         return setLoading(false);
-    }, 2 * 1600);
-  }
-
-  // get user obj from sql + set local storage
-  const tryFetchDetailsAgain = async (userId) => {
-    // let userId = localStorage.getItem("loggedInUserId");
-    await API.getUserInfo(userId)
-    .then((userData) => {
-      if(userData.status === 404){
-        alert("error retrieving user data from sql")
-      }else if(userData.status === 202){
-        // loadPageTwo();
-        setUser(userData.data);
-        history.push('/home');
-      }
-    });
+    }, 2 * 1100);
   };
 
+// send s3 bucket url and user entered details to server to create user
   const signupUser = async (newAwsURL , signupObject) => {
 
     let finalSignupObj = {
@@ -144,16 +204,14 @@ const history = useHistory();
       if(res.status === 202){
         document.cookie = res.data.sessToken;
         localStorage.setItem("loggedInUserId", res.data.userData.insertId);
-        // let userId = localStorage.getItem("loggedInUserId");
-        // if(userId === res.data.insertId){
           loadPageTwo();
-        // }
       }else{
         alert('error creating user, please try again');
       }
     });
   };
 
+// send selected img file to aws and return new url to use for icon in sql
   const sendIconAws = async (awsFileName, fileType , fileData , signupObject) => {
     if(fileData === null){
       setTimeout(() => {
@@ -174,7 +232,7 @@ const history = useHistory();
     }
 
   }
-
+// check file type and then manipulate data to send to s3 bucket
   const checkFileType = async (signupObject) => {
     if (
       selectedFile.type === "application/pdf" ||
@@ -201,6 +259,7 @@ const history = useHistory();
     }
   }
 
+// creating initial signup obj and checking the fields for empty string or null
   const validateForm = (e) => {
     e.preventDefault();
     var dateTime = new Date().toJSON().slice(0, 19).replace("T", " ");
@@ -218,7 +277,7 @@ const history = useHistory();
       jobTitle: jobTitleRef.current.value,
       date: dateTime,
     };
-
+    
     if(signupObject.icon === ""){
       alert("Please select a profile icon")
     }else if (signupObject.firstName === "") {
@@ -242,96 +301,31 @@ const history = useHistory();
     } else if (signupObject.jobTitle === "") {
       alert("Please enter job title");
     } else {
-      // signupUser(signupObject);
       checkFileType(signupObject);
     }
   };
 
-  // state for topic obj
-  const [choiceOne, setChoiceOne] = useState(null);
-  const [choiceTwo, setChoiceTwo] = useState(null);
-  const [choiceThree, setChoiceThree] = useState(null);
-  const [choiceFour, setChoiceFour] = useState(null);
-  const [choiceFive, setChoiceFive] = useState(null);
-
-  // topic obj to send to be
-  const topicObj = {
-    choiceOne : choiceOne,
-    choiceTwo : choiceTwo,
-    choiceThree : choiceThree,
-    choiceFour : choiceFour,
-    choiceFive : choiceFive,
-}
-
-// func passed to child buttons to receive topics
-  const getTopic = (someTopic) => {
-        if (choiceOne === null){
-            setTopicLimit(topicLimit - 1)
-            return setChoiceOne(someTopic);
-        }else if(choiceOne !== null && choiceTwo === null){
-            setTopicLimit(topicLimit - 1)
-            return setChoiceTwo(someTopic);
-        }else if(choiceOne !== null && choiceTwo !== null && choiceThree === null){
-            setTopicLimit(topicLimit - 1)
-            return setChoiceThree(someTopic);
-        }else if(choiceOne !== null && choiceTwo !== null && choiceThree !== null && choiceFour === null){
-            setTopicLimit(topicLimit - 1)
-            return setChoiceFour(someTopic);
-        }else if(choiceOne !== null && choiceTwo !== null && choiceThree !== null && choiceFour !== null && choiceFive === null){
-            setTopicLimit(topicLimit - 1)
-            return setChoiceFive(someTopic);
-        }else if(choiceOne !== null && choiceTwo !== null && choiceThree !== null && choiceFour !== null && choiceFive !== null){
-          alert("Please remove a topic before selecting a new one");
-          return setTopicLimit(0);
-        }
-  }
-// func passed to child buttons to remove topics
-  const removeTopic = (someTopic) => {
-    if (choiceOne === someTopic){
-        setTopicLimit(topicLimit + 1)
-        return setChoiceOne(null);
-    }else if(choiceOne !== someTopic && choiceTwo === someTopic){
-        setTopicLimit(topicLimit + 1)
-        return setChoiceTwo(null);
-    }else if(choiceOne !== someTopic && choiceTwo !== someTopic && choiceThree === someTopic){
-        setTopicLimit(topicLimit + 1)
-        return setChoiceThree(null);
-    }else if(choiceOne !== someTopic && choiceTwo !== someTopic && choiceThree !== someTopic && choiceFour === someTopic){
-        setTopicLimit(topicLimit + 1)
-        return setChoiceFour(null);
-    }else if(choiceOne !== someTopic && choiceTwo !== someTopic && choiceThree !== someTopic && choiceFour !== someTopic && choiceFive === someTopic){
-        setTopicLimit(topicLimit + 1)
-        return setChoiceFive(null);
-    }else if(choiceOne !== someTopic && choiceTwo !== someTopic && choiceThree !== someTopic && choiceFour !== someTopic && choiceFive !== someTopic) {
-      alert("Please remove a topic before selecting a new one")
-        return setTopicLimit(0);
+  // get file from input type="file"
+  const retrieveFile = () => {
+    const inputElement = document.getElementById("input");
+    inputElement.addEventListener("change", handleFiles, false);
+    function handleFiles() {
+      const fileList = this.files;
+      if (fileList.length === 0 || fileList === null) {
+        return alert("Error Loading File, Please Try Again");
+      } else {
+        let dataUrl = URL.createObjectURL(fileList[0]);
+        setImgSrc(dataUrl);
+        return setSelectedFile(fileList[0]);
+      }
     }
-  }
-  // send topics to api
-  const sendTopics = async () => {
-    const userId = localStorage.getItem('loggedInUserId')
-    if(topicObj.choiceOne === null || topicObj.choiceTwo === null || topicObj.choiceThree === null || topicObj.choiceFour === null || topicObj.choiceFive === null ){
-      alert("Please select all five topics you may be interested in!")
-    }else{
-      await API.sendUserTopics(topicObj, userId ).then((res) => {
-        if(res.status === 400){
-          alert("Error posting topics, please try again");
-        }else if(res.status === 202){
-          API.getUserInfo(userId)
-          .then((userRes) => {
-            if(userRes.status === 404){
-              tryFetchDetailsAgain(userId);
-            }else if(userRes.status === 202){
-              setUser(userRes.data)
-              history.push('/home');
-            }
-          });
-        }
-      });
-    }
-  }
+  };
+  const openDialogue = () => {
+    inputFile.current.click();
+    retrieveFile();
+  };
 
-  if(pageTwoShow === false){
+  if(!pageTwoShow){
   return (
     <div className="signup-page container-fixed">
       <h1>Tell Us About Yourself!</h1>
@@ -386,14 +380,14 @@ const history = useHistory();
     </div>
   );
 }
-else if(pageTwoShow === true){
-  if(loading === true){
+else {
+  if(loading){
     return(
       <div className="load-screen-holder container-fixed">
         <LoadingPage />
        </div>
     )
-  }else{
+  } else {
   return(
     <div className="signup-page-two container-fixed">
       <h1>{titleMsg}</h1>
