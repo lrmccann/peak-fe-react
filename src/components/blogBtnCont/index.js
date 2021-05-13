@@ -8,16 +8,14 @@ import API from "../../utils/API";
 import "./style.css";
 
 export default function BlogBtnCont(props) {
-  const [bookMarked, setBookmarked] = useState(bookMarkIcon);
+  const [bookmarked, setBookmarked] = useState(bookMarkIcon);
   const [likeBtn, setLikeBtn] = useState(thumbsUpIcon);
-  // const [settingsClicked, setSettingsClicked] = useState(false);
-  const [numOfLikes, setNumOfLikes] = useState(props.numOfLikes);
   const [loading, setLoading] = useState(true);
 
   var bookmarksArr = props.bookMarkedPosts;
   var likedPostArr = props.likedPosts;
 
-  // set already bookmarked posts & likes
+// set already bookmarked posts & likes
   useEffect(() => {
     bookmarksArr.map((index) => {
       if (index === props.postId) {
@@ -35,11 +33,10 @@ export default function BlogBtnCont(props) {
       setLoading(false);
     }
   }, [bookmarksArr, props.postId, likedPostArr]);
-  //
-
+//
+// Toggle like btn to add or remove like
   const toggleLike = async () => {
     if (likeBtn === thumbsUpIcon) {
-      setNumOfLikes(numOfLikes + 1);
       var postIdToSend = props.postId;
       var postTitleToSend = props.postTitle;
       var likesPlusOne = "add";
@@ -53,7 +50,6 @@ export default function BlogBtnCont(props) {
         }
       );
     } else {
-      setNumOfLikes(numOfLikes - 1);
       var postIdToSendTwo = props.postId;
       var postTitleToSendTwo = props.postTitle;
       var likesMinusOne = "remove";
@@ -70,11 +66,12 @@ export default function BlogBtnCont(props) {
       });
     }
   };
-
+//
+// toggle bookmark button to add or remove
   const toggleBookmark = async () => {
     var userId = localStorage.getItem("loggedInUserId");
     var idToSend = props.postId;
-    if (bookMarked === bookMarkIcon) {
+    if (bookmarked === bookMarkIcon) {
       await API.bookmarkNewPost(idToSend, userId).then((response) => {
         if (response.status === 202) {
           setBookmarked(bookMarkIconClicked);
@@ -88,7 +85,7 @@ export default function BlogBtnCont(props) {
       );
     }
   };
-
+//
   if (loading === true) {
     return (
       <div>
@@ -106,7 +103,7 @@ export default function BlogBtnCont(props) {
         <button
           className="bookmark-btn"
           onClick={toggleBookmark}
-          style={{ backgroundImage: "url(" + bookMarked + ")" }}
+          style={{ backgroundImage: "url(" + bookmarked + ")" }}
         ></button>
         <button
           className="settings-btn"
