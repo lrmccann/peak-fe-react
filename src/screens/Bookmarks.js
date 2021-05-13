@@ -7,7 +7,7 @@ import LoadingPage from "../components/Loading/index";
 export default function Bookmarks() {
   const [bookmarkedBlog, setBookmarkedBlog] = useState([]);
   const [loading, setLoading] = useState(true);
-
+// use effect to get bookmarked posts from server using user id from local storage
   useEffect(() => {
     const getBookmarks = async () => {
       let userId = localStorage.getItem("loggedInUserId");
@@ -22,7 +22,8 @@ export default function Bookmarks() {
     };
     getBookmarks();
   }, []);
-  if (loading === true) {
+//
+  if (loading) {
     return (
       <div className="load-screen-holder container-fixed">
         <LoadingPage />
