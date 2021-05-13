@@ -262,8 +262,8 @@ const history = useHistory();
 // creating initial signup obj and checking the fields for empty string or null
   const validateForm = (e) => {
     e.preventDefault();
-    var dateTime = new Date().toJSON().slice(0, 19).replace("T", " ");
-    var signupObject = {
+    let dateTime = new Date().toJSON().slice(0, 19).replace("T", " ");
+    let signupObject = {
       icon: selectedFile,
       firstName: firstNameRef.current.value,
       lastName: lastNameRef.current.value,

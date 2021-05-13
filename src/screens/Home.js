@@ -31,7 +31,7 @@ export default function Home() {
   // CHECK USER BOOKMARKS AGAINST ALL POSTS BY ID
   useEffect(() => {
     const checkBookmarkStatus = async () => {
-      var userId = localStorage.getItem("loggedInUserId");
+      let userId = localStorage.getItem("loggedInUserId");
       await API.checkBookmarksForHome(userId).then((res) => {
         setBookmarkedPost(res.data);
       });
@@ -46,7 +46,7 @@ export default function Home() {
 // check posts from user data against posts being loaded
   useEffect(() => {
     const checkLikeStatus = async () => {
-      var userId = localStorage.getItem("loggedInUserId");
+      let userId = localStorage.getItem("loggedInUserId");
       await API.getLikedPosts(userId).then((res) => {
         setLikedPost(res.data);
       });

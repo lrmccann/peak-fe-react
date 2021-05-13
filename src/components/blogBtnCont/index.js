@@ -12,8 +12,8 @@ export default function BlogBtnCont(props) {
   const [likeBtn, setLikeBtn] = useState(thumbsUpIcon);
   const [loading, setLoading] = useState(true);
 
-  var bookmarksArr = props.bookMarkedPosts;
-  var likedPostArr = props.likedPosts;
+  let bookmarksArr = props.bookMarkedPosts;
+  let likedPostArr = props.likedPosts;
 
 // set already bookmarked posts & likes
   useEffect(() => {
@@ -37,9 +37,9 @@ export default function BlogBtnCont(props) {
 // Toggle like btn to add or remove like
   const toggleLike = async () => {
     if (likeBtn === thumbsUpIcon) {
-      var postIdToSend = props.postId;
-      var postTitleToSend = props.postTitle;
-      var likesPlusOne = "add";
+      let postIdToSend = props.postId;
+      let postTitleToSend = props.postTitle;
+      let likesPlusOne = "add";
       await API.addLike(postIdToSend, likesPlusOne, postTitleToSend).then(
         (results) => {
           if (results.status === 200) {
@@ -50,9 +50,9 @@ export default function BlogBtnCont(props) {
         }
       );
     } else {
-      var postIdToSendTwo = props.postId;
-      var postTitleToSendTwo = props.postTitle;
-      var likesMinusOne = "remove";
+      let postIdToSendTwo = props.postId;
+      let postTitleToSendTwo = props.postTitle;
+      let likesMinusOne = "remove";
       await API.addLike(
         postIdToSendTwo,
         likesMinusOne,
@@ -69,8 +69,8 @@ export default function BlogBtnCont(props) {
 //
 // toggle bookmark button to add or remove
   const toggleBookmark = async () => {
-    var userId = localStorage.getItem("loggedInUserId");
-    var idToSend = props.postId;
+    let userId = localStorage.getItem("loggedInUserId");
+    let idToSend = props.postId;
     if (bookmarked === bookMarkIcon) {
       await API.bookmarkNewPost(idToSend, userId).then((response) => {
         if (response.status === 202) {

@@ -8,9 +8,8 @@ import CreatePost from './screens/CreatePost';
 import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { UserProvider } from "./utils/Context";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import NavbarTop from "./components/navbar/index";
-// import ScrollToTop from "react-scroll-to-top";
 
 export default function App() {
   const [user, setTheUser] = useState({});

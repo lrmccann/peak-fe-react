@@ -144,11 +144,11 @@ export default function CreatePost() {
   };
 
   const handleBlogPost = async () => {
-    var imgHeaderToSend = imgHeader.current.value;
-    var blogTitleToSend = blogTitle.current.value;
-    var blogBodyToSend = blogBody.current.value;
+    let imgHeaderToSend = imgHeader.current.value;
+    let blogTitleToSend = blogTitle.current.value;
+    let blogBodyToSend = blogBody.current.value;
 
-    var blogInfoToCheck = {
+    let blogInfoToCheck = {
       imgHeaderToSend,
       blogTitleToSend,
       blogBodyToSend,
