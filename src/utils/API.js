@@ -41,7 +41,8 @@ export default {
                 // return await axios.get(`/user-details/${id}`, {
                     return await axios.get(`https://peak-blogspace.herokuapp.com/user-details/${id}`, {
                 headers: {
-                    'Access-Control-Allow-Origin': 'http://peak-blogspace.s3-website.us-east-2.amazonaws.com/'
+                    'Access-Control-Allow-Origin': 'http://peak-blogspace.s3-website.us-east-2.amazonaws.com/',
+                    'authorization' : token
                 }
             })
         },
@@ -51,7 +52,8 @@ export default {
                 // return await axios.get(`/getUserPost/${id}` , {
                     return await axios.get(`https://peak-blogspace.herokuapp.com/getUserPost/${id}` , {
                 headers: {
-                    'Access-Control-Allow-Origin': 'http://peak-blogspace.s3-website.us-east-2.amazonaws.com/'
+                    'Access-Control-Allow-Origin': 'http://peak-blogspace.s3-website.us-east-2.amazonaws.com/',
+                    'authorization' : token
                 }
             })
         },
@@ -75,7 +77,8 @@ export default {
                 // return await axios.get(`/user-posts/${id}` , {
                     return await axios.get(`https://peak-blogspace.herokuapp.com/user-posts/${id}` , {
                 headers: {
-                    'Access-Control-Allow-Origin': 'http://peak-blogspace.s3-website.us-east-2.amazonaws.com/'
+                    'Access-Control-Allow-Origin': 'http://peak-blogspace.s3-website.us-east-2.amazonaws.com/',
+                    'authorization' : token
                 }
             })
         },
@@ -85,7 +88,8 @@ export default {
                 // return await axios.get(`/user-comments`  , {
                         return await axios.get(`https://peak-blogspace.herokuapp.com/user-comments/` + comment_ids , {
                 headers: {
-                    'Access-Control-Allow-Origin': 'http://peak-blogspace.s3-website.us-east-2.amazonaws.com/'
+                    'Access-Control-Allow-Origin': 'http://peak-blogspace.s3-website.us-east-2.amazonaws.com/',
+                    'authorization' : token
                 },
                 params : {
                     stuff : comment_ids
@@ -100,7 +104,8 @@ export default {
                 // return await axios.post(`/create-new-post` , blogContent , {
                         return await axios.post(`https://peak-blogspace.herokuapp.com/create-new-post` , blogContent , {    
                 headers: {
-                    'Access-Control-Allow-Origin': 'http://peak-blogspace.s3-website.us-east-2.amazonaws.com/'
+                    'Access-Control-Allow-Origin': 'http://peak-blogspace.s3-website.us-east-2.amazonaws.com/',
+                    'authorization' : token
                 }
             })
         },
@@ -112,7 +117,8 @@ export default {
             // return await axios.post(`/create-new-post` , blogContent , {
                     return await axios.post(`https://peak-blogspace.herokuapp.com/create-new-post` , blogContent , {    
             headers: {
-                'Access-Control-Allow-Origin': 'http://peak-blogspace.s3-website.us-east-2.amazonaws.com/'
+                'Access-Control-Allow-Origin': 'http://peak-blogspace.s3-website.us-east-2.amazonaws.com/',
+                'authorization' : token
             }
         })
     },
@@ -124,7 +130,8 @@ export default {
             // return await axios.put(`/post-views/${postId}` , {
                         return await axios.put(`https://peak-blogspace.herokuapp.com/post-views/${postId}` , {
             headers: {
-                'Access-Control-Allow-Origin': 'http://peak-blogspace.s3-website.us-east-2.amazonaws.com/'
+                'Access-Control-Allow-Origin': 'http://peak-blogspace.s3-website.us-east-2.amazonaws.com/',
+                'authorization' : token
             }
         })
     },
@@ -134,7 +141,8 @@ export default {
             // return await axios.put(`/numOfLikesForPost/${postId}/${numOfLikesToSend}/${postTitle}` , {
                         return await axios.get(`https://peak-blogspace.herokuapp.com/liked-posts/${userId}` , {
             headers: {
-                'Access-Control-Allow-Origin': 'http://peak-blogspace.s3-website.us-east-2.amazonaws.com/'
+                'Access-Control-Allow-Origin': 'http://peak-blogspace.s3-website.us-east-2.amazonaws.com/',
+                'authorization' : token
             }
         })
     },
@@ -147,7 +155,8 @@ export default {
                 // return await axios.put(`/numOfLikesForPost/${postId}/${numOfLikesToSend}/${postTitle}` , {
                             return await axios.put(`https://peak-blogspace.herokuapp.com/numOfLikesForPost/${postId}/${numOfLikesToSend}/${postTitle}` , {
                 headers: {
-                    'Access-Control-Allow-Origin': 'http://peak-blogspace.s3-website.us-east-2.amazonaws.com/'
+                    'Access-Control-Allow-Origin': 'http://peak-blogspace.s3-website.us-east-2.amazonaws.com/',
+                    'authorization' : token
                 }
             })
         },
@@ -157,7 +166,8 @@ export default {
                 // return await axios.get(`/user-bookmarks-home/${userId}` , {
                     return await axios.get(`https://peak-blogspace.herokuapp.com/user-bookmarks-home/${userId}` , {
                 headers : {
-                    'Access-Control-Allow-Origin': 'http://peak-blogspace.s3-website.us-east-2.amazonaws.com/'
+                    'Access-Control-Allow-Origin': 'http://peak-blogspace.s3-website.us-east-2.amazonaws.com/',
+                    'authorization' : token
                 }
             })
         },
@@ -168,7 +178,8 @@ export default {
                 // return await axios.put(`/user-bookmarks/${postToBookmark}/${userId}` , {
                             return await axios.put(`https://peak-blogspace.herokuapp.com/user-bookmarks/${postToBookmark}/${userId}` , {
                 headers : {
-                    'Access-Control-Allow-Origin': 'http://peak-blogspace.s3-website.us-east-2.amazonaws.com/'
+                    'Access-Control-Allow-Origin': 'http://peak-blogspace.s3-website.us-east-2.amazonaws.com/',
+                    'authorization' : token
                 }
             })
         },
@@ -178,7 +189,8 @@ export default {
                 // return await axios.get(`/user-all-bookmarks/${userId}` , {
                             return await axios.get(`https://peak-blogspace.herokuapp.com/user-all-bookmarks/${userId}` , {
                 headers : {
-                    'Access-Control-Allow-Origin': 'http://peak-blogspace.s3-website.us-east-2.amazonaws.com/'
+                    'Access-Control-Allow-Origin': 'http://peak-blogspace.s3-website.us-east-2.amazonaws.com/',
+                    'authorization' : token
                 }
             })
         },
@@ -188,7 +200,8 @@ export default {
                 // return await axios.delete(`/user-bookmarks/${postIdToRemove}/${userId}` , {
                             return await axios.delete(`https://peak-blogspace.herokuapp.com/user-bookmarks/${postIdToRemove}/${userId}` , {
                 headers : {
-                    'Access-Control-Allow-Origin': 'http://peak-blogspace.s3-website.us-east-2.amazonaws.com/'
+                    'Access-Control-Allow-Origin': 'http://peak-blogspace.s3-website.us-east-2.amazonaws.com/',
+                    'authorization' : token
                 }
             })
         },
@@ -199,7 +212,8 @@ export default {
                 // return await axios.get(`/user-comments/${id}` , {
                             return await axios.get(`https://peak-blogspace.herokuapp.com/user-comments/${id}` , {
                 headers: {
-                    'Access-Control-Allow-Origin': 'http://peak-blogspace.s3-website.us-east-2.amazonaws.com/'
+                    'Access-Control-Allow-Origin': 'http://peak-blogspace.s3-website.us-east-2.amazonaws.com/',
+                    'authorization' : token
                 }
             })
         },
@@ -210,7 +224,8 @@ export default {
                             return await axios.post(`https://peak-blogspace.herokuapp.com/user-comments-post/${userId}/${postId}/${commentBody}` , {
 
                 headers: {
-                    'Access-Control-Allow-Origin': 'http://peak-blogspace.s3-website.us-east-2.amazonaws.com/'
+                    'Access-Control-Allow-Origin': 'http://peak-blogspace.s3-website.us-east-2.amazonaws.com/',
+                    'authorization' : token
                 }
             })
         },
@@ -220,7 +235,8 @@ export default {
                 // return await axios.delete(`/user-posts/${postId}` , {
                         return await axios.put(`https://peak-blogspace.herokuapp.com/blog-images/${blogTitle}/${imgType}` , {
                 headers : {
-                    'Access-Control-Allow-Origin': 'http://peak-blogspace.s3-website.us-east-2.amazonaws.com/'
+                    'Access-Control-Allow-Origin': 'http://peak-blogspace.s3-website.us-east-2.amazonaws.com/',
+                    'authorization' : token
                 },
                 data : {
                     fileURL
@@ -233,7 +249,8 @@ export default {
                 // return await axios.delete(`/user-posts/${postId}` , {
                         return await axios.put(`https://peak-blogspace.herokuapp.com/user-images/${awsFileName}/${fileType}` , {
                 headers : {
-                    'Access-Control-Allow-Origin': 'http://peak-blogspace.s3-website.us-east-2.amazonaws.com/'
+                    'Access-Control-Allow-Origin': 'http://peak-blogspace.s3-website.us-east-2.amazonaws.com/',
+                    'authorization' : token
                 },
                 data : {
                     fileData
@@ -247,7 +264,8 @@ export default {
                 // return await axios.delete(`/user-posts/${postId}` , {
                         return await axios.delete(`https://peak-blogspace.herokuapp.com/user-posts/${postId}` , {
                 headers : {
-                    'Access-Control-Allow-Origin': 'http://peak-blogspace.s3-website.us-east-2.amazonaws.com/'
+                    'Access-Control-Allow-Origin': 'http://peak-blogspace.s3-website.us-east-2.amazonaws.com/',
+                    'authorization' : token
                 }
             })
         }
