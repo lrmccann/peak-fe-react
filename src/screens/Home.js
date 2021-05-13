@@ -8,9 +8,8 @@ import viewIcon from "../images/view-icon.png";
 import LoadingPage from '../components/Loading/index';
 import "../stylesheets/home.css";
 
-export default function Home(props) {
+export default function Home() {
   const history = useHistory();
-
   const { getDetailedPost, user, setUser } = useContext(UserContext);
   const [blogObject, setBlogObject] = useState([]);
   const [bookmarkedPost, setBookmarkedPost] = useState([]);
@@ -44,7 +43,7 @@ export default function Home(props) {
     };
     checkBookmarkStatus();
   }, [bookmarkedPost.length]);
-
+// check posts from user data against posts being loaded
   useEffect(() => {
     const checkLikeStatus = async () => {
       var userId = localStorage.getItem("loggedInUserId");
@@ -60,10 +59,10 @@ export default function Home(props) {
     checkLikeStatus();
   }, [likedPosts.length]);
 
+// check if user from context is empty, if empty load user data again
   useEffect(() => {
     if (Object.keys(user).length) {
-      // console.log(user, "user if object is full");
-      // getTopPosts(user.id);
+      return;
     } else {
       (async () => {
         let userToReload = localStorage.getItem("loggedInUserId");
@@ -74,13 +73,18 @@ export default function Home(props) {
     }
   }, [setUser, user]);
 
-  // ADD VIEW TO SQL COL BY ID
+// ADD VIEW TO SQL COL BY ID
   const addPostView = async (postId) => {
     await API.addViewToBlog(postId).then((res) => {
+      if(res.status === 202){
+        return alert("Post liked");
+      }else{
+        return alert("error liking post, try again");
+      }
     });
   };
 
-  // GET POST DETAILS FOR NEXT PAGE
+// GET POST DETAILS FOR NEXT PAGE
   const getIndepthblogDetails = async (e) => {
     localStorage.setItem("recentPostId", e);
     await API.getPostDetails(e).then((res) => {
@@ -90,13 +94,13 @@ export default function Home(props) {
     history.push("/indepthpost");
   };
 
-  if (loading === true) {
+  if (loading) {
     return (
       <div className="load-screen-holder container-fixed">
       <LoadingPage />
      </div>
     );
-  } else if (loading === false) {
+  } else {
     return (
       <div className="home-page container">
         {blogObject.map((index, myKey) => (

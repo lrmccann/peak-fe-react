@@ -293,22 +293,6 @@ export default {
       }
     );
   },
-  //
-  getTopUserComments: async function (id) {
-    console.log(id, "id for getTopUserComments api");
-    // return await axios.get(`http://localhost:3005/user-comments/${id}` , {
-    // return await axios.get(`/user-comments/${id}` , {
-    return await axios.get(
-      `https://peak-blogspace.herokuapp.com/user-comments/${id}`,
-      {
-        headers: {
-          "Access-Control-Allow-Origin":
-            "http://peak-blogspace.s3-website.us-east-2.amazonaws.com/",
-          authorization: token,
-        },
-      }
-    );
-  },
   postNewComment: async function (userId, postId, commentBody) {
     console.log(
       userId,
