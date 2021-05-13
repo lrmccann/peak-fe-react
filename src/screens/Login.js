@@ -61,7 +61,11 @@ export default function Login () {
       if (res.data === "Invalid Username or Password") {
         setLoading(false);
         return alert("Invalid Username or Password, Please Try Again");
+      }else if(res.data === "error retrieving account information"){
+        setLoading(false);
+        return alert("Error retrieving account information, please try again!")
       } else {
+        // console.log(res, "LOGAN LOGAN LOGAN")
         setUser(res.data);
         localStorage.setItem("loggedInUserId" , res.data.id)
         history.push("/home");

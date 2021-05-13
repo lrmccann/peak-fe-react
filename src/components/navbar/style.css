@@ -160,8 +160,13 @@
 }
 
 #nav-button > img{
-  height: 65%;
-  width: 85%;
+  height: 90%;
+  width: 90%;
+  border-radius: 50px;
+  border: solid rgb(84, 84, 216) 2px;
+  padding: 3.20%;
+  margin-left: 20%;
+  /* background-color: rebeccapurple; */
 }
 
 #nav-button > p {

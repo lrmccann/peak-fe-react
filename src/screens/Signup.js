@@ -1,4 +1,5 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useContext } from "react";
+import UserContext from '../utils/Context';
 import { useHistory } from "react-router-dom";
 import API from "../utils/API";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -25,6 +26,8 @@ const [topicLimit, setTopicLimit] = useState(5);
   const [imgSrc, setImgSrc] = useState();
 
   const [selectedFile, setSelectedFile] = useState();
+
+  const { setUser } = useContext(UserContext);
 
   const inputFile = useRef(null);
 
@@ -114,6 +117,7 @@ const history = useHistory();
         alert("error retrieving user data from sql")
       }else if(userData.status === 202){
         // loadPageTwo();
+        setUser(userData.data);
         history.push('/home');
       }
     });
@@ -139,10 +143,10 @@ const history = useHistory();
     await API.signupUser(finalSignupObj).then((res) => {
       if(res.status === 202){
         localStorage.setItem("loggedInUserId", res.data.insertId);
-        let userId = localStorage.getItem("loggedInUserId");
-        if(userId === res.data.insertId){
+        // let userId = localStorage.getItem("loggedInUserId");
+        // if(userId === res.data.insertId){
           loadPageTwo();
-        }
+        // }
       }else{
         alert('error creating user, please try again');
       }
@@ -155,7 +159,11 @@ const history = useHistory();
         checkFileType(signupObject);
       }, 2 * 500);
     }else{
-      await API.postUserImg(awsFileName , fileType , fileData).then((res) => {
+      const base64Data = new Buffer.from(
+        fileData.replace(/^data:image\/\w+;base64,/, ""),
+        "base64"
+      );
+      await API.postUserImg(awsFileName , fileType , base64Data).then((res) => {
         if(res.status === 404){
           return alert("There was an error posting your photo")
         }else if(res.status === 202){
@@ -305,7 +313,7 @@ const history = useHistory();
       alert("Please select all five topics you may be interested in!")
     }else{
       await API.sendUserTopics(topicObj, userId ).then((res) => {
-        if(res.status === 404){
+        if(res.status === 400){
           alert("Error posting topics, please try again");
         }else if(res.status === 202){
           API.getUserInfo(userId)
@@ -313,6 +321,7 @@ const history = useHistory();
             if(userRes.status === 404){
               tryFetchDetailsAgain(userId);
             }else if(userRes.status === 202){
+              setUser(userRes.data)
               history.push('/home');
             }
           });

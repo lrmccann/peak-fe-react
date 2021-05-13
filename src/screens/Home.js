@@ -11,7 +11,7 @@ import "../stylesheets/home.css";
 export default function Home(props) {
   const history = useHistory();
 
-  const { getDetailedPost } = useContext(UserContext);
+  const { getDetailedPost, user, setUser } = useContext(UserContext);
   const [blogObject, setBlogObject] = useState([]);
   const [bookmarkedPost, setBookmarkedPost] = useState([]);
   const [likedPosts, setLikedPost] = useState([]);
@@ -60,11 +60,23 @@ export default function Home(props) {
     checkLikeStatus();
   }, [likedPosts.length]);
 
+  useEffect(() => {
+    if (Object.keys(user).length) {
+      // console.log(user, "user if object is full");
+      // getTopPosts(user.id);
+    } else {
+      (async () => {
+        let userToReload = localStorage.getItem("loggedInUserId");
+        await API.getUserInfo(userToReload).then((res) => {
+          setUser(res.data);
+        });
+      })();
+    }
+  }, [setUser, user]);
+
   // ADD VIEW TO SQL COL BY ID
   const addPostView = async (postId) => {
-    console.log(postId);
     await API.addViewToBlog(postId).then((res) => {
-      console.log(res);
     });
   };
 
