@@ -1,13 +1,10 @@
-import React, { useState, useRef, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import UserContext from '../../utils/Context';
-import API from "../../utils/API";
-import photoThree from "../../images/profile-icon-def.png";
 import peakIcon from "../../images/peak-new-icon.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBookmark,
-  faFile,
   faHome,
 } from "@fortawesome/free-solid-svg-icons";
 import "./style.css";
@@ -18,6 +15,7 @@ export default function NavbarTop() {
   const [iconLoaded, setIconLoaded] = useState(false);
   const [userIcon, setUserIcon] = useState(null);
 
+// use effect to set state of user icon
 useEffect(() => {
   console.log(userIcon, "look here")
   if(iconLoaded === false) {
@@ -25,6 +23,7 @@ useEffect(() => {
   }else if(iconLoaded === true){
     setUserIcon(`${user.icon}`)
   }
+// eslint-disable-next-line react-hooks/exhaustive-deps
 }, [iconLoaded])
 
 useEffect(() => {
@@ -34,8 +33,8 @@ useEffect(() => {
     setIconLoaded(false);
   }
 },[user])
-
-//   // Screen nav
+//
+// Screen nav
   const navHome = () => {
     history.push("/home");
   };
@@ -48,11 +47,11 @@ useEffect(() => {
   const navAccount = () => {
     history.push("/myaccount");
   };
-  const navLogout = () => {
-    localStorage.clear();
-    history.push("/");
-  };
-
+  // const navLogout = () => {
+  //   localStorage.clear();
+  //   history.push("/");
+  // };
+//
     return (
       <div className="navbar-cont">
         <div className="logo-cont">
@@ -77,7 +76,6 @@ useEffect(() => {
           <button
             style={{ marginRight: "1%" }}
             id="nav-button"
-            // onClick={openBlog}
             onClick={navCreatePost}
           >
             <p>Write</p>
