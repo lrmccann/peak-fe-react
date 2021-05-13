@@ -66,8 +66,9 @@ export default function Login () {
         return alert("Error retrieving account information, please try again!")
       } else {
         // console.log(res, "LOGAN LOGAN LOGAN")
-        setUser(res.data);
-        localStorage.setItem("loggedInUserId" , res.data.id)
+        document.cookie = res.data.sessToken;
+        setUser(res.data.userData);
+        localStorage.setItem("loggedInUserId" , res.data.userData.id)
         history.push("/home");
       }
     });

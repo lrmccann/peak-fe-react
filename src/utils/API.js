@@ -1,7 +1,10 @@
 /* eslint-disable import/no-anonymous-default-export */
 import axios from "axios";
 
-console.log(process.env)
+// console.log(process.env)
+const token = document.cookie;
+
+// console.log(token, "cookie tokens")
 export default {
         signupUser: async function (userData) {
             console.log(userData, "user data for signup API");
@@ -59,7 +62,8 @@ export default {
                 // return await axios.get(`/user-posts`, {
                 return await axios.get(`https://peak-blogspace.herokuapp.com/user-posts`, {
                 headers: {
-                    'Access-Control-Allow-Origin': 'http://peak-blogspace.s3-website.us-east-2.amazonaws.com/'
+                    'Access-Control-Allow-Origin': 'http://peak-blogspace.s3-website.us-east-2.amazonaws.com/',
+                    'authorization' : token
                 }
             })
         },

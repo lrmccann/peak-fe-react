@@ -142,7 +142,8 @@ const history = useHistory();
 
     await API.signupUser(finalSignupObj).then((res) => {
       if(res.status === 202){
-        localStorage.setItem("loggedInUserId", res.data.insertId);
+        document.cookie = res.data.sessToken;
+        localStorage.setItem("loggedInUserId", res.data.userData.insertId);
         // let userId = localStorage.getItem("loggedInUserId");
         // if(userId === res.data.insertId){
           loadPageTwo();
