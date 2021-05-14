@@ -8,6 +8,7 @@ import {
   faHome,
 } from "@fortawesome/free-solid-svg-icons";
 import "./style.css";
+import API from "../../utils/API";
 
 export default function NavbarTop() {
   const history = useHistory();
@@ -17,12 +18,21 @@ export default function NavbarTop() {
 
 // use effect to set state of user icon
 useEffect(() => {
-  console.log(userIcon, "look here")
+  let userId = localStorage.getItem("loggedInUserId")
+  const loadUserIcon = async () => {
   if(iconLoaded === false) {
-    return setUserIcon("")
+    await API.getUserInfo(userId).then((res) => {
+      if(res.status === 202){
+        setUserIcon(`${res.data.icon}`);
+      }else{
+        setUserIcon("")
+      }
+    })
   }else if(iconLoaded === true){
     setUserIcon(`${user.icon}`)
   }
+}
+loadUserIcon()
 // eslint-disable-next-line react-hooks/exhaustive-deps
 }, [iconLoaded])
 

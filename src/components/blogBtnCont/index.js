@@ -36,13 +36,15 @@ export default function BlogBtnCont(props) {
 //
 // Toggle like btn to add or remove like
   const toggleLike = async () => {
+    let userId = localStorage.getItem("loggedInUserId");
     if (likeBtn === thumbsUpIcon) {
       let postIdToSend = props.postId;
-      let postTitleToSend = props.postTitle;
+      // let postTitleToSend = props.postTitle;
       let likesPlusOne = "add";
-      await API.addLike(postIdToSend, likesPlusOne, postTitleToSend).then(
+      await API.addLike(postIdToSend, likesPlusOne, userId).then(
         (results) => {
-          if (results.status === 200) {
+          // console.log(results, "toggle like results")
+          if (results.status === 202) {
             setLikeBtn(thumbsUpIconClicked);
           } else {
             alert("Failed to like post, please try again");
@@ -50,15 +52,14 @@ export default function BlogBtnCont(props) {
         }
       );
     } else {
-      let postIdToSendTwo = props.postId;
-      let postTitleToSendTwo = props.postTitle;
+      let postIdToSend = props.postId;
       let likesMinusOne = "remove";
       await API.addLike(
-        postIdToSendTwo,
+        postIdToSend,
         likesMinusOne,
-        postTitleToSendTwo
+        userId
       ).then((response) => {
-        if (response.status === 200) {
+        if (response.status === 202) {
           setLikeBtn(thumbsUpIcon);
         } else {
           alert("Failed to unliked post, please try again");

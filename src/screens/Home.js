@@ -11,7 +11,7 @@ import "../stylesheets/home.css";
 export default function Home() {
   const history = useHistory();
   const { getDetailedPost, user, setUser } = useContext(UserContext);
-  const [blogObject, setBlogObject] = useState([]);
+  const [blogObject] = useState([]);
   const [bookmarkedPost, setBookmarkedPost] = useState([]);
   const [likedPosts, setLikedPost] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -24,25 +24,35 @@ export default function Home() {
   // GET ALL POSTS
   useEffect(() => {
     (async () => {
-      await API.getAllPosts().then((res) => setBlogObject(res.data));
+      await API.getAllPosts().then((res) =>{
+        if(res.status === 200){
+            res.data.map((index) => {
+              blogObject.push(index);
+            });
+            return setLoading(false);
+        }else{
+          alert("error getting posts for home page, please refresh!")
+        }
+      }
+       );
     })();
-  }, []);
+  }, [blogObject]);
 
   // CHECK USER BOOKMARKS AGAINST ALL POSTS BY ID
   useEffect(() => {
     const checkBookmarkStatus = async () => {
       let userId = localStorage.getItem("loggedInUserId");
       await API.checkBookmarksForHome(userId).then((res) => {
-        setBookmarkedPost(res.data);
+        console.log(res, "here here here")
+        if(res.status === 200){
+          setBookmarkedPost(res.data);
+        }else{
+          return console.log("error loading bookmarks")
+        }
       });
-      if (bookmarkedPost.length === 0) {
-        setLoading(true);
-      } else {
-        setLoading(false);
-      }
     };
     checkBookmarkStatus();
-  }, [bookmarkedPost.length]);
+  }, []);
 // check posts from user data against posts being loaded
   useEffect(() => {
     const checkLikeStatus = async () => {
@@ -76,10 +86,10 @@ export default function Home() {
 // ADD VIEW TO SQL COL BY ID
   const addPostView = async (postId) => {
     await API.addViewToBlog(postId).then((res) => {
-      if(res.status === 202){
-        return alert("Post liked");
+      if(res.status === 404){
+        console.log("Post Error");
       }else{
-        return alert("error liking post, try again");
+        console.log("Post Liked!");
       }
     });
   };

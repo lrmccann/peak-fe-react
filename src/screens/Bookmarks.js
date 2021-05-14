@@ -6,23 +6,30 @@ import LoadingPage from "../components/Loading/index";
 
 export default function Bookmarks() {
   const [bookmarkedBlog, setBookmarkedBlog] = useState([]);
+  const [bookmarksEmpty, setBookmarksEmpty] = useState(true);
   const [loading, setLoading] = useState(true);
+
 // use effect to get bookmarked posts from server using user id from local storage
   useEffect(() => {
     const getBookmarks = async () => {
       let userId = localStorage.getItem("loggedInUserId");
       await API.getBookmarkedPosts(userId).then(async (results) => {
-        if (results.data === null) {
-          setLoading(true);
-        } else {
-          setLoading(false);
+        if (results.status === 210) {
+          setBookmarksEmpty(true);
+          return setLoading(false);
+        } else if(results.status === 200){
+          setBookmarksEmpty(false);
           setBookmarkedBlog(await results.data);
+          return setLoading(false);
+        }else{
+          alert("error loading your page")
         }
       });
     };
     getBookmarks();
   }, []);
 //
+
   if (loading) {
     return (
       <div className="load-screen-holder container-fixed">
@@ -30,7 +37,7 @@ export default function Bookmarks() {
       </div>
     );
   } else {
-    if (bookmarkedBlog.length === 0) {
+    if (bookmarksEmpty) {
       return (
         <div>
           <h1>No Bookmarks Yet!</h1>

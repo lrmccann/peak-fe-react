@@ -36,10 +36,7 @@ export default function CreatePost() {
     if (blogPosted === true) {
         setImgVisibility("hidden");
         setImgSrc("");
-        imgHeader(null);
-        blogTitle(null);
-        blogBody(null);
-        inputFile(null);
+        setFileName("")
     }
   }, [blogPosted]);
 

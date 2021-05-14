@@ -1,24 +1,24 @@
 import React, { useRef, useEffect, useState, useContext } from "react";
-import UserContext from '../utils/Context';
+import UserContext from "../utils/Context";
 import { useHistory } from "react-router-dom";
 import API from "../utils/API";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import LoadingPage from '../components/Loading/index';
+import LoadingPage from "../components/Loading/index";
 import TopicBtn from "../components/TopicBtn";
 import "../stylesheets/signup.css";
 
 export default function Signup() {
-// state to set title message a few seconds after user loads second page
+  // state to set title message a few seconds after user loads second page
   const [loadTitleMessage, setLoadTitleMessage] = useState(false);
   const [titleMsg, setTitleMsg] = useState(null);
-// state to show select topic screen
+  // state to show select topic screen
   const [pageTwoShow, setPageTwoShow] = useState(false);
-// state for topic limit, updates UI & capped at 5
+  // state for topic limit, updates UI & capped at 5
   const [topicLimit, setTopicLimit] = useState(5);
-// state for loading
+  // state for loading
   const [loading, setLoading] = useState(true);
-// state to load preview image of blog img
+  // state to load preview image of blog img
   const [imgSrc, setImgSrc] = useState();
 
   const [selectedFile, setSelectedFile] = useState();
@@ -28,22 +28,22 @@ export default function Signup() {
   const inputFile = useRef(null);
 
   const topicChoices = {
-    topicOne : "Food",
-    topicTwo : "Self-Improvement",
-    topicThree : "Technology",
-    topicFour : "Business",
-    topicFive : "Pop-Culture",
-    topicSix : "Music",
-    topicSeven : "Fashion",
-    topicEight : "Gardening",
-    topicNine : "Finance",
-    topicTen : "Health",
-    topicEleven : "Gaming",
-    topicTwelve : "Medicine",
-    topicThirteen : "Movies",
-    topicFourteen : "Sports",
-    topicFifteen : "Travel"
-  }
+    topicOne: "Food",
+    topicTwo: "Self-Improvement",
+    topicThree: "Technology",
+    topicFour: "Business",
+    topicFive: "Pop-Culture",
+    topicSix: "Music",
+    topicSeven: "Fashion",
+    topicEight: "Gardening",
+    topicNine: "Finance",
+    topicTen: "Health",
+    topicEleven: "Gaming",
+    topicTwelve: "Medicine",
+    topicThirteen: "Movies",
+    topicFourteen: "Sports",
+    topicFifteen: "Travel",
+  };
 
   // refs to create user obj
   const firstNameRef = useRef(null);
@@ -56,183 +56,227 @@ export default function Signup() {
   const stateRef = useRef(null);
   const zipRef = useRef(null);
   const jobTitleRef = useRef(null);
-// history
-const history = useHistory();
 
-// scroll top
+  const history = useHistory();
+
+  // scroll top
   useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
-    if(loadTitleMessage === true){
+    if (loadTitleMessage === true) {
       setTitleMsg("Almost Finished!");
       setTimeout(() => {
-        return setTitleMsg(`Personalize Your Experience (${topicLimit})`)
+        return setTitleMsg(`Personalize Your Experience (${topicLimit})`);
       }, 2 * 1100);
-    }else{
+    } else {
       setTitleMsg("Almost Finished!");
     }
   }, [loadTitleMessage, topicLimit]);
 
-    // state for topic obj
-    const [choiceOne, setChoiceOne] = useState(null);
-    const [choiceTwo, setChoiceTwo] = useState(null);
-    const [choiceThree, setChoiceThree] = useState(null);
-    const [choiceFour, setChoiceFour] = useState(null);
-    const [choiceFive, setChoiceFive] = useState(null);
-  
-    // topic obj to send to be
-    const topicObj = {
-      choiceOne : choiceOne,
-      choiceTwo : choiceTwo,
-      choiceThree : choiceThree,
-      choiceFour : choiceFour,
-      choiceFive : choiceFive,
-  }
-  
-  // func passed to child buttons to receive topics
-    const getTopic = (someTopic) => {
-          if (choiceOne === null){
-              setTopicLimit(topicLimit - 1)
-              return setChoiceOne(someTopic);
-          }else if(choiceOne !== null && choiceTwo === null){
-              setTopicLimit(topicLimit - 1)
-              return setChoiceTwo(someTopic);
-          }else if(choiceOne !== null && choiceTwo !== null && choiceThree === null){
-              setTopicLimit(topicLimit - 1)
-              return setChoiceThree(someTopic);
-          }else if(choiceOne !== null && choiceTwo !== null && choiceThree !== null && choiceFour === null){
-              setTopicLimit(topicLimit - 1)
-              return setChoiceFour(someTopic);
-          }else if(choiceOne !== null && choiceTwo !== null && choiceThree !== null && choiceFour !== null && choiceFive === null){
-              setTopicLimit(topicLimit - 1)
-              return setChoiceFive(someTopic);
-          }else if(choiceOne !== null && choiceTwo !== null && choiceThree !== null && choiceFour !== null && choiceFive !== null){
-            alert("Please remove a topic before selecting a new one");
-            return setTopicLimit(0);
-          }
-    }
-  // func passed to child buttons to remove topics
-    const removeTopic = (someTopic) => {
-      if (choiceOne === someTopic){
-          setTopicLimit(topicLimit + 1)
-          return setChoiceOne(null);
-      }else if(choiceOne !== someTopic && choiceTwo === someTopic){
-          setTopicLimit(topicLimit + 1)
-          return setChoiceTwo(null);
-      }else if(choiceOne !== someTopic && choiceTwo !== someTopic && choiceThree === someTopic){
-          setTopicLimit(topicLimit + 1)
-          return setChoiceThree(null);
-      }else if(choiceOne !== someTopic && choiceTwo !== someTopic && choiceThree !== someTopic && choiceFour === someTopic){
-          setTopicLimit(topicLimit + 1)
-          return setChoiceFour(null);
-      }else if(choiceOne !== someTopic && choiceTwo !== someTopic && choiceThree !== someTopic && choiceFour !== someTopic && choiceFive === someTopic){
-          setTopicLimit(topicLimit + 1)
-          return setChoiceFive(null);
-      }else if(choiceOne !== someTopic && choiceTwo !== someTopic && choiceThree !== someTopic && choiceFour !== someTopic && choiceFive !== someTopic) {
-        alert("Please remove a topic before selecting a new one")
-          return setTopicLimit(0);
-      }
-    }
+  // state for topic obj
+  const [choiceOne, setChoiceOne] = useState(null);
+  const [choiceTwo, setChoiceTwo] = useState(null);
+  const [choiceThree, setChoiceThree] = useState(null);
+  const [choiceFour, setChoiceFour] = useState(null);
+  const [choiceFive, setChoiceFive] = useState(null);
 
-      // get user obj from sql + set local storage
+  // topic obj to send to be
+  const topicObj = {
+    choiceOne: choiceOne,
+    choiceTwo: choiceTwo,
+    choiceThree: choiceThree,
+    choiceFour: choiceFour,
+    choiceFive: choiceFive,
+  };
+
+  // func passed to child buttons to receive topics
+  const getTopic = (someTopic) => {
+    if (choiceOne === null) {
+      setTopicLimit(topicLimit - 1);
+      return setChoiceOne(someTopic);
+    } else if (choiceOne !== null && choiceTwo === null) {
+      setTopicLimit(topicLimit - 1);
+      return setChoiceTwo(someTopic);
+    } else if (
+      choiceOne !== null &&
+      choiceTwo !== null &&
+      choiceThree === null
+    ) {
+      setTopicLimit(topicLimit - 1);
+      return setChoiceThree(someTopic);
+    } else if (
+      choiceOne !== null &&
+      choiceTwo !== null &&
+      choiceThree !== null &&
+      choiceFour === null
+    ) {
+      setTopicLimit(topicLimit - 1);
+      return setChoiceFour(someTopic);
+    } else if (
+      choiceOne !== null &&
+      choiceTwo !== null &&
+      choiceThree !== null &&
+      choiceFour !== null &&
+      choiceFive === null
+    ) {
+      setTopicLimit(topicLimit - 1);
+      return setChoiceFive(someTopic);
+    } else if (
+      choiceOne !== null &&
+      choiceTwo !== null &&
+      choiceThree !== null &&
+      choiceFour !== null &&
+      choiceFive !== null
+    ) {
+      alert("Please remove a topic before selecting a new one");
+      return setTopicLimit(0);
+    }
+  };
+  // func passed to child buttons to remove topics
+  const removeTopic = (someTopic) => {
+    if (choiceOne === someTopic) {
+      setTopicLimit(topicLimit + 1);
+      return setChoiceOne(null);
+    } else if (choiceOne !== someTopic && choiceTwo === someTopic) {
+      setTopicLimit(topicLimit + 1);
+      return setChoiceTwo(null);
+    } else if (
+      choiceOne !== someTopic &&
+      choiceTwo !== someTopic &&
+      choiceThree === someTopic
+    ) {
+      setTopicLimit(topicLimit + 1);
+      return setChoiceThree(null);
+    } else if (
+      choiceOne !== someTopic &&
+      choiceTwo !== someTopic &&
+      choiceThree !== someTopic &&
+      choiceFour === someTopic
+    ) {
+      setTopicLimit(topicLimit + 1);
+      return setChoiceFour(null);
+    } else if (
+      choiceOne !== someTopic &&
+      choiceTwo !== someTopic &&
+      choiceThree !== someTopic &&
+      choiceFour !== someTopic &&
+      choiceFive === someTopic
+    ) {
+      setTopicLimit(topicLimit + 1);
+      return setChoiceFive(null);
+    } else if (
+      choiceOne !== someTopic &&
+      choiceTwo !== someTopic &&
+      choiceThree !== someTopic &&
+      choiceFour !== someTopic &&
+      choiceFive !== someTopic
+    ) {
+      alert("Please remove a topic before selecting a new one");
+      return setTopicLimit(0);
+    }
+  };
+
+  // get user obj from sql + set local storage
   const tryFetchDetailsAgain = async (userId) => {
-    await API.getUserInfo(userId)
-    .then((userData) => {
-      if(userData.status === 404){
-        alert("error retrieving user data from sql")
-      }else if(userData.status === 202){
+    await API.getUserInfo(userId).then((userData) => {
+      if (userData.status === 404) {
+        alert("error retrieving user data from sql");
+      } else if (userData.status === 202) {
         setUser(userData.data);
-        history.push('/home');
+        history.push("/home");
       }
     });
   };
 
-    // send topics to api
-    const sendTopics = async () => {
-      const userId = localStorage.getItem('loggedInUserId')
-      if(topicObj.choiceOne === null || topicObj.choiceTwo === null || topicObj.choiceThree === null || topicObj.choiceFour === null || topicObj.choiceFive === null ){
-        alert("Please select all five topics you may be interested in!")
-      }else{
-        await API.sendUserTopics(topicObj, userId ).then((res) => {
-          if(res.status === 400){
-            alert("Error posting topics, please try again");
-          }else if(res.status === 202){
-            API.getUserInfo(userId)
-            .then((userRes) => {
-              if(userRes.status === 404){
-                tryFetchDetailsAgain(userId);
-              }else if(userRes.status === 202){
-                setUser(userRes.data)
-                history.push('/home');
-              }
-            });
-          }
-        });
-      }
-    };
+  // send topics to api
+  const sendTopics = async () => {
+    const userId = localStorage.getItem("loggedInUserId");
+    if (
+      topicObj.choiceOne === null ||
+      topicObj.choiceTwo === null ||
+      topicObj.choiceThree === null ||
+      topicObj.choiceFour === null ||
+      topicObj.choiceFive === null
+    ) {
+      alert("Please select all five topics you may be interested in!");
+    } else {
+      await API.sendUserTopics(topicObj, userId).then((res) => {
+        if (res.status === 400) {
+          alert("Error posting topics, please try again");
+        } else if (res.status === 202) {
+          API.getUserInfo(userId).then((userRes) => {
+            if (userRes.status === 404) {
+              tryFetchDetailsAgain(userId);
+            } else if (userRes.status === 202) {
+              setUser(userRes.data);
+              history.push("/home");
+            }
+          });
+        }
+      });
+    }
+  };
 
-// load state for pg 2 and set brief load
+  // load state for pg 2 and set brief load
   const loadPageTwo = () => {
     setLoadTitleMessage(true);
     setPageTwoShow(true);
     setTimeout(() => {
-        return setLoading(false);
+      return setLoading(false);
     }, 2 * 1100);
   };
 
-// send s3 bucket url and user entered details to server to create user
-  const signupUser = async (newAwsURL , signupObject) => {
-
+  // send s3 bucket url and user entered details to server to create user
+  const signupUser = async (newAwsURL, signupObject) => {
     let finalSignupObj = {
-      icon : newAwsURL,
-      firstName : signupObject.firstName,
-      lastName : signupObject.lastName,
-      username : signupObject.username,
-      email : signupObject.email,
-      password : signupObject.password,
-      age : signupObject.age,
-      city : signupObject.city,
-      state : signupObject.state,
-      zip : signupObject.zip,
-      jobTitle : signupObject.jobTitle,
-      date : signupObject.date
-    }
+      icon: newAwsURL,
+      firstName: signupObject.firstName,
+      lastName: signupObject.lastName,
+      username: signupObject.username,
+      email: signupObject.email,
+      password: signupObject.password,
+      age: signupObject.age,
+      city: signupObject.city,
+      state: signupObject.state,
+      zip: signupObject.zip,
+      jobTitle: signupObject.jobTitle,
+      date: signupObject.date,
+    };
 
     await API.signupUser(finalSignupObj).then((res) => {
-      if(res.status === 202){
+      if (res.status === 202) {
         document.cookie = res.data.sessToken;
         localStorage.setItem("loggedInUserId", res.data.userData.insertId);
-          loadPageTwo();
-      }else{
-        alert('error creating user, please try again');
+        loadPageTwo();
+      } else {
+        alert("error creating user, please try again");
       }
     });
   };
 
-// send selected img file to aws and return new url to use for icon in sql
-  const sendIconAws = async (awsFileName, fileType , fileData , signupObject) => {
-    if(fileData === null){
+  // send selected img file to aws and return new url to use for icon in sql
+  const sendIconAws = async (awsFileName, fileType, fileData, signupObject) => {
+    if (fileData === null) {
       setTimeout(() => {
         checkFileType(signupObject);
       }, 2 * 500);
-    }else{
+    } else {
       const base64Data = new Buffer.from(
         fileData.replace(/^data:image\/\w+;base64,/, ""),
         "base64"
       );
-      await API.postUserImg(awsFileName , fileType , base64Data).then((res) => {
-        if(res.status === 404){
-          return alert("There was an error posting your photo")
-        }else if(res.status === 202){
-          signupUser(res.data , signupObject)
+      await API.postUserImg(awsFileName, fileType, base64Data).then((res) => {
+        if (res.status === 404) {
+          return alert("There was an error posting your photo");
+        } else if (res.status === 202) {
+          signupUser(res.data, signupObject);
         }
-      })
+      });
     }
-
-  }
-// check file type and then manipulate data to send to s3 bucket
+  };
+  // check file type and then manipulate data to send to s3 bucket
   const checkFileType = async (signupObject) => {
     if (
       selectedFile.type === "application/pdf" ||
@@ -240,15 +284,21 @@ const history = useHistory();
       selectedFile.type === "image/png" ||
       selectedFile.type === "image/jpeg"
     ) {
-      let fileTypeAfterReplace = `${selectedFile.type}`.replace("image/" , "");
-      let awsFileName = `${signupObject.firstName}${signupObject.lastName}`.replace(/\s/g, "");
+      let fileTypeAfterReplace = `${selectedFile.type}`.replace("image/", "");
+      let awsFileName =
+        `${signupObject.firstName}${signupObject.lastName}`.replace(/\s/g, "");
       if (fileTypeAfterReplace === null) {
         return alert("file did not de stringify");
       } else {
         const reader = new FileReader();
         reader.readAsDataURL(selectedFile);
         reader.onload = function () {
-          sendIconAws(awsFileName, fileTypeAfterReplace , reader.result, signupObject);
+          sendIconAws(
+            awsFileName,
+            fileTypeAfterReplace,
+            reader.result,
+            signupObject
+          );
         };
         reader.onerror = function () {
           return console.log(reader.error, "on error load");
@@ -257,9 +307,9 @@ const history = useHistory();
     } else {
       alert("Please Select From png, jpg, jpeg, or pdf");
     }
-  }
+  };
 
-// creating initial signup obj and checking the fields for empty string or null
+  // creating initial signup obj and checking the fields for empty string or null
   const validateForm = (e) => {
     e.preventDefault();
     let dateTime = new Date().toJSON().slice(0, 19).replace("T", " ");
@@ -277,10 +327,10 @@ const history = useHistory();
       jobTitle: jobTitleRef.current.value,
       date: dateTime,
     };
-    
-    if(signupObject.icon === ""){
-      alert("Please select a profile icon")
-    }else if (signupObject.firstName === "") {
+
+    if (signupObject.icon === "") {
+      alert("Please select a profile icon");
+    } else if (signupObject.firstName === "") {
       alert("Please enter user name");
     } else if (signupObject.lastName === "") {
       alert("Please enter last name");
@@ -295,7 +345,7 @@ const history = useHistory();
     } else if (signupObject.city === "") {
       alert("Please enter city");
     } else if (signupObject.state === "") {
-      alert("Please enter state")
+      alert("Please enter state");
     } else if (signupObject.zip === "") {
       alert("Please enter zip");
     } else if (signupObject.jobTitle === "") {
@@ -325,92 +375,164 @@ const history = useHistory();
     retrieveFile();
   };
 
-  if(!pageTwoShow){
-  return (
-    <div className="signup-page container-fixed">
-      <h1>Tell Us About Yourself!</h1>
-      <div className="signup-container">
-        <div className="user-icon-cont container-fixed">
-          <button onClick={openDialogue}>
-            <input
-            type="file"
-            id="input"
-            ref={inputFile}
-            style={{display: "none"}}
-            ></input>
-          <img 
-          src={imgSrc} 
-          alt="Your Profile Icon"
-          >
-          </img>
+  if (!pageTwoShow) {
+    return (
+      <div className="signup-page container-fixed">
+        <h1>Tell Us About Yourself!</h1>
+        <div className="signup-container">
+          <div className="user-icon-cont container-fixed">
+            <button onClick={openDialogue}>
+              <input
+                type="file"
+                id="input"
+                ref={inputFile}
+                style={{ display: "none" }}
+              ></input>
+              <img src={imgSrc} alt="Your Profile Icon"></img>
+            </button>
+          </div>
+          <div className="forms-container">
+            <form>
+              <label>First</label>
+              <input type="text" ref={firstNameRef}></input>
+              <label>Last</label>
+              <input type="text" ref={lastNameRef}></input>
+              <label>Username</label>
+              <input type="text" ref={usernameRef}></input>
+              <label>Email</label>
+              <input type="text" ref={emailRef}></input>
+              <label>Password</label>
+              <input type="text" ref={passwordRef}></input>
+            </form>
+            <form>
+              <label>Age</label>
+              <input type="text" ref={ageRef}></input>
+              <label>City</label>
+              <input type="text" ref={cityRef}></input>
+              <label>Zip</label>
+              <input type="text" ref={zipRef}></input>
+              <label>State</label>
+              <input type="text" ref={stateRef}></input>
+              <label>Title</label>
+              <input type="text" ref={jobTitleRef}></input>
+            </form>
+          </div>
+          <button onClick={validateForm} className="submit-btn">
+            <p>
+              Continue <FontAwesomeIcon icon={faArrowRight}></FontAwesomeIcon>
+            </p>
           </button>
         </div>
-        <div className="forms-container">
-        <form>
-          <label>First</label>
-          <input type="text" ref={firstNameRef}></input>
-          <label>Last</label>
-          <input type="text" ref={lastNameRef}></input>
-          <label>Username</label>
-          <input type="text" ref={usernameRef}></input>
-          <label>Email</label>
-          <input type="text" ref={emailRef}></input>
-          <label>Password</label>
-          <input type="text" ref={passwordRef}></input>
-        </form>
-        <form>
-          <label>Age</label>
-          <input type="text" ref={ageRef}></input>
-          <label>City</label>
-          <input type="text" ref={cityRef}></input>
-          <label>Zip</label>
-          <input type="text" ref={zipRef}></input>
-          <label>State</label>
-          <input type="text" ref={stateRef}></input>
-          <label>Title</label>
-          <input type="text" ref={jobTitleRef}></input>
-        </form>
-        </div>
-        <button 
-        onClick={validateForm}
-         className="submit-btn">
-          <p>Continue <FontAwesomeIcon icon={faArrowRight}></FontAwesomeIcon></p>
-        </button>
       </div>
-    </div>
-  );
-}
-else {
-  if(loading){
-    return(
-      <div className="load-screen-holder container-fixed">
-        <LoadingPage />
-       </div>
-    )
+    );
   } else {
-  return(
-    <div className="signup-page-two container-fixed">
-      <h1>{titleMsg}</h1>
-      <div className="topic-cont container-fixed">
-        <TopicBtn topic = {topicChoices.topicOne} getTopic = {getTopic} removeTopic = {removeTopic} limit={topicLimit} />
-        <TopicBtn topic = {topicChoices.topicTwo} getTopic = {getTopic} removeTopic = {removeTopic} limit={topicLimit} />
-        <TopicBtn topic = {topicChoices.topicThree} getTopic = {getTopic} removeTopic = {removeTopic} limit={topicLimit} />
-        <TopicBtn topic = {topicChoices.topicFour} getTopic = {getTopic} removeTopic = {removeTopic} limit={topicLimit} />
-        <TopicBtn topic = {topicChoices.topicFive} getTopic = {getTopic} removeTopic = {removeTopic} limit={topicLimit} />
-        <TopicBtn topic = {topicChoices.topicSix} getTopic = {getTopic} removeTopic = {removeTopic} limit={topicLimit} />
-        <TopicBtn topic = {topicChoices.topicSeven} getTopic = {getTopic} removeTopic = {removeTopic} limit={topicLimit} />
-        <TopicBtn topic = {topicChoices.topicEight} getTopic = {getTopic} removeTopic = {removeTopic} limit={topicLimit} />
-        <TopicBtn topic = {topicChoices.topicNine} getTopic = {getTopic} removeTopic = {removeTopic} limit={topicLimit} />
-        <TopicBtn topic = {topicChoices.topicTen} getTopic = {getTopic} removeTopic = {removeTopic} limit={topicLimit} />
-        <TopicBtn topic = {topicChoices.topicEleven} getTopic = {getTopic} removeTopic = {removeTopic} limit={topicLimit} />
-        <TopicBtn topic = {topicChoices.topicTwelve} getTopic = {getTopic} removeTopic = {removeTopic} limit={topicLimit} />
-        <TopicBtn topic = {topicChoices.topicThirteen} getTopic = {getTopic} removeTopic = {removeTopic} limit={topicLimit} />
-        <TopicBtn topic = {topicChoices.topicFourteen} getTopic = {getTopic} removeTopic = {removeTopic} limit={topicLimit} />
-        <TopicBtn topic = {topicChoices.topicFifteen} getTopic = {getTopic} removeTopic = {removeTopic} limit={topicLimit} />
-      </div>
-      <button className="topic-btn" onClick={sendTopics}><p>Finish</p></button>
-    </div>
-  )
-}
-}
+    if (loading) {
+      return (
+        <div className="load-screen-holder container-fixed">
+          <LoadingPage />
+        </div>
+      );
+    } else {
+      return (
+        <div className="signup-page-two container-fixed">
+          <h1>{titleMsg}</h1>
+          <div className="topic-cont container-fixed">
+            <TopicBtn
+              topic={topicChoices.topicOne}
+              getTopic={getTopic}
+              removeTopic={removeTopic}
+              limit={topicLimit}
+            />
+            <TopicBtn
+              topic={topicChoices.topicTwo}
+              getTopic={getTopic}
+              removeTopic={removeTopic}
+              limit={topicLimit}
+            />
+            <TopicBtn
+              topic={topicChoices.topicThree}
+              getTopic={getTopic}
+              removeTopic={removeTopic}
+              limit={topicLimit}
+            />
+            <TopicBtn
+              topic={topicChoices.topicFour}
+              getTopic={getTopic}
+              removeTopic={removeTopic}
+              limit={topicLimit}
+            />
+            <TopicBtn
+              topic={topicChoices.topicFive}
+              getTopic={getTopic}
+              removeTopic={removeTopic}
+              limit={topicLimit}
+            />
+            <TopicBtn
+              topic={topicChoices.topicSix}
+              getTopic={getTopic}
+              removeTopic={removeTopic}
+              limit={topicLimit}
+            />
+            <TopicBtn
+              topic={topicChoices.topicSeven}
+              getTopic={getTopic}
+              removeTopic={removeTopic}
+              limit={topicLimit}
+            />
+            <TopicBtn
+              topic={topicChoices.topicEight}
+              getTopic={getTopic}
+              removeTopic={removeTopic}
+              limit={topicLimit}
+            />
+            <TopicBtn
+              topic={topicChoices.topicNine}
+              getTopic={getTopic}
+              removeTopic={removeTopic}
+              limit={topicLimit}
+            />
+            <TopicBtn
+              topic={topicChoices.topicTen}
+              getTopic={getTopic}
+              removeTopic={removeTopic}
+              limit={topicLimit}
+            />
+            <TopicBtn
+              topic={topicChoices.topicEleven}
+              getTopic={getTopic}
+              removeTopic={removeTopic}
+              limit={topicLimit}
+            />
+            <TopicBtn
+              topic={topicChoices.topicTwelve}
+              getTopic={getTopic}
+              removeTopic={removeTopic}
+              limit={topicLimit}
+            />
+            <TopicBtn
+              topic={topicChoices.topicThirteen}
+              getTopic={getTopic}
+              removeTopic={removeTopic}
+              limit={topicLimit}
+            />
+            <TopicBtn
+              topic={topicChoices.topicFourteen}
+              getTopic={getTopic}
+              removeTopic={removeTopic}
+              limit={topicLimit}
+            />
+            <TopicBtn
+              topic={topicChoices.topicFifteen}
+              getTopic={getTopic}
+              removeTopic={removeTopic}
+              limit={topicLimit}
+            />
+          </div>
+          <button className="topic-btn" onClick={sendTopics}>
+            <p>Finish</p>
+          </button>
+        </div>
+      );
+    }
+  }
 }
