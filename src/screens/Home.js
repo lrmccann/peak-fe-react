@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import API from "../utils/API";
 import UserContext from "../utils/Context";
 import { useHistory } from "react-router-dom";
-import photoThree from "../images/profile-icon-def.png";
 import BlogBtnCont from "../components/blogBtnCont";
 import viewIcon from "../images/view-icon.png";
 import LoadingPage from '../components/Loading/index';
@@ -24,9 +23,10 @@ export default function Home() {
   // GET ALL POSTS
   useEffect(() => {
     (async () => {
-      await API.getAllPosts().then((res) =>{
+      await API.getAllPosts().then((res) => {
         if(res.status === 200){
             res.data.map((index) => {
+              console.log(index, "some index here")
               blogObject.push(index);
             });
             return setLoading(false);
@@ -53,6 +53,7 @@ export default function Home() {
     };
     checkBookmarkStatus();
   }, []);
+
 // check posts from user data against posts being loaded
   useEffect(() => {
     const checkLikeStatus = async () => {
@@ -90,6 +91,7 @@ export default function Home() {
         console.log("Post Error");
       }else{
         console.log("Post Liked!");
+        history.push("/indepthpost");
       }
     });
   };
@@ -101,7 +103,12 @@ export default function Home() {
       getDetailedPost(res.data);
     });
     addPostView(e);
-    history.push("/indepthpost");
+    // history.push("/indepthpost");
+  };
+
+  const saveUserId = (e) => {
+    localStorage.setItem("selectedUserId" , e);
+    history.push('/useraccount')
   };
 
   if (loading) {
@@ -129,10 +136,16 @@ export default function Home() {
             </div>
             <div className="blog-footer-cont container-fixed">
               <div className="COMEBACKTOTHIS">
-                <div className="author-info container-fixed">
-                  <img alt="User Icon" src={photoThree}></img>
-                  <h4>{index.username}</h4>
-                </div>
+                <button
+                  id={index.user_id}
+                 className="author-info container-fixed"
+                 onClick={(e) => {saveUserId(e.target.id);}}
+                 >
+                   {/* <div id={index.user_id}> */}
+                  <img id={index.user_id} alt="User Icon" src={index.icon}></img>
+                  <h4 id={index.user_id}>{index.username}</h4>
+                  {/* </div> */}
+                </button>
                 <div className="more-info-div">
                   <button
                     className="more-info-btn"

@@ -3,7 +3,6 @@
   width: 100%;
   max-width: 100%;
   background-color: white;
-  /* border-bottom: solid black 1px; */
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -15,18 +14,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  /* background-color: rebeccapurple; */
 }
-
-/* .logo-cont > h2 {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  text-align: center;
-  font-size: 32px;
-  height: 75%;
-  width: 32%;
-  margin-left: 4%;
-  font-weight: 500;
-} */
 
 .logo-cont > h1{
   margin-left: 7.5%;
@@ -89,61 +77,22 @@
   height: 85%;
   width: 22%;
   justify-self: flex-start;
-  /* padding-top: .5%; */
   padding-left: 2%;
-  /* background-color: red; */
 }
-
-/* .new-post-btn {
-  height: 100%;
-  width: 40%;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  margin: auto;
-} */
-
-/* .new-post-btn > button {
-  background-color: ghostwhite;
-  height: 100%;
-  width: 100%;
-  display: flex;
-  border-left: solid black 1px;
-  border-right: solid black 1px;
-  border-bottom: none;
-  border-top: none;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-} */
-
-/* .new-post-btn > button:hover {
-  background-color: rgb(169, 169, 190);
-}
-
-.new-post-btn > button > h3 {
-  font-size: 30px;
-  font-weight: 500;
-} */
 
 .nav-btn-cont {
-    /* margin-top: 1.35%; */
     display: flex;
     flex-direction: row;
     height: 100%;
     width: 50%;
     justify-content: flex-end;
     padding-right: 5.5%;
-    /* background-color: red; */
   }
 
 #nav-button {
   align-self: center;
   height: 60%;
   width: 13.5%;
-  /* width: 10%; */
-  /* border-left: solid black 1px; */
   border-left: none;
   border-right: none;
   border-top: none;
@@ -166,7 +115,6 @@
   border: solid rgb(84, 84, 216) 2px;
   padding: 3.20%;
   margin-left: 20%;
-  /* background-color: rebeccapurple; */
 }
 
 #nav-button > p {
@@ -177,10 +125,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  /* font-weight: 600; */
   border: rgb(84, 84, 216) solid 2px;
 }
-
 
 /* MODAL CONTENT */
 .modal-background{

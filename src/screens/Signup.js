@@ -180,10 +180,12 @@ export default function Signup() {
 
   // get user obj from sql + set local storage
   const tryFetchDetailsAgain = async (userId) => {
+    console.log(userId, "the id")
     await API.getUserInfo(userId).then((userData) => {
+      console.log(userData, "the data")
       if (userData.status === 404) {
         alert("error retrieving user data from sql");
-      } else if (userData.status === 202) {
+      } else if (userData.status === 200) {
         setUser(userData.data);
         history.push("/home");
       }
@@ -205,17 +207,10 @@ export default function Signup() {
       await API.sendUserTopics(topicObj, userId).then((res) => {
         if (res.status === 400) {
           alert("Error posting topics, please try again");
-        } else if (res.status === 202) {
-          API.getUserInfo(userId).then((userRes) => {
-            if (userRes.status === 404) {
-              tryFetchDetailsAgain(userId);
-            } else if (userRes.status === 202) {
-              setUser(userRes.data);
-              history.push("/home");
-            }
-          });
+        } else if (res.status === 200) {
+            tryFetchDetailsAgain(userId);
         }
-      });
+      })
     }
   };
 
@@ -246,9 +241,10 @@ export default function Signup() {
     };
 
     await API.signupUser(finalSignupObj).then((res) => {
-      if (res.status === 202) {
+      console.log(res)
+      if (res.status === 200) {
         document.cookie = res.data.sessToken;
-        localStorage.setItem("loggedInUserId", res.data.userData.insertId);
+        localStorage.setItem("loggedInUserId", res.data.userData.id);
         loadPageTwo();
       } else {
         alert("error creating user, please try again");
@@ -260,7 +256,8 @@ export default function Signup() {
   const sendIconAws = async (awsFileName, fileType, fileData, signupObject) => {
     if (fileData === null) {
       setTimeout(() => {
-        checkFileType(signupObject);
+        // checkFileType(signupObject);
+        alert("Please select an image")
       }, 2 * 500);
     } else {
       const base64Data = new Buffer.from(

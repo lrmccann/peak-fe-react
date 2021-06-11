@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import API from "../utils/API";
 import profIcon from "../images/profile-icon-def.png";
 import UserContext from "../utils/Context";
@@ -13,6 +13,10 @@ export default function InDepthPost() {
   const [commentBodyState, setCommentBodyState] = useState(
     "Please enter comment!"
   );
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   let newObj = {
     authUsername: "",
@@ -44,8 +48,9 @@ export default function InDepthPost() {
         await API.getPostDetails(blogToReload).then((res) =>
           getDetailedPost(res.data)
         );
+        isLoading(false);
       })();
-      isLoading(false);
+      // return isLoading(false);
     }
   })();
 

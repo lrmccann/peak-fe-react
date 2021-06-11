@@ -18,6 +18,7 @@ export default function Bookmarks() {
           setBookmarksEmpty(true);
           return setLoading(false);
         } else if(results.status === 200){
+          console.log(results);
           setBookmarksEmpty(false);
           setBookmarkedBlog(await results.data);
           return setLoading(false);

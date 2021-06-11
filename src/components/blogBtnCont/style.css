@@ -37,3 +37,10 @@
   background-repeat: no-repeat;
   cursor: pointer;
 }
+
+
+#thumb-active{
+  height: 90%;
+  width: 90%;
+  background-color: red;
+}

@@ -6,10 +6,11 @@ import MyAccount from "./screens/MyAccount";
 import Bookmarks from "./screens/Bookmarks";
 import CreatePost from './screens/CreatePost';
 import "./App.css";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, useHistory } from "react-router-dom";
 import { UserProvider } from "./utils/Context";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NavbarTop from "./components/navbar/index";
+import UserAccount from "./screens/UserAccount";
 
 export default function App() {
   const [user, setTheUser] = useState({});
@@ -17,6 +18,21 @@ export default function App() {
   const [detailedPost, setDetailedPost] = useState({});
   const [allComments, setAllComments] = useState([]);
   const [loggedIn , setLoggedIn] = useState(false);
+  const history = useHistory();
+  // useEffect(() => {
+    const token = document.cookie;
+
+  // })
+  useEffect(() => {
+    console.log(loggedIn, "here")
+    if (Object.keys(user).length || token === null) {
+      return setLoggedIn(true);
+    } else {
+      return setLoggedIn(false);
+    }
+  // }, [token, user]);
+  }, [loggedIn, token, user]);
+
 
   const setUser = (userData) => {
     setTheUser((user) => {
@@ -56,23 +72,29 @@ export default function App() {
         getAllComments,
       }}
     >
-      <Router>
+        {loggedIn === false ?
+        (
+          <Router>
         <Route exact activeClassName path="/" component={Login} />
         <Route exact activeClassName path="/signup" component={Signup} />
+        </Router>
+        ) : 
+        <Router>
         <NavbarTop />
-        <Switch>
           <Route exact activeClassName path="/home" component={Home} />
-        </Switch>
         <Route
           exact
           activeClassName
           path="/indepthpost"
           component={InDepthPost}
         />
+        <Route exact activeClassName path="/useraccount" component={UserAccount} />
         <Route exact activeClassName path="/createPost" component={CreatePost} />
         <Route exact activeClassName path="/myaccount" component={MyAccount} />
         <Route exact activeClassName path="/bookmarks" component={Bookmarks} />
+
       </Router>
+}
     </UserProvider>
   );
 }

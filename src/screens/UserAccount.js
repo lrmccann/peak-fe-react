@@ -1,16 +1,72 @@
 import React, { useContext, useEffect, useState } from "react";
 import UserContext from "../utils/Context";
 import API from "../utils/API";
-import "../stylesheets/myAccount.css";
+import "../stylesheets/userAccount.css";
 import LoadingPage from "../components/Loading";
+import { useHistory } from "react-router-dom";
 
-export default function MyAccount() {
-  const { user, setUser } = useContext(UserContext);
+export default function UserAccount() {
+  const history = useHistory();
   const [prefTopicsArr, setPrefTopicsArr] = useState([]);
   const [topPosts, setTopPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedUser , setSelectedUser] = useState({});
+  const {user, setUser } = useContext(UserContext);
+
+
+  useEffect(() => {
+    if (Object.keys(user).length) {
+      return;
+    } else {
+      (async () => {
+        let userToReload = localStorage.getItem("loggedInUserId");
+        await API.getUserInfo(userToReload).then((res) => {
+          setUser(res.data);
+        });
+      })();
+    }
+  }, [setUser, user]);
+
+  useEffect(() => {
+      const loadUser = async () => {
+      let idToFetch = localStorage.getItem("selectedUserId");
+      if(idToFetch === null){
+          alert("Error Loading Profile, Please try again!");
+          history.push('/home');
+      }else{
+        await API.getUserInfo(idToFetch).then((res) =>{
+            if(res.status === 200){
+                setSelectedUser(res.data);
+                return setLoading(false);
+            }
+        })
+      }
+    }
+    loadUser();
+  }, [])
 
   // checking user context obj, if empty reload user
+  useEffect(() => {
+    if (Object.keys(selectedUser).length) {
+      if (selectedUser.preferred_topics === null) {
+        setTimeout(() => {
+          setLoading(false);
+        }, 2 * 1100);
+      } else {
+        const removeQuotes = selectedUser.preferred_topics
+          .replace(/['"]+/g, "")
+          .split(",");
+        setPrefTopicsArr(removeQuotes);
+        if (prefTopicsArr.length <= 1) {
+          setTimeout(() => {
+            setLoading(false);
+          }, 2 * 1800);
+        } else if (prefTopicsArr.length >= 3) {
+          setLoading(false);
+        }
+      }
+    }
+  }, [prefTopicsArr.length, selectedUser]);
 
   // scroll top
   useEffect(() => {
@@ -25,41 +81,19 @@ export default function MyAccount() {
   };
   // checks if user obj is empty, if empty reload user
   useEffect(() => {
-    if (Object.keys(user).length) {
-      console.log(user, "user if object is full");
-      getTopPosts(user.id);
+    if (Object.keys(selectedUser).length) {
+    //   console.log(user, "user if object is full");
+      getTopPosts(selectedUser.id);
     } else {
       (async () => {
-        let userToReload = localStorage.getItem("loggedInUserId");
+        let userToReload = localStorage.getItem("selectedUserId");
         await API.getUserInfo(userToReload).then((res) => {
-          setUser(res.data);
+        //   setUser(res.data);
+        setSelectedUser(res.data)
         });
       })();
     }
-  }, [setUser, user]);
-
-  useEffect(() => {
-    if (Object.keys(user).length) {
-      if (user.preferred_topics === null) {
-        setTimeout(() => {
-          setLoading(false);
-        }, 2 * 1800);
-      } else {
-        console.log(user)
-        const removeQuotes = user.preferred_topics
-          .replace(/['"]+/g, "")
-          .split(",");
-        setPrefTopicsArr(removeQuotes);
-        if (prefTopicsArr.length <= 1) {
-          setTimeout(() => {
-            setLoading(false);
-          }, 2 * 1800);
-        } else if (prefTopicsArr.length >= 3) {
-          setLoading(false);
-        }
-      }
-    }
-  }, [prefTopicsArr.length, user]);
+  }, [selectedUser]);
 
   if (loading) {
     return (
@@ -70,6 +104,10 @@ export default function MyAccount() {
   } else {
     return (
       <div className="account-page container-fixed">
+          <div className="icon-and-btn">
+          <img className="user-icon" src={selectedUser.icon} alt="User icon"></img>
+          <button>Follow</button>
+          </div>
         <div className="account-content">
           <div className="leftSide">
             <div className="infoRowOne">
@@ -78,7 +116,7 @@ export default function MyAccount() {
                   First Name
                 </h3>
                 <h4 className="firstNameText" id="infoText">
-                  {user.first_name}
+                  {selectedUser.first_name}
                 </h4>
               </div>
               <div className="shit">
@@ -86,7 +124,7 @@ export default function MyAccount() {
                   User Name
                 </h3>
                 <h4 className="usernameInput" id="infoText">
-                  {user.username}
+                  {selectedUser.username}
                 </h4>
               </div>
             </div>
@@ -96,7 +134,7 @@ export default function MyAccount() {
                   City
                 </h3>
                 <h4 className="cityText" id="infoText">
-                  {user.city}
+                  {selectedUser.city}
                 </h4>
               </div>
               <div className="shit">
@@ -104,7 +142,7 @@ export default function MyAccount() {
                   Title
                 </h3>
                 <h4 className="titleText" id="infoText">
-                  {user.job_title}
+                  {selectedUser.job_title}
                 </h4>
               </div>
             </div>
@@ -114,7 +152,7 @@ export default function MyAccount() {
                   Last Name
                 </h3>
                 <h4 className="lastNameText" id="infoText">
-                  {user.last_name}
+                  {selectedUser.last_name}
                 </h4>
               </div>
               <div className="shit">
@@ -122,7 +160,7 @@ export default function MyAccount() {
                   Email
                 </h3>
                 <h4 className="emailText" id="infoText">
-                  {user.email}
+                  {selectedUser.email}
                 </h4>
               </div>
             </div>
@@ -132,7 +170,7 @@ export default function MyAccount() {
                   Zipcode
                 </h3>
                 <h4 className="zipcodeText" id="infoText">
-                  {user.zipcode}
+                  {selectedUser.zipcode}
                 </h4>
               </div>
               <div className="shit">
@@ -140,7 +178,7 @@ export default function MyAccount() {
                   Age
                 </h3>
                 <h4 className="ageText" id="infoText">
-                  {user.age}
+                  {selectedUser.age}
                 </h4>
               </div>
               <div className="shit">
@@ -148,7 +186,7 @@ export default function MyAccount() {
                   State
                 </h3>
                 <h4 className="stateText" id="infoText">
-                  {user.state}
+                  {selectedUser.state}
                 </h4>
               </div>
             </div>
@@ -174,7 +212,7 @@ export default function MyAccount() {
             ))}
           </div>
           <div className="topCommentsCont">
-            <h1 id="topStatsHeaderText">Preferred Topics</h1>
+            <h1 className="topicsHeaderText">Preferred Topics</h1>
             {prefTopicsArr.map((index, mapKey) => (
               <button className="commentBox" key={mapKey}>
                 <h3>{index}</h3>

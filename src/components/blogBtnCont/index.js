@@ -8,85 +8,83 @@ import API from "../../utils/API";
 import "./style.css";
 
 export default function BlogBtnCont(props) {
-  const [bookmarked, setBookmarked] = useState(bookMarkIcon);
+  const [bookmarked, setBookmarkIcon] = useState(bookMarkIcon);
   const [likeBtn, setLikeBtn] = useState(thumbsUpIcon);
   const [loading, setLoading] = useState(true);
 
   let bookmarksArr = props.bookMarkedPosts;
   let likedPostArr = props.likedPosts;
 
-// set already bookmarked posts & likes
+
   useEffect(() => {
-    bookmarksArr.map((index) => {
-      if (index === props.postId) {
-        return setBookmarked(bookMarkIconClicked);
-      }
-    });
-    if (likedPostArr.length === 0) {
-      setLoading(true);
-    } else {
       likedPostArr.map((index) => {
         if (index === props.postId) {
           return setLikeBtn(thumbsUpIconClicked);
         }
       });
       setLoading(false);
-    }
-  }, [bookmarksArr, props.postId, likedPostArr]);
-//
-// Toggle like btn to add or remove like
+  }, []);
+
+  // set already bookmarked posts & likes
+  useEffect(() => {
+      bookmarksArr.map((index) => {
+        if (index === props.postId) {
+          return setBookmarkIcon(bookMarkIconClicked);
+        }
+      });
+      setLoading(false);
+  }, []);
+  //
+  // Toggle like btn to add or remove like
   const toggleLike = async () => {
+    let likesArrIndex = likedPostArr.indexOf(props.postId);
     let userId = localStorage.getItem("loggedInUserId");
-    if (likeBtn === thumbsUpIcon) {
-      let postIdToSend = props.postId;
-      // let postTitleToSend = props.postTitle;
-      let likesPlusOne = "add";
-      await API.addLike(postIdToSend, likesPlusOne, userId).then(
-        (results) => {
-          // console.log(results, "toggle like results")
-          if (results.status === 202) {
-            setLikeBtn(thumbsUpIconClicked);
+    if(likesArrIndex === -1){
+      await API.addLike(props.postId, 'add', userId).then((results) => {
+        if (results.status === 200) {
+          setLikeBtn(thumbsUpIconClicked);
+        } else {
+          alert("Failed to like post, please try again");
+        }
+      });
+    } else {
+      await API.addLike(props.postId, 'remove', userId).then(
+        (response) => {
+          if (response.status === 200) {
+            setLikeBtn(thumbsUpIcon);
           } else {
-            alert("Failed to like post, please try again");
+            alert("Failed to unliked post, please try again");
           }
         }
       );
-    } else {
-      let postIdToSend = props.postId;
-      let likesMinusOne = "remove";
-      await API.addLike(
-        postIdToSend,
-        likesMinusOne,
-        userId
-      ).then((response) => {
-        if (response.status === 202) {
-          setLikeBtn(thumbsUpIcon);
-        } else {
-          alert("Failed to unliked post, please try again");
-        }
-      });
     }
   };
-//
-// toggle bookmark button to add or remove
+  //
+  // toggle bookmark button to add or remove
   const toggleBookmark = async () => {
+    let bmarkArrIndex = bookmarksArr.indexOf(props.postId)
     let userId = localStorage.getItem("loggedInUserId");
-    let idToSend = props.postId;
-    if (bookmarked === bookMarkIcon) {
-      await API.bookmarkNewPost(idToSend, userId).then((response) => {
-        if (response.status === 202) {
-          setBookmarked(bookMarkIconClicked);
+    let postId = props.postId;
+
+    if(bmarkArrIndex === -1){
+      await API.bookmarkNewPost(postId, userId, 'add').then((response) => {
+        if (response.status === 200) {
+          setBookmarkIcon(bookMarkIconClicked);
         } else {
           alert("Failed to bookmark");
         }
       });
     } else {
-      await API.removeBookmarkedPost(idToSend, userId).then(
-        setBookmarked(bookMarkIcon)
-      );
+      await API.bookmarkNewPost(postId, userId, 'remove').then((response) => {
+        if(response.status === 200) {
+        setBookmarkIcon(bookMarkIcon);
+        } else {
+          alert("Failed to Remove Bookmark")
+        }
+      });
     }
-  };
-//
+  }
+  //
   if (loading === true) {
     return (
       <div>

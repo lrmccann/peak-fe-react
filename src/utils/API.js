@@ -1,6 +1,9 @@
 /* eslint-disable import/no-anonymous-default-export */
 import axios from "axios";
 
+const currentEnv = process.env.NODE_ENV;
+let prodOrDevUrl = null;
+
 let token = document.cookie;
 axios.defaults.headers.post['Authorization'] = token;
 const optionsPut = {
@@ -13,43 +16,36 @@ const optionsPut = {
 const optionsPost = {
   headers : {
     "Access-Control-Allow-Origin" : "http://peak-blogspace.s3-website.us-east-2.amazonaws.com/",
-    'X-Method' : 'PUT',
+    'X-Method' : 'POST',
     'X-Auth-Token' : token
   }
 };
 // axios.defaults.headers.put['Authorization'] = token;
+if(currentEnv === 'development'){
+  prodOrDevUrl = 'http://localhost:3005';
+}else if(currentEnv === 'production'){
+  prodOrDevUrl = 'https://peak-blogspace.herokuapp.com';
+}
+
+console.log(prodOrDevUrl)
 
 export default {
   signupUser: async function (userData) {
     console.log(userData, "user data for signup API");
-    // return await axios.post(`http://localhost:3005/account-info`, userData , {
     return await axios.post(
-      `https://peak-blogspace.herokuapp.com/account-info`,
-      {data : userData},
+      // `https://peak-blogspace.herokuapp.com/account-info`,
+      `${prodOrDevUrl}/account-info`,
+      {userData : userData},
       optionsPost
-      // userData,
-      // {
-      //   headers: {
-      //     "Access-Control-Allow-Origin":
-      //       "http://peak-blogspace.s3-website.us-east-2.amazonaws.com/",
-      //   },
-      // }
     );
   },
   sendUserTopics: async function (topicObj, userId) {
     console.log(topicObj, "user data for signup API");
-    // return await axios.post(`http://localhost:3005/account-info`, userData , {
     return await axios.put(
-      `https://peak-blogspace.herokuapp.com/account_info/${userId}`,
-      {data : topicObj},
+      // `https://peak-blogspace.herokuapp.com/account_info/${userId}`,
+      `${prodOrDevUrl}/account_info/${userId}`,
+      {topicData : topicObj},
       optionsPut
-      // topicObj,
-      // {
-      //   headers: {
-      //     "Access-Control-Allow-Origin":
-      //       "http://peak-blogspace.s3-website.us-east-2.amazonaws.com/",
-      //   },
-      // }
     );
   },
   loginUser: async function (username, password) {
@@ -58,9 +54,8 @@ export default {
       password,
       "username and password for auth FROM DEV ENV"
     );
-    // return await axios.get(`http://localhost:3005/account-info-login/${username}/${password}`, {
     return await axios.get(
-      `https://peak-blogspace.herokuapp.com/account-info-login/${username}/${password}`,
+      `${prodOrDevUrl}/account-info-login/${username}/${password}`,
       {
         headers: {
           "Access-Control-Allow-Origin":
@@ -70,9 +65,9 @@ export default {
     );
   },
   getUserInfo: async function (id) {
-    // return await axios.get(`http://localhost:3005/user-details/${id}`, {
     return await axios.get(
-      `https://peak-blogspace.herokuapp.com/user-details/${id}`,
+      `${prodOrDevUrl}/user-details/${id}`,
+      // `https://peak-blogspace.herokuapp.com/user-details/${id}`,
       {
         headers: {
           "Access-Control-Allow-Origin":
@@ -84,9 +79,9 @@ export default {
   },
   getTopUserPosts: async function (id) {
     console.log(id, "id for getTopUserPosts API");
-    // return await axios.get(`http://localhost:3005/getUserPost/${id}` , {
     return await axios.get(
-      `https://peak-blogspace.herokuapp.com/getUserPost/${id}`,
+      // `https://peak-blogspace.herokuapp.com/getUserPost/${id}`,
+      `${prodOrDevUrl}/getUserPost/${id}`,
       {
         headers: {
           "Access-Control-Allow-Origin":
@@ -99,8 +94,10 @@ export default {
   //
   // home page calls
   getAllPosts: async function () {
-    // return await axios.get(`http://localhost:3005/user-posts`, {
-    return await axios.get(`https://peak-blogspace.herokuapp.com/user-posts`, {
+    return await axios.get(
+      // `https://peak-blogspace.herokuapp.com/user-posts`, 
+      `${prodOrDevUrl}/user-posts`, 
+      {
       headers: {
         "Access-Control-Allow-Origin":
           "http://peak-blogspace.s3-website.us-east-2.amazonaws.com/",
@@ -111,9 +108,9 @@ export default {
   // posts - general where id1 = post id;
   getPostDetails: async function (id) {
     console.log(id, "id of post to get details");
-    // return await axios.get(`http://localhost:3005/user-posts/${id}` , {
     return await axios.get(
-      `https://peak-blogspace.herokuapp.com/posts-general/${id}`,
+      `${prodOrDevUrl}/posts-general/${id}`,
+      // `https://peak-blogspace.herokuapp.com/posts-general/${id}`,
       {
         headers: {
           "Access-Control-Allow-Origin":
@@ -125,23 +122,15 @@ export default {
   },
   addViewToBlog: async function (postId) {
     console.log(postId, "add view to post API");
-    // return await axios.put(`http://localhost:3005/post-views/${postId}` , {
     return await axios.put(
-      `https://peak-blogspace.herokuapp.com/posts-general/${postId}`,
+      `${prodOrDevUrl}/posts-general/${postId}`,
+      // `https://peak-blogspace.herokuapp.com/posts-general/${postId}`,
       {data : null},
       optionsPut
-      // {
-      //   headers: {
-      //     "Access-Control-Allow-Origin":
-      //       "http://peak-blogspace.s3-website.us-east-2.amazonaws.com/",
-      //     'Authorization' : token,
-      //   },
-      // }
     );
   },
   deletePost: async function (postId) {
     console.log(postId, "id of post to delete for API");
-    // return await axios.delete(`http://localhost:3005/user-posts/${postId}` , {
     return await axios.delete(
       `https://peak-blogspace.herokuapp.com/posts-general/${postId}`,
       {
@@ -155,7 +144,6 @@ export default {
   },
   getUsernamesForComments: async function (comment_ids) {
     console.log(comment_ids, "comment id for API");
-    // return await axios.get(`http://localhost:3005/user-comments`  , {
     return await axios.get(
       `https://peak-blogspace.herokuapp.com/user-comments/` + comment_ids,
       {
@@ -173,44 +161,26 @@ export default {
   // calls to create new blog
   postNewBlog: async function (blogContent) {
     console.log(blogContent, "new blog for API");
-    // return await axios.post(`http://localhost:3005/create-new-post` , blogContent , {
     return await axios.post(
       `https://peak-blogspace.herokuapp.com/create-new-post`,
       {data : blogContent},
       optionsPost
-      // blogContent,
-      // {
-      //   headers: {
-      //     "Access-Control-Allow-Origin":
-      //       "http://peak-blogspace.s3-website.us-east-2.amazonaws.com/",
-      //     authorization: token,
-      //   },
-      // }
     );
   },
   // calls to send user icon to aws
   saveUserIcon: async function (blogContent) {
     console.log(blogContent, "new blog for API");
-    // return await axios.post(`http://localhost:3005/create-new-post` , blogContent , {
     return await axios.post(
       `https://peak-blogspace.herokuapp.com/create-new-post`,
       {data : blogContent},
       optionsPost
-      // blogContent,
-      // {
-      //   headers: {
-      //     "Access-Control-Allow-Origin":
-      //       "http://peak-blogspace.s3-website.us-east-2.amazonaws.com/",
-      //     authorization: token,
-      //   },
-      // }
     );
   },
   getLikedPosts: async function (userId) {
     console.log(userId, "Userid for getLikedPosts API");
-    // return await axios.put(`http://localhost:3005/numOfLikesForPost/${postId}/${numOfLikesToSend}/${postTitle}` , {
     return await axios.get(
-      `https://peak-blogspace.herokuapp.com/liked-posts/${userId}`,
+      // `https://peak-blogspace.herokuapp.com/liked-posts/${userId}`,
+      `${prodOrDevUrl}/liked-posts/${userId}`,
       {
         headers: {
           "Access-Control-Allow-Origin":
@@ -226,23 +196,18 @@ export default {
     console.log(postTitle, "post title for addLike API");
     // return await axios.put(`http://localhost:3005/numOfLikesForPost/${postId}/${numOfLikesToSend}/${postTitle}` , {
     return await axios.put(
-      `https://peak-blogspace.herokuapp.com/numOfLikesForPost/${postId}/${numOfLikesToSend}/${postTitle}`,
+      `${prodOrDevUrl}/numOfLikesForPost/${postId}/${numOfLikesToSend}/${postTitle}`,
+      // `https://peak-blogspace.herokuapp.com/numOfLikesForPost/${postId}/${numOfLikesToSend}/${postTitle}`,
       {data : null},
       optionsPut
-      // {
-      //   headers: {
-      //     "Access-Control-Allow-Origin":
-      //       "http://peak-blogspace.s3-website.us-east-2.amazonaws.com/",
-      //     authorization : token
-      //   }
-      // }
     );
   },
   checkBookmarksForHome: async function (userId) {
     console.log(userId, "user id for check bookmarks func for API!");
     // return await axios.get(`http://localhost:3005/user-bookmarks-home/${userId}` , {
     return await axios.get(
-      `https://peak-blogspace.herokuapp.com/user-bookmarks-home/${userId}`,
+      // `https://peak-blogspace.herokuapp.com/user-bookmarks-home/${userId}`,
+      `${prodOrDevUrl}/user-bookmarks-home/${userId}`,
       {
         headers: {
           "Access-Control-Allow-Origin":
@@ -253,27 +218,22 @@ export default {
     );
   },
   // bookmark related axios requests
-  bookmarkNewPost: async function (postToBookmark, userId) {
+  bookmarkNewPost: async function (postToBookmark, userId, cond) {
     console.log(postToBookmark, "id of blog to bookmark!!!");
     // return await axios.put(`http://localhost:3005/user-bookmarks/${postToBookmark}/${userId}` , {
     return await axios.put(
-      `https://peak-blogspace.herokuapp.com/user-bookmarks/${postToBookmark}/${userId}`,
+      `${prodOrDevUrl}/user-bookmarks/${postToBookmark}/${userId}/${cond}`,
+      // `https://peak-blogspace.herokuapp.com/user-bookmarks/${postToBookmark}/${userId}`,
       {data : null},
       optionsPut
-      // {
-      //   headers: {
-      //     "Access-Control-Allow-Origin":
-      //       "http://peak-blogspace.s3-website.us-east-2.amazonaws.com/",
-      //     authorization: token,
-      //   },
-      // }
     );
   },
   getBookmarkedPosts: async function (userId) {
     console.log(userId, "id of user to fetch bookmarked blogs API");
     // return await axios.get(`http://localhost:3005/user-all-bookmarks/${userId}` , {
     return await axios.get(
-      `https://peak-blogspace.herokuapp.com/user-all-bookmarks/${userId}`,
+      // `https://peak-blogspace.herokuapp.com/user-all-bookmarks/${userId}`,
+      `${prodOrDevUrl}/user-all-bookmarks/${userId}`,
       {
         headers: {
           "Access-Control-Allow-Origin":
@@ -303,16 +263,10 @@ export default {
     );
     // return await axios.post(`http://localhost:3005/user-comments-post/${userId}/${postId}/${commentBody}` , {
     return await axios.post(
-      `https://peak-blogspace.herokuapp.com/user-comments-post/${userId}/${postId}`,
-      {data : commentBody},
+      `${prodOrDevUrl}/user-comments-post/${userId}/${postId}`,
+      // `https://peak-blogspace.herokuapp.com/user-comments-post/${userId}/${postId}`,
+      {commentBody : commentBody},
       optionsPost
-      // {
-      //   headers: {
-      //     "Access-Control-Allow-Origin":
-      //       "http://peak-blogspace.s3-website.us-east-2.amazonaws.com/",
-      //     authorization: token,
-      //   },
-      // }
     );
   },
   postBlogImg: async function (fileURL, imgType, blogTitle) {
@@ -324,16 +278,6 @@ export default {
       `https://peak-blogspace.herokuapp.com/blog-images/${blogTitle}/${imgType}`,
       {dataFile : fileURL},
       optionsPut
-      // {
-      //   headers: {
-      //     "Access-Control-Allow-Origin":
-      //       "http://peak-blogspace.s3-website.us-east-2.amazonaws.com/",
-      //     authorization: token,
-      //   },
-      //   data: {
-      //     fileURL,
-      //   },
-      // }
     );
   },
   postUserImg: async function (awsFileName, fileType, fileData) {
@@ -343,18 +287,8 @@ export default {
     // return await axios.delete(`http://localhost:3005/user-posts/${postId}` , {
     return await axios.put(
       `https://peak-blogspace.herokuapp.com/user-images/${awsFileName}/${fileType}`,
-      {data : fileData},
+      {dataFile : fileData},
       optionsPut
-      // {
-      //   headers: {
-      //     "Access-Control-Allow-Origin":
-      //       "http://peak-blogspace.s3-website.us-east-2.amazonaws.com/",
-      //     authorization: token,
-      //   },
-      //   data: {
-      //     fileData,
-      //   },
-      // }
     );
   },
 };
