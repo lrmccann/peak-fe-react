@@ -72,7 +72,7 @@ export default function CreatePost() {
       userId: userId,
     };
     await API.postNewBlog(finalBlogObj).then((res) => {
-      if (res.status === 202) {
+      if (res.status === 200) {
         setBlogPosted(true);
         alert("Blog created successfully!");
         return setLoading(false);
@@ -96,16 +96,16 @@ export default function CreatePost() {
         (response) => {
           if (response === undefined) {
             setTimeout(() => {
-              if (response.status !== 202) {
+              if (response.status !== 200) {
                 alert("There was an error uploading your image");
-              } else if (response.status === 202) {
+              } else if (response.status === 200) {
                 savePostToSQL(response.data, blogObj);
               }
             }, 2 * 800);
           } else {
-            if (response.status !== 202) {
+            if (response.status !== 200) {
               alert("There was an error uploading your image");
-            } else if (response.status === 202) {
+            } else if (response.status === 200) {
               savePostToSQL(response.data, blogObj);
             }
           }

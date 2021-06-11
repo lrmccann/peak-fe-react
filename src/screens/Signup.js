@@ -267,7 +267,7 @@ export default function Signup() {
       await API.postUserImg(awsFileName, fileType, base64Data).then((res) => {
         if (res.status === 404) {
           return alert("There was an error posting your photo");
-        } else if (res.status === 202) {
+        } else if (res.status === 200) {
           signupUser(res.data, signupObject);
         }
       });
