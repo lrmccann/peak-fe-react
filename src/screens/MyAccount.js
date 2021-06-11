@@ -25,14 +25,17 @@ export default function MyAccount() {
   };
   // checks if user obj is empty, if empty reload user
   useEffect(() => {
+    console.log(user);
     if (Object.keys(user).length) {
       console.log(user, "user if object is full");
       getTopPosts(user.id);
+      setPrefTopicsArr(user.preferred_topics.replace(/['"]+/g, "").split(","));
     } else {
       (async () => {
         let userToReload = localStorage.getItem("loggedInUserId");
         await API.getUserInfo(userToReload).then((res) => {
           setUser(res.data);
+          setPrefTopicsArr(res.data.preferred_topics.replace(/['"]+/g, "").split(","));
         });
       })();
     }

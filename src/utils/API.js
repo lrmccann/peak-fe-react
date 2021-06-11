@@ -142,27 +142,11 @@ export default {
       }
     );
   },
-  getUsernamesForComments: async function (comment_ids) {
-    console.log(comment_ids, "comment id for API");
-    return await axios.get(
-      `https://peak-blogspace.herokuapp.com/user-comments/` + comment_ids,
-      {
-        headers: {
-          "Access-Control-Allow-Origin":
-            "http://peak-blogspace.s3-website.us-east-2.amazonaws.com/",
-          authorization: token,
-        },
-        params: {
-          stuff: comment_ids,
-        },
-      }
-    );
-  },
   // calls to create new blog
   postNewBlog: async function (blogContent) {
     console.log(blogContent, "new blog for API");
     return await axios.post(
-      `https://peak-blogspace.herokuapp.com/create-new-post`,
+      `${prodOrDevUrl}/create-new-post`,
       {data : blogContent},
       optionsPost
     );
@@ -171,7 +155,7 @@ export default {
   saveUserIcon: async function (blogContent) {
     console.log(blogContent, "new blog for API");
     return await axios.post(
-      `https://peak-blogspace.herokuapp.com/create-new-post`,
+      `${prodOrDevUrl}/create-new-post`,
       {data : blogContent},
       optionsPost
     );
@@ -179,7 +163,6 @@ export default {
   getLikedPosts: async function (userId) {
     console.log(userId, "Userid for getLikedPosts API");
     return await axios.get(
-      // `https://peak-blogspace.herokuapp.com/liked-posts/${userId}`,
       `${prodOrDevUrl}/liked-posts/${userId}`,
       {
         headers: {
@@ -194,19 +177,15 @@ export default {
     console.log(numOfLikesToSend, "num of likes for addLike API");
     console.log(postId, "id of post addlike API");
     console.log(postTitle, "post title for addLike API");
-    // return await axios.put(`http://localhost:3005/numOfLikesForPost/${postId}/${numOfLikesToSend}/${postTitle}` , {
     return await axios.put(
       `${prodOrDevUrl}/numOfLikesForPost/${postId}/${numOfLikesToSend}/${postTitle}`,
-      // `https://peak-blogspace.herokuapp.com/numOfLikesForPost/${postId}/${numOfLikesToSend}/${postTitle}`,
       {data : null},
       optionsPut
     );
   },
   checkBookmarksForHome: async function (userId) {
     console.log(userId, "user id for check bookmarks func for API!");
-    // return await axios.get(`http://localhost:3005/user-bookmarks-home/${userId}` , {
     return await axios.get(
-      // `https://peak-blogspace.herokuapp.com/user-bookmarks-home/${userId}`,
       `${prodOrDevUrl}/user-bookmarks-home/${userId}`,
       {
         headers: {
@@ -220,19 +199,15 @@ export default {
   // bookmark related axios requests
   bookmarkNewPost: async function (postToBookmark, userId, cond) {
     console.log(postToBookmark, "id of blog to bookmark!!!");
-    // return await axios.put(`http://localhost:3005/user-bookmarks/${postToBookmark}/${userId}` , {
     return await axios.put(
       `${prodOrDevUrl}/user-bookmarks/${postToBookmark}/${userId}/${cond}`,
-      // `https://peak-blogspace.herokuapp.com/user-bookmarks/${postToBookmark}/${userId}`,
       {data : null},
       optionsPut
     );
   },
   getBookmarkedPosts: async function (userId) {
     console.log(userId, "id of user to fetch bookmarked blogs API");
-    // return await axios.get(`http://localhost:3005/user-all-bookmarks/${userId}` , {
     return await axios.get(
-      // `https://peak-blogspace.herokuapp.com/user-all-bookmarks/${userId}`,
       `${prodOrDevUrl}/user-all-bookmarks/${userId}`,
       {
         headers: {
@@ -245,9 +220,8 @@ export default {
   },
   removeBookmarkedPost: async function (postIdToRemove, userId) {
     console.log(postIdToRemove, "id of post to unbookmark for API!");
-    // return await axios.delete(`http://localhost:3005/user-bookmarks/${postIdToRemove}/${userId}` , {
     return await axios.delete(
-      `https://peak-blogspace.herokuapp.com/user-bookmarks/${postIdToRemove}/${userId}`,
+      `${prodOrDevUrl}/${postIdToRemove}/${userId}`,
       {
         headers: {
           "Access-Control-Allow-Origin":
@@ -261,10 +235,8 @@ export default {
     console.log(
       `userId : ${userId} postId: ${postId} body : ${commentBody} for postnewcomment api`
     );
-    // return await axios.post(`http://localhost:3005/user-comments-post/${userId}/${postId}/${commentBody}` , {
     return await axios.post(
-      `${prodOrDevUrl}/user-comments-post/${userId}/${postId}`,
-      // `https://peak-blogspace.herokuapp.com/user-comments-post/${userId}/${postId}`,
+      `${prodOrDevUrl}/user-comments/${userId}/${postId}`,
       {commentBody : commentBody},
       optionsPost
     );
@@ -272,10 +244,8 @@ export default {
   postBlogImg: async function (fileURL, imgType, blogTitle) {
     console.log(
       `FILE : ${fileURL}  BLOG NAME : ${blogTitle}  POST BLOG IMG API`
-    );
-    // return await axios.delete(`http://localhost:3005/user-posts/${postId}` , {
-    return await axios.put(
-      `https://peak-blogspace.herokuapp.com/blog-images/${blogTitle}/${imgType}`,
+    );    return await axios.put(
+      `${prodOrDevUrl}/blog-images/${blogTitle}/${imgType}`,
       {dataFile : fileURL},
       optionsPut
     );
@@ -284,9 +254,8 @@ export default {
     console.log(
       `FILENAME : ${awsFileName}  FILETYPE :  ${fileType} POST USER IMG API`
     );
-    // return await axios.delete(`http://localhost:3005/user-posts/${postId}` , {
     return await axios.put(
-      `https://peak-blogspace.herokuapp.com/user-images/${awsFileName}/${fileType}`,
+      `${prodOrDevUrl}/user-images/${awsFileName}/${fileType}`,
       {dataFile : fileData},
       optionsPut
     );
