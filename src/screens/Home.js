@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import BlogBtnCont from "../components/blogBtnCont";
 import viewIcon from "../images/view-icon.png";
 import LoadingPage from '../components/Loading/index';
+import TrendingBlogs from "../components/TrendingBlogs";
 import "../stylesheets/home.css";
 
 export default function Home() {
@@ -47,7 +48,7 @@ export default function Home() {
         if(res.status === 200){
           setBookmarkedPost(res.data);
         }else{
-          return console.log("error loading bookmarks")
+          return console.log("error loading bookmarks");
         }
       });
     };
@@ -103,12 +104,11 @@ export default function Home() {
       getDetailedPost(res.data);
     });
     addPostView(e);
-    // history.push("/indepthpost");
   };
 
   const saveUserId = (e) => {
     localStorage.setItem("selectedUserId" , e);
-    history.push('/useraccount')
+    history.push('/useraccount');
   };
 
   if (loading) {
@@ -120,9 +120,11 @@ export default function Home() {
   } else {
     return (
       <div className="home-page container">
+        <h1>Trending</h1>
+        <TrendingBlogs />
         {blogObject.map((index, myKey) => (
-          <div className="blog-content container" key={myKey}>
-            <div
+          <div className="blog-content container" key={myKey}>            
+          <div
               className="blog-img-header container-fixed"
               style={{ backgroundImage: `url(${index.blog_img})` }}
             >

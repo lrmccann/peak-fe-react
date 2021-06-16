@@ -62,7 +62,7 @@ export default function BlogBtnCont(props) {
   //
   // toggle bookmark button to add or remove
   const toggleBookmark = async () => {
-    let bmarkArrIndex = bookmarksArr.indexOf(props.postId)
+    let bmarkArrIndex = bookmarksArr.indexOf(props.postId);
     let userId = localStorage.getItem("loggedInUserId");
     let postId = props.postId;
 
@@ -79,7 +79,7 @@ export default function BlogBtnCont(props) {
         if(response.status === 200) {
         setBookmarkIcon(bookMarkIcon);
         } else {
-          alert("Failed to Remove Bookmark")
+          alert("Failed to Remove Bookmark");
         }
       });
     }

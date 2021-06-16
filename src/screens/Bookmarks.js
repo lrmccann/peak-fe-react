@@ -14,6 +14,7 @@ export default function Bookmarks() {
     const getBookmarks = async () => {
       let userId = localStorage.getItem("loggedInUserId");
       await API.getBookmarkedPosts(userId).then(async (results) => {
+        console.log(results, 'RESUUUUULTS OF DIS BITCH');
         if (results.status === 210) {
           setBookmarksEmpty(true);
           return setLoading(false);

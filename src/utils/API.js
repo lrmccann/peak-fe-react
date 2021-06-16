@@ -33,7 +33,6 @@ export default {
   signupUser: async function (userData) {
     console.log(userData, "user data for signup API");
     return await axios.post(
-      // `https://peak-blogspace.herokuapp.com/account-info`,
       `${prodOrDevUrl}/account-info`,
       {userData : userData},
       optionsPost
@@ -42,7 +41,6 @@ export default {
   sendUserTopics: async function (topicObj, userId) {
     console.log(topicObj, "user data for signup API");
     return await axios.put(
-      // `https://peak-blogspace.herokuapp.com/account_info/${userId}`,
       `${prodOrDevUrl}/account_info/${userId}`,
       {topicData : topicObj},
       optionsPut
@@ -67,7 +65,6 @@ export default {
   getUserInfo: async function (id) {
     return await axios.get(
       `${prodOrDevUrl}/user-details/${id}`,
-      // `https://peak-blogspace.herokuapp.com/user-details/${id}`,
       {
         headers: {
           "Access-Control-Allow-Origin":
@@ -77,11 +74,10 @@ export default {
       }
     );
   },
-  getTopUserPosts: async function (id) {
-    console.log(id, "id for getTopUserPosts API");
+  getTopUserPosts: async function (id, cond) {
+    console.log(id, "id for getTopUserPosts API" , cond, "cond for id");
     return await axios.get(
-      // `https://peak-blogspace.herokuapp.com/getUserPost/${id}`,
-      `${prodOrDevUrl}/getUserPost/${id}`,
+      `${prodOrDevUrl}/getUserPost/${id}/${cond}`,
       {
         headers: {
           "Access-Control-Allow-Origin":
@@ -95,7 +91,6 @@ export default {
   // home page calls
   getAllPosts: async function () {
     return await axios.get(
-      // `https://peak-blogspace.herokuapp.com/user-posts`, 
       `${prodOrDevUrl}/user-posts`, 
       {
       headers: {
@@ -110,7 +105,6 @@ export default {
     console.log(id, "id of post to get details");
     return await axios.get(
       `${prodOrDevUrl}/posts-general/${id}`,
-      // `https://peak-blogspace.herokuapp.com/posts-general/${id}`,
       {
         headers: {
           "Access-Control-Allow-Origin":
@@ -124,7 +118,6 @@ export default {
     console.log(postId, "add view to post API");
     return await axios.put(
       `${prodOrDevUrl}/posts-general/${postId}`,
-      // `https://peak-blogspace.herokuapp.com/posts-general/${postId}`,
       {data : null},
       optionsPut
     );
@@ -132,7 +125,6 @@ export default {
   deletePost: async function (postId) {
     console.log(postId, "id of post to delete for API");
     return await axios.delete(
-      `https://peak-blogspace.herokuapp.com/posts-general/${postId}`,
       {
         headers: {
           "Access-Control-Allow-Origin":
@@ -153,7 +145,7 @@ export default {
   },
   // calls to send user icon to aws
   saveUserIcon: async function (blogContent) {
-    console.log(blogContent, "new blog for API");
+    console.log(blogContent, "SAVE USER ICON for API");
     return await axios.post(
       `${prodOrDevUrl}/create-new-post`,
       {data : blogContent},
@@ -173,12 +165,10 @@ export default {
       }
     );
   },
-  addLike: async function (numOfLikesToSend, postId, postTitle) {
-    console.log(numOfLikesToSend, "num of likes for addLike API");
-    console.log(postId, "id of post addlike API");
-    console.log(postTitle, "post title for addLike API");
+  addLike: async function (cond , postId, postTitle) {
+    console.log(`${cond}: num of likes | ${postId}: post id | ${postTitle}: post title FOR ADD LIKE API`);
     return await axios.put(
-      `${prodOrDevUrl}/numOfLikesForPost/${postId}/${numOfLikesToSend}/${postTitle}`,
+      `${prodOrDevUrl}/numOfLikesForPost/${postId}/${cond}/${postTitle}`,
       {data : null},
       optionsPut
     );
@@ -209,19 +199,6 @@ export default {
     console.log(userId, "id of user to fetch bookmarked blogs API");
     return await axios.get(
       `${prodOrDevUrl}/user-all-bookmarks/${userId}`,
-      {
-        headers: {
-          "Access-Control-Allow-Origin":
-            "http://peak-blogspace.s3-website.us-east-2.amazonaws.com/",
-          authorization: token,
-        },
-      }
-    );
-  },
-  removeBookmarkedPost: async function (postIdToRemove, userId) {
-    console.log(postIdToRemove, "id of post to unbookmark for API!");
-    return await axios.delete(
-      `${prodOrDevUrl}/${postIdToRemove}/${userId}`,
       {
         headers: {
           "Access-Control-Allow-Origin":

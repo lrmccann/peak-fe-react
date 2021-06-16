@@ -75,20 +75,20 @@ export default function UserAccount() {
 
   // if user object is NOT empty we fetch their top posts
   const getTopPosts = async (id) => {
-    await API.getTopUserPosts(id).then(async (res) => {
-      setTopPosts(res.data);
+    await API.getTopUserPosts(id, 'forAcc').then(async (res) => {
+     setTopPosts(res.data);
     });
   };
   // checks if user obj is empty, if empty reload user
   useEffect(() => {
     if (Object.keys(selectedUser).length) {
-    //   console.log(user, "user if object is full");
       getTopPosts(selectedUser.id);
     } else {
       (async () => {
-        let userToReload = localStorage.getItem("selectedUserId");
+        // let userToReload = localStorage.getItem("selectedUserId");
+        let userToReload = user.id;
         await API.getUserInfo(userToReload).then((res) => {
-        //   setUser(res.data);
+          setUser(res.data);
         setSelectedUser(res.data)
         });
       })();
