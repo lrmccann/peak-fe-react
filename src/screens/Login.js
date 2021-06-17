@@ -11,6 +11,7 @@ export default function Login() {
   const { setUser } = useContext(UserContext);
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [invalidInfo, setInvalidInfo] = useState("hidden");
 
   const usernameRef = useRef();
   const passwordRef = useRef();
@@ -28,30 +29,32 @@ export default function Login() {
     setShow(false);
   };
 
-// verifying credentials with sql and argon2
+  // verifying credentials with sql and argon2
   const checkSqlForUser = async (username, password) => {
     await API.loginUser(
       (username = usernameRef.current.value),
       (password = passwordRef.current.value)
-    ).then(async function (res) {
-      if (res.data === "Invalid Username or Password") {
-        setLoading(false);
-        return alert("Invalid Username or Password, Please Try Again");
-      } else if (res.data === "error retrieving account information") {
-        setLoading(false);
-        return alert("Error retrieving account information, please try again!");
-      } else {
-        document.cookie = res.data.sessToken;
-        console.log(res.data.userData)
-        setUser(res.data.userData);
-        localStorage.setItem("loggedInUserId", res.data.userData.id);
-        //////  maybe set something here for app auth 
-        history.push("/home");
-      }
-    });
+    )
+      .then(async function (res) {
+        console.log(res, "REPSONSE IF ERROR MAYBE");
+        if (res.status === 200) {
+          document.cookie = res.data.sessToken;
+          setUser(res.data.userData);
+          localStorage.setItem("loggedInUserId", res.data.userData.id);
+          //////  maybe set something here for app auth
+          history.push("/home");
+        }
+      })
+      .catch(() => {
+        setInvalidInfo("visible");
+        setTimeout(() => {
+          setLoading(false);
+          showModal();
+        }, 2 * 600);
+      });
   };
 
-// checking input values to validate that all have been filled
+  // checking input values to validate that all have been filled
   const checkCredentialValidity = (e) => {
     e.preventDefault();
     setLoading(true);
@@ -138,6 +141,16 @@ export default function Login() {
                   ref={passwordRef}
                   placeholder="Password(8-20 Characters)"
                 ></input>
+                <p
+                  style={{
+                    color: "red",
+                    textDecoration: "underline",
+                    alignSelf: "center",
+                    visibility: invalidInfo,
+                  }}
+                >
+                  Incorrect Username or Password
+                </p>
               </div>
               <label className="login-options-cont">
                 <div>
