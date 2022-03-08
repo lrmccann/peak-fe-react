@@ -1,0 +1,46 @@
+.blog-btn-cont-page {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.like-btn {
+  height: 100%;
+  width: 33.3%;
+  background-color: transparent;
+  border: transparent;
+  background-size: 45%;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.bookmark-btn {
+  height: 100%;
+  width: 33.3%;
+  background-color: transparent;
+  border: transparent;
+  background-size: 45%;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.settings-btn {
+  height: 100%;
+  width: 33.3%;
+  background-color: transparent;
+  border: transparent;
+  background-size: 45%;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+
+#thumb-active{
+  height: 90%;
+  width: 90%;
+  background-color: red;
+}

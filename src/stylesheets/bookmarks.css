@@ -1,0 +1,163 @@
+.bookmarks_page {
+  height: auto;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.bk-blog-content {
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  height: 70%;
+  width: 75%;
+  border: none;
+  margin-bottom: 2%;
+  margin-top: 2%;
+}
+
+.bk-blog-img-header {
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-top: solid black 1px;
+  border-left: solid black 1px;
+  border-right: solid black 1px;
+  border-bottom: solid black  1px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.bk-blog-img-header > div {
+  color: whitesmoke;
+  text-align: left;
+  margin-top: 30%;
+  margin-left: 1.25%;
+  font-size: 25px;
+}
+
+.bk-blog-footer-cont {
+  height: 10%;
+  width: 100%;
+  background-color: gainsboro;
+  border-top: solid black 1px;
+  border-left: solid black 1px;
+  border-right: solid black 1px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.bk-COMEBACKTOTHIS {
+  height: 10%;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  border-bottom: solid black 1px;
+}
+
+.bk-author-info {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  height: auto;
+  width: 25%;
+}
+
+.bk-author-info > img {
+  width: 50px;
+  height: 50px;
+  border-radius: 60px;
+  background-color: #acacac;
+  border: solid black 1px;
+  z-index: 100;
+  margin-top: 4%;
+  margin-left: 5%;
+}
+
+.bk-author-info > h4 {
+  margin-left: 3%;
+  margin-top: 11%;
+  height: 25%;
+  width: 40%;
+}
+
+.bk-more-info-div {
+  height: auto;
+  width: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.bk-more-info-btn {
+  height: 100%;
+  width: 100%;
+  background-color: transparent;
+  border-left: solid black 1px;
+  border-right: solid black 1px;
+  border-top: none;
+  border-bottom: none;
+  cursor: pointer;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.bk-more-info-btn:focus {
+  outline: none;
+}
+
+.bk-more-info-btn:hover {
+  background-color: #9b9999;
+}
+
+.bk-more-info-btn > h2 {
+  font-weight: 100;
+}
+
+.bk-blog-options-bar {
+  width: 25%;
+  height: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+/*# sourceMappingURL=bookmarks.css.map */

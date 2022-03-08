@@ -1,0 +1,19 @@
+.topic-btn-cont{
+    height: 32.4%;
+    width: 19.57%;
+    background-color: white;
+    /* border: solid 2px rgb(84, 84, 216); */
+    border: solid 2px slategray;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-topic{
+    height: 90%;
+    width: 90%;
+    /* background-color: gold; */
+    cursor: pointer;
+    font-size: 20px;
+}
