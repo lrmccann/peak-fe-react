@@ -18,9 +18,14 @@ export default function App() {
   const [allPosts, setAllPosts] = useState([]);
   const [detailedPost, setDetailedPost] = useState({});
   const [allComments, setAllComments] = useState([]);
+  const [selectedUserId, setSelectedUserId] = useState();
   const [loggedIn , setLoggedIn] = useState(false);
   const history = useHistory();
 
+  // SCROLL TOP
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
 
   const token = document.cookie;
 
@@ -47,10 +52,6 @@ export default function App() {
     }
   }, [loggedIn, token, user]);
 
-  const getAuthorAccount = (userId) => {
-
-  }
-
 
   const setUser = (userData) => {
     setTheUser((user) => {
@@ -76,6 +77,12 @@ export default function App() {
     });
   };
 
+  const setSelectedUser = (selectedUserId) => {
+    setSelectedUserId((userId) => {
+      return(userId = selectedUserId);
+    })
+  }
+
   return (
     <UserProvider
       value={{
@@ -83,11 +90,13 @@ export default function App() {
         allPosts,
         detailedPost,
         allComments,
+        selectedUserId,
 
         setUser,
         getAllPostsForHomePage,
         getDetailedPost,
         getAllComments,
+        setSelectedUser,
       }}
     >
         {loggedIn === false ?

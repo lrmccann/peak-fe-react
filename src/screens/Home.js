@@ -8,18 +8,13 @@ import LoadingPage from '../components/Loading/index';
 import TrendingBlogs from "../components/TrendingBlogs";
 import "../stylesheets/home.css";
 
-export default function Home(props) {
+export default function Home() {
   const history = useHistory();
-  const { getDetailedPost } = useContext(UserContext);
+  const { getDetailedPost, setSelectedUser } = useContext(UserContext);
   const [blogObject] = useState([]);
   const [bookmarkedPost, setBookmarkedPost] = useState([]);
   const [likedPosts, setLikedPost] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  // SCROLL TOP
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
 
   // GET ALL POSTS
   useEffect(() => {
@@ -27,7 +22,7 @@ export default function Home(props) {
       await API.getAllPosts().then((res) => {
         if(res.status === 200){
             res.data.map((index) => {
-              console.log(index, "some index here");
+              // console.log(index, "some index here");
               blogObject.push(index);
             });
             return setLoading(false);
@@ -44,9 +39,13 @@ export default function Home(props) {
     const checkBookmarkStatus = async () => {
       let userId = localStorage.getItem("loggedInUserId");
       await API.checkBookmarksForHome(userId).then((res) => {
-        console.log(res, "here here here")
+        // console.log(res, "here here here");
         if(res.status === 200){
-          setBookmarkedPost(res.data);
+            if(res.data.length === 0){
+              setBookmarkedPost(null);
+            } else if(res.data.length !== 0){
+              setBookmarkedPost(res.data);
+            }
         }else{
           return console.log("error loading bookmarks");
         }
@@ -55,7 +54,7 @@ export default function Home(props) {
     checkBookmarkStatus();
   }, []);
 
-// check posts from user data against posts being loaded
+// CHECK USER LIKES AGAINST ALL POSTS BY ID
   useEffect(() => {
     const checkLikeStatus = async () => {
       let userId = localStorage.getItem("loggedInUserId");
@@ -71,7 +70,7 @@ export default function Home(props) {
     checkLikeStatus();
   }, [likedPosts.length]);
 
-// ADD VIEW TO SQL COL BY ID
+// ADD VIEW TO POST
   const addPostView = async (postId) => {
     await API.addViewToBlog(postId).then((res) => {
       if(res.status === 404){
@@ -85,17 +84,16 @@ export default function Home(props) {
 
 // GET POST DETAILS FOR NEXT PAGE
   const getIndepthblogDetails = async (e) => {
-    localStorage.setItem("recentPostId", e);
-    await API.getPostDetails(e).then((res) => {
+    localStorage.setItem("recentPostId", e.target.id);
+    await API.getPostDetails(e.target.id).then((res) => {
       getDetailedPost(res.data);
     });
-    addPostView(e);
+    addPostView(e.target.id);
   };
 
   const saveUserId = (e) => {
-    props.callback(e.target.id);
-    // localStorage.setItem("selectedUserId" , e);
-    // history.push('/useraccount');
+    setSelectedUser(e.target.id);
+    history.push('/useraccount');
   };
 
   if (loading) {
@@ -128,7 +126,7 @@ export default function Home(props) {
                 <button
                   id={index.user_id}
                  className="author-info container-fixed"
-                 onClick={(e) => {saveUserId(e.target.id);}}
+                 onClick={(e) => {saveUserId(e);}}
                  >
                    {/* <div id={index.user_id}> */}
                   <img id={index.user_id} alt="User Icon" src={index.icon}></img>
@@ -140,7 +138,7 @@ export default function Home(props) {
                     className="more-info-btn"
                     id={index.id}
                     onClick={(e) => {
-                      getIndepthblogDetails(e.target.id);
+                      getIndepthblogDetails(e);
                     }}
                   >
                     <h2 id={index.id}>View</h2>
