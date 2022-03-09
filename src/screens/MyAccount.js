@@ -5,31 +5,24 @@ import "../stylesheets/myAccount.css";
 import LoadingPage from "../components/Loading";
 
 export default function MyAccount() {
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [prefTopicsArr, setPrefTopicsArr] = useState([]);
   const [topPosts, setTopPosts] = useState([]);
   const [loading, setLoading] = useState(true);
 
-
   // if user object is NOT empty we fetch their top posts
-  const getTopPosts = async (id) => {
-    await API.getTopUserPosts(id).then(async (res) => {
+  const getTopPosts = async () => {
+    await API.getTopUserPosts(user.id).then(async (res) => {
       setTopPosts(res.data);
     });
+    setLoading(false);
   };
   // checks if user obj is empty, if not get top posts
   useEffect(() => {
     if (Object.keys(user).length) {
-      getTopPosts(user.id);
-      setPrefTopicsArr(user.preferred_topics.replace(/['"]+/g, "").split(","));
-    }
-  }, [setUser, user]);
-
-  useEffect(() => {
-    if (Object.keys(user).length) {
       if (user.preferred_topics === null) {
         setTimeout(() => {
-          setLoading(false);
+          getTopPosts();
         }, 2 * 1800);
       } else {
         const removeQuotes = user.preferred_topics
@@ -38,10 +31,10 @@ export default function MyAccount() {
         setPrefTopicsArr(removeQuotes);
         if (prefTopicsArr.length <= 1) {
           setTimeout(() => {
-            setLoading(false);
+            getTopPosts();
           }, 2 * 1800);
         } else if (prefTopicsArr.length >= 3) {
-          setLoading(false);
+          getTopPosts();
         }
       }
     }

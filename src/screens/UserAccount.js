@@ -10,27 +10,29 @@ export default function UserAccount() {
   const [prefTopicsArr, setPrefTopicsArr] = useState([]);
   const [topPosts, setTopPosts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedUser , setSelectedUser] = useState({});
-  const {user, setUser } = useContext(UserContext);
+  const [selectedUser, setSelectedUser] = useState({});
+  const { selectedUserId } = useContext(UserContext);
 
+
+    // FETCH USER TOP POSTS
+    const getTopPosts = async () => {
+      await API.getTopUserPosts(selectedUserId, "forAcc").then(async (res) => {
+        setTopPosts(res.data);
+      });
+      setLoading(false);
+    };
 
   useEffect(() => {
-      const loadUser = async () => {
-      let idToFetch = localStorage.getItem("selectedUserId");
-      if(idToFetch === null){
-          alert("Error Loading Profile, Please try again!");
-          history.push('/home');
-      }else{
-        await API.getUserInfo(idToFetch).then((res) =>{
-            if(res.status === 200){
-                setSelectedUser(res.data);
-                return setLoading(false);
-            }
-        })
-      }
-    }
+    const loadUser = async () => {
+      await API.getUserInfo(selectedUserId).then((res) => {
+        if (res.status === 200) {
+          setSelectedUser(res.data);
+          getTopPosts();
+        }
+      });
+    };
     loadUser();
-  }, [])
+  }, []);
 
   // checking user context obj, if empty reload user
   useEffect(() => {
@@ -55,33 +57,6 @@ export default function UserAccount() {
     }
   }, [prefTopicsArr.length, selectedUser]);
 
-  // scroll top
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  // if user object is NOT empty we fetch their top posts
-  const getTopPosts = async (id) => {
-    await API.getTopUserPosts(id, 'forAcc').then(async (res) => {
-     setTopPosts(res.data);
-    });
-  };
-  // checks if user obj is empty, if empty reload user
-  useEffect(() => {
-    if (Object.keys(selectedUser).length) {
-      getTopPosts(selectedUser.id);
-    } else {
-      (async () => {
-        // let userToReload = localStorage.getItem("selectedUserId");
-        let userToReload = user.id;
-        await API.getUserInfo(userToReload).then((res) => {
-          setUser(res.data);
-        setSelectedUser(res.data)
-        });
-      })();
-    }
-  }, [selectedUser]);
-
   if (loading) {
     return (
       <div className="load-holder container-fixed">
@@ -91,10 +66,14 @@ export default function UserAccount() {
   } else {
     return (
       <div className="account-page container-fixed">
-          <div className="icon-and-btn">
-          <img className="user-icon" src={selectedUser.icon} alt="User icon"></img>
+        <div className="icon-and-btn">
+          <img
+            className="user-icon"
+            src={selectedUser.icon}
+            alt="User icon"
+          ></img>
           <button>Follow</button>
-          </div>
+        </div>
         <div className="account-content">
           <div className="leftSide">
             <div className="infoRowOne">

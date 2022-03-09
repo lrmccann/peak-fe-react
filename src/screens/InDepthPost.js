@@ -14,10 +14,6 @@ export default function InDepthPost() {
     "Please enter comment!"
   );
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   let newObj = {
     authUsername: "",
     postData: "",
@@ -121,7 +117,7 @@ export default function InDepthPost() {
             </div>
           </div>
           {newObj.commentArr.map((index, key) => (
-            <div className="each-comment">
+            <div className="each-comment" key={key}>
               <div className="comment-auth-info">
                 <img src={profIcon} alt="Profile Icon"></img>
                 <h4>{index.username}</h4>

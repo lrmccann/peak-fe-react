@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import "../stylesheets/bookmarks.css";
 import API from "../utils/API";
 import photoThree from "../images/profile-icon-def.png";
 import LoadingPage from "../components/Loading/index";
+import UserContext from "../utils/Context";
 
 export default function Bookmarks() {
   const [bookmarkedBlog, setBookmarkedBlog] = useState([]);
   const [bookmarksEmpty, setBookmarksEmpty] = useState(true);
   const [loading, setLoading] = useState(true);
+  const {user} = useContext(UserContext);
 
 // use effect to get bookmarked posts from server using user id from local storage
   useEffect(() => {
     const getBookmarks = async () => {
-      let userId = localStorage.getItem("loggedInUserId");
-      await API.getBookmarkedPosts(userId).then(async (results) => {
+      await API.getBookmarkedPosts(user.id).then(async (results) => {
         console.log(results, 'RESUUUUULTS OF DIS BITCH');
         if (results.status === 210) {
           setBookmarksEmpty(true);
