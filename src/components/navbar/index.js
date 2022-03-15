@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBookmark,
   faHome,
+  faSearch,
 } from "@fortawesome/free-solid-svg-icons";
 import "./style.css";
 import API from "../../utils/API";
@@ -25,11 +26,9 @@ export default function NavbarTop() {
 
 // use effect to set state of user icon
 useEffect(() => {
-  console.log(location);
-  let userId = localStorage.getItem("loggedInUserId");
   const loadUserIcon = async () => {
   if(iconLoaded === false) {
-    await API.getUserInfo(userId).then((res) => {
+    await API.getUserInfo(user.id).then((res) => {
       if(res.status === 200){
         setUserIcon(`${res.data.icon}`);
       }else{
@@ -122,40 +121,49 @@ const uncheckRoute = (oldPath) => {
   // };
 //
     return (
-      <div className="navbar-cont" style={{visibility : `${navShown}`}}>
-        <div className="logo-cont">
-          <img src={peakIcon} alt="Peak Icon"></img>
-          {/* <h1>{welcomeMsg}</h1> */}
+      <main className="nav-cont container-fixed" style={{visibility : `${navShown}`}}>
+        <div>
+          <div className="logo-cont">
+            <img src={peakIcon} alt="Peak Icon"></img>
+          </div>
+          {/* <div className="search-cont">
+            <FontAwesomeIcon className="search-btn" icon={faSearch}></FontAwesomeIcon>
+            <input className="search-input"></input>
+          </div> */}
+          <div className="btn-cont container-fixed">
+            <button 
+              className="nav-button"
+              id="home-btn"
+              onClick={navHome}
+            >
+              {homeNavLink}
+            </button>
+            <button
+              className="nav-button"
+              id="bookmark-btn"
+              onClick={navBookmarks}
+            >
+              {bookmarkNavLink}
+            </button>
+            <button
+              className="nav-button"
+              id="write-btn"
+              onClick={navCreatePost}
+            >
+              {createPostNavLink}
+            </button>
+            <button 
+            className="nav-button" 
+            id="act-btn"
+            onClick={navAccount}
+            >
+              <img src={userIcon} alt={"Your Profile"}></img>
+            </button>
+            {/* <button id="nav-button" onClick={navLogout}>
+              <p>Log Out</p>
+            </button> */}
+          </div>
         </div>
-        <div className="nav-btn-cont">
-          <button
-            style={{ fontSize: "32.5px" }}
-            id="nav-button"
-            onClick={navHome}
-          >
-            {homeNavLink}
-          </button>
-          <button
-            style={{ fontSize: "30px" }}
-            id="nav-button"
-            onClick={navBookmarks}
-          >
-            {bookmarkNavLink}
-          </button>
-          <button
-            style={{ marginRight: "1%" }}
-            id="nav-button"
-            onClick={navCreatePost}
-          >
-            {createPostNavLink}
-          </button>
-          <button id="nav-button" onClick={navAccount}>
-            <img src={userIcon} alt={"Your Profile"}></img>
-          </button>
-          {/* <button id="nav-button" onClick={navLogout}>
-            <p>Log Out</p>
-          </button> */}
-        </div>
-      </div>
+      </main>
     );
 }

@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import bookMarkIcon from "../../images/bookmark-unchecked.png";
 import bookMarkIconClicked from "../../images/bookmark-checked.png";
 import thumbsUpIcon from "../../images/thumbs-up.png";
 import thumbsUpIconClicked from "../../images/thumbs-up-clicked.png";
 import settingsIcon from "../../images/settings-icon.png";
+import UserContext from "../../utils/Context";
 import API from "../../utils/API";
 import "./style.css";
 
@@ -11,9 +12,16 @@ export default function BlogBtnCont(props) {
   const [bookmarked, setBookmarkIcon] = useState(bookMarkIcon);
   const [likeBtn, setLikeBtn] = useState(thumbsUpIcon);
   const [loading, setLoading] = useState(true);
+  const {user} = useContext(UserContext);
+  const [bookmarksArr, setBookmarksArr] = useState(props.bookMarkedPosts);
 
-  let bookmarksArr = props.bookMarkedPosts;
+  // let bookmarksArr = props.bookMarkedPosts;
   let likedPostArr = props.likedPosts;
+
+  useEffect(() => {
+    console.log(bookmarksArr, 'bookmarks arr for child')
+      setBookmarksArr(props.bookMarkedPosts);
+  }, [props])
 
 
   useEffect(() => {
@@ -34,13 +42,12 @@ export default function BlogBtnCont(props) {
       });
       setLoading(false);
   }, []);
-  //
+ 
   // Toggle like btn to add or remove like
   const toggleLike = async () => {
     let likesArrIndex = likedPostArr.indexOf(props.postId);
-    let userId = localStorage.getItem("loggedInUserId");
     if(likesArrIndex === -1){
-      await API.addLike(props.postId, 'add', userId).then((results) => {
+      await API.addLike(props.postId, 'add', user.id).then((results) => {
         if (results.status === 200) {
           setLikeBtn(thumbsUpIconClicked);
         } else {
@@ -48,7 +55,7 @@ export default function BlogBtnCont(props) {
         }
       });
     } else {
-      await API.addLike(props.postId, 'remove', userId).then(
+      await API.addLike(props.postId, 'remove', user.id).then(
         (response) => {
           if (response.status === 200) {
             setLikeBtn(thumbsUpIcon);

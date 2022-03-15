@@ -4,12 +4,15 @@ import API from "../utils/API";
 import photoThree from "../images/profile-icon-def.png";
 import LoadingPage from "../components/Loading/index";
 import UserContext from "../utils/Context";
+import { useHistory } from "react-router-dom";
 
 export default function Bookmarks() {
   const [bookmarkedBlog, setBookmarkedBlog] = useState([]);
   const [bookmarksEmpty, setBookmarksEmpty] = useState(true);
   const [loading, setLoading] = useState(true);
-  const {user} = useContext(UserContext);
+  const {user, getDetailedPost} = useContext(UserContext);
+
+  const history = useHistory();
 
 // use effect to get bookmarked posts from server using user id from local storage
   useEffect(() => {
@@ -31,7 +34,14 @@ export default function Bookmarks() {
     };
     getBookmarks();
   }, []);
-//
+
+  const getIndepthblogDetails = async (e) => {
+    localStorage.setItem("recentPostId", e.target.id);
+    await API.getPostDetails(e.target.id).then((res) => {
+      getDetailedPost(res.data);
+    });
+    history.push("/indepthpost");
+  };
 
   if (loading) {
     return (
@@ -68,12 +78,12 @@ export default function Bookmarks() {
                   <div className="bk-more-info-div">
                     <button
                       className="bk-more-info-btn"
-                      id={`bk-${index.id}`}
-                      // onClick={(e) => {
-                      //   getIndepthblogDetails(e.target.id);
-                      // }}
+                      id={index.id}
+                      onClick={(e) => {
+                        getIndepthblogDetails(e);
+                      }}
                     >
-                      <h2 id={`bk-${index.id}`}>View</h2>
+                      <h2 id={index.id}>View</h2>
                     </button>
                   </div>
                   <div className="bk-blog-options-bar">
