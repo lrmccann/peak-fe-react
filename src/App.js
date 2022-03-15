@@ -11,6 +11,7 @@ import { UserProvider } from "./utils/Context";
 import { useEffect, useState } from "react";
 import NavbarTop from "./components/navbar/index";
 import UserAccount from "./screens/UserAccount";
+import Sidebar from './components/sidebar';
 import API from "./utils/API";
 
 export default function App() {
@@ -84,6 +85,7 @@ export default function App() {
   }
 
   return (
+    <div className="app">
     <UserProvider
       value={{
         user,
@@ -108,6 +110,7 @@ export default function App() {
         ) : 
         <Router>
         <NavbarTop />
+        {/* <Sidebar /> */}
           <Route exact activeClassName path="/home" component={Home} />
         <Route
           exact
@@ -123,5 +126,6 @@ export default function App() {
       </Router>
 }
     </UserProvider>
+    </div>
   );
 }

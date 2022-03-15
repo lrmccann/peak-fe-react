@@ -4,8 +4,9 @@ import UserContext from "../utils/Context";
 import { useHistory } from "react-router-dom";
 import BlogBtnCont from "../components/blogBtnCont";
 import viewIcon from "../images/view-icon.png";
-import LoadingPage from '../components/Loading/index';
+import LoadingPage from "../components/Loading/index";
 import TrendingBlogs from "../components/TrendingBlogs";
+import Sidebar from "../components/sidebar/index";
 import "../stylesheets/home.css";
 
 export default function Home() {
@@ -15,38 +16,66 @@ export default function Home() {
   const [bookmarkedPost, setBookmarkedPost] = useState([]);
   const [likedPosts, setLikedPost] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { user } = useContext(UserContext);
+
+  const [sidebarTopic, setSidebarTopic] = useState("following");
+  // const blogContent = [];
+  const [bookmarks, setBookmarks] = useState([]);
+  const [sidebarLoaded, setSidebarLoaded] = useState(false);
+
+  const getBookmarks = async () => {
+    await API.getBookmarkedPosts(user.id).then((res) => {
+      if (res.data) {
+        res.data.map((b, i) => {
+          bookmarks.push(b);
+        });
+      } else {
+      }
+      console.log(bookmarks, "bookmark content array for new sidebar");
+      setSidebarLoaded(true);
+    });
+  };
+
+  useEffect(() => {
+    if (sidebarTopic === "following") {
+      console.log("following");
+      // api call here for following topic
+    } else if (sidebarTopic === "saved") {
+      console.log("saved");
+      getBookmarks();
+      // api call to get saved user topics here
+    }
+  }, [sidebarTopic]);
 
   // GET ALL POSTS
   useEffect(() => {
     (async () => {
       await API.getAllPosts().then((res) => {
-        if(res.status === 200){
-            res.data.map((index) => {
-              // console.log(index, "some index here");
-              blogObject.push(index);
-            });
-            return setLoading(false);
-        }else{
-          alert("error getting posts for home page, please refresh!")
+        if (res.status === 200) {
+          res.data.map((index) => {
+            // console.log(index, "some index here");
+            blogObject.push(index);
+          });
+          return setLoading(false);
+        } else {
+          alert("error getting posts for home page, please refresh!");
         }
-      }
-       );
+      });
     })();
   }, [blogObject]);
 
   // CHECK USER BOOKMARKS AGAINST ALL POSTS BY ID
   useEffect(() => {
     const checkBookmarkStatus = async () => {
-      let userId = localStorage.getItem("loggedInUserId");
-      await API.checkBookmarksForHome(userId).then((res) => {
-        // console.log(res, "here here here");
-        if(res.status === 200){
-            if(res.data.length === 0){
-              setBookmarkedPost(null);
-            } else if(res.data.length !== 0){
-              setBookmarkedPost(res.data);
-            }
-        }else{
+      await API.checkBookmarksForHome(user.id).then((res) => {
+        if (res.status === 200) {
+          if (res.data.length === 0) {
+            setBookmarkedPost(null);
+          } else if (res.data.length !== 0) {
+            setBookmarkedPost(res.data);
+            console.log(bookmarkedPost, "bookmarked posts run every click");
+          }
+        } else {
           return console.log("error loading bookmarks");
         }
       });
@@ -54,11 +83,10 @@ export default function Home() {
     checkBookmarkStatus();
   }, []);
 
-// CHECK USER LIKES AGAINST ALL POSTS BY ID
+  // CHECK USER LIKES AGAINST ALL POSTS BY ID
   useEffect(() => {
     const checkLikeStatus = async () => {
-      let userId = localStorage.getItem("loggedInUserId");
-      await API.getLikedPosts(userId).then((res) => {
+      await API.getLikedPosts(user.id).then((res) => {
         setLikedPost(res.data);
       });
       if (likedPosts.length === 0) {
@@ -70,19 +98,19 @@ export default function Home() {
     checkLikeStatus();
   }, [likedPosts.length]);
 
-// ADD VIEW TO POST
+  // ADD VIEW TO POST
   const addPostView = async (postId) => {
     await API.addViewToBlog(postId).then((res) => {
-      if(res.status === 404){
+      if (res.status === 404) {
         console.log("Post Error");
-      }else{
+      } else {
         console.log("Post Liked!");
         history.push("/indepthpost");
       }
     });
   };
 
-// GET POST DETAILS FOR NEXT PAGE
+  // GET POST DETAILS FOR NEXT PAGE
   const getIndepthblogDetails = async (e) => {
     localStorage.setItem("recentPostId", e.target.id);
     await API.getPostDetails(e.target.id).then((res) => {
@@ -93,21 +121,68 @@ export default function Home() {
 
   const saveUserId = (e) => {
     setSelectedUser(e.target.id);
-    history.push('/useraccount');
+    history.push("/useraccount");
   };
 
   if (loading) {
     return (
       <div className="load-screen-holder container-fixed">
-      <LoadingPage />
-     </div>
+        <LoadingPage />
+      </div>
     );
   } else {
     return (
       <main className="home-page container">
-        <h1>Trending</h1>
-        <TrendingBlogs />
-        {blogObject.map((index, myKey) => (
+        {/* <h1>Trending</h1> */}
+        <div className="main-cont">
+          <TrendingBlogs />
+          <TrendingBlogs />
+        </div>
+        <div className="sidebar-container">
+          <div className="side-content">
+            <input placeholder="Search"></input>
+            <div className="sidebar-slider">
+              <button
+                onClick={() => {
+                  setSidebarTopic("following");
+                }}
+              >
+                <p>Following</p>
+              </button>
+              <button
+                onClick={() => {
+                  setSidebarTopic("saved");
+                }}
+              >
+                <p>Saved</p>
+              </button>
+            </div>
+            <div className="bmark-cont">
+              {sidebarTopic === "following" ? (
+                <div>
+                  <h1>Following Blogs</h1>
+                </div>
+              ) : (
+                <>
+                  {bookmarks.map((b, i) => (
+                    <div key={i}>
+                      <span>
+                        <img src={`${b.blog_img}`} alt="bookmark"></img>
+                        <h2>{b.username}</h2>
+                      </span>
+                      <h1>{b.post_title}</h1>
+                      <span>
+                        <h3>{b.publish_date}</h3>
+                        <h3>Read Time</h3>
+                      </span>
+                    </div>
+                  ))}
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+        {/* {blogObject.map((index, myKey) => (
           <div className="blog-content container" key={myKey}>            
           <div
               className="blog-img-header container-fixed"
@@ -128,10 +203,8 @@ export default function Home() {
                  className="author-info container-fixed"
                  onClick={(e) => {saveUserId(e);}}
                  >
-                   {/* <div id={index.user_id}> */}
                   <img id={index.user_id} alt="User Icon" src={index.icon}></img>
                   <h4 id={index.user_id}>{index.username}</h4>
-                  {/* </div> */}
                 </button>
                 <div className="more-info-div">
                   <button
@@ -156,7 +229,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-        ))}
+        ))} */}
       </main>
     );
   }
