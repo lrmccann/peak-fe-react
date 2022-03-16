@@ -208,6 +208,32 @@ export default {
       }
     );
   },
+  getFollowingBlogs: async function (userId){
+    console.log(userId, 'user id to get followed users blog');
+    return await axios.get(
+      `${prodOrDevUrl}/user-following/${userId}`,
+      {
+        headers: {
+          "Access-Control-Allow-Origin":
+            "http://peak-blogspace.s3-website.us-east-2.amazonaws.com/",
+          authorization: token,
+      },
+      }
+    )
+  },
+  followUser: async function (userId, followId, cond){
+    console.log(`userId : ${userId} followId : ${followId} and cond: ${cond} to toggle follower`);
+    return await axios.get(
+      `${prodOrDevUrl}/followers/${userId}/${followId}/${cond}`,
+      {
+        headers: {
+          "Access-Control-Allow-Origin":
+            "http://peak-blogspace.s3-website.us-east-2.amazonaws.com/",
+          authorization: token,
+      },
+      }
+    )
+  },
   postNewComment: async function (userId, postId, commentBody) {
     console.log(
       `userId : ${userId} postId: ${postId} body : ${commentBody} for postnewcomment api`
