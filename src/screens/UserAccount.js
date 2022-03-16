@@ -11,7 +11,10 @@ export default function UserAccount() {
   const [topPosts, setTopPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedUser, setSelectedUser] = useState({});
-  const { selectedUserId } = useContext(UserContext);
+  const { selectedUserId, user } = useContext(UserContext);
+  const [followArr, setFollowArr] = useState();
+
+  const [followText, setFollowText] = useState();
 
 
     // FETCH USER TOP POSTS
@@ -57,6 +60,37 @@ export default function UserAccount() {
     }
   }, [prefTopicsArr.length, selectedUser]);
 
+  const followUser = async () => {
+    console.log(user, 'user loganm123')
+    await API.followUser(user.id, selectedUserId, 'following')
+    .then((res) => {
+      console.log(res, 'response to follow user');
+      setFollowArr(res.data.newArr);
+      // setFollowArr(res.data.newArr.split(","));
+    })
+  }
+// need to add a useeffect to watch array of followers / length and check against that
+useEffect(() => {
+  if(followArr){
+    const newIndex = followArr.indexOf(selectedUserId);
+    if(newIndex !== -1 ){
+        setFollowText('Unfollow');
+    } else if(newIndex === -1){
+        setFollowText('follow');
+    }
+  } else if(followArr === undefined){
+      const anotherIndex = user.following.indexOf(selectedUserId);
+      if(anotherIndex !== -1 ){
+        setFollowText('Unfollow');
+    } else if(anotherIndex === -1){
+        setFollowText('follow');
+    }
+  }
+  // console.log(typeof user.following, 'type of user id');
+  // console.log(typeof selectedUserId, 'type of selected user id');
+  console.log(followArr, 'new state for follow arr');
+}, [followArr])
+
   if (loading) {
     return (
       <div className="load-holder container-fixed">
@@ -72,7 +106,7 @@ export default function UserAccount() {
             src={selectedUser.icon}
             alt="User icon"
           ></img>
-          <button>Follow</button>
+          <button onClick={followUser}>{followText}</button>
         </div>
         <div className="account-content">
           <div className="leftSide">

@@ -21,6 +21,7 @@ export default function Home() {
   const [sidebarTopic, setSidebarTopic] = useState("following");
   // const blogContent = [];
   const [bookmarks, setBookmarks] = useState([]);
+  const [followingBlogs, setFollowingBlogs] = useState([]);
   const [sidebarLoaded, setSidebarLoaded] = useState(false);
 
   const getBookmarks = async () => {
@@ -30,14 +31,29 @@ export default function Home() {
           bookmarks.push(b);
         });
       } else {
+        // load empty array
       }
       console.log(bookmarks, "bookmark content array for new sidebar");
-      setSidebarLoaded(true);
     });
   };
 
+  const getFollowingBlogs = async () => {
+      await API.getFollowingBlogs(user.id).then((res) => {
+        if(res.data){
+          res.data.map((b, i) => {
+            console.log(b, 'followed users blog for home page');
+            // followingBlogs.push(b);
+          })
+        } else{
+          // load empty arra
+        }
+        console.log(followingBlogs, "bookmark content array for new sidebar");
+      })
+  }
+
   useEffect(() => {
     if (sidebarTopic === "following") {
+      getFollowingBlogs();
       console.log("following");
       // api call here for following topic
     } else if (sidebarTopic === "saved") {
@@ -182,7 +198,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        {/* {blogObject.map((index, myKey) => (
+        {blogObject.map((index, myKey) => (
           <div className="blog-content container" key={myKey}>            
           <div
               className="blog-img-header container-fixed"
@@ -229,7 +245,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-        ))} */}
+        ))}
       </main>
     );
   }
